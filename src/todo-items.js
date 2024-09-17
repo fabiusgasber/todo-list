@@ -29,6 +29,7 @@ export function createTodo(title = "", description = "", dueDate = null){
         getCompleted, 
         setCompleted, 
         getPriority, 
-        setPriority 
+        setPriority,
+        isTodoItem : true,
     };
 }
