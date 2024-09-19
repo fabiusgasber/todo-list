@@ -38,3 +38,37 @@ export function createTodoContainer(todo){
     return container;
 }
 
+export function createForm(){
+    const formIsVisible = document.querySelector("#todo-form")
+    if(formIsVisible){
+        return;
+    }
+    else {
+        const form = document.createElement("form");
+        form.id = "todo-form";
+    
+        const titleLabel = createLabel("title", "Title");
+        const title = createInput("text", "title", "title");
+    
+        const descriptionLabel = createLabel("description", "Description (optional)");
+        const description = createInput("text", "description", "description");
+
+        const dateLabel = createLabel("date", "Due Date");
+        const date = createInput("date", "date", "date");
+    
+        const submitBtn = createButton("button", "Submit");
+        submitBtn.addEventListener("click", function() {
+            const allTasks = getAllTasks();
+            allTasks.addTodo(createTodo(title.value, description.value, date.valueAsDate));
+            removeForm();
+            getProjects(allTasks);
+        });
+    
+        const cancelBtn = createButton("button", "Cancel");    
+        cancelBtn.addEventListener("click", removeForm);    
+    
+        form.append(titleLabel, title, descriptionLabel, description, dateLabel, date, submitBtn, cancelBtn);
+        return form;
+    }
+}
+
