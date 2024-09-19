@@ -1,3 +1,5 @@
+import { initForm, loadProjects } from "./dom-handler";
+import { getAllTasks, loadToday } from "./projects";
 
 
 function init() {
@@ -14,7 +16,6 @@ function setUpListeners() {
     defaultProjects.forEach(project => project.addEventListener("click", tabSwitch));  
 
 }
-
 
 function tabSwitch(e) {
     const currentTab = e.target.id;
@@ -34,3 +35,4 @@ function tabSwitch(e) {
     }
 }
 
+init();
