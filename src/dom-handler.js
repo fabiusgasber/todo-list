@@ -12,3 +12,11 @@ export function createLabel(labelFor, textContent){
     label.textContent = textContent;
     return label;
 }
+
+export function createButton(type, textContent) {
+    const btn = document.createElement("button");
+    type ? btn.type = type : "";
+    btn.textContent = textContent;
+    return btn;
+}
+
