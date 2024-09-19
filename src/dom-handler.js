@@ -72,3 +72,9 @@ export function createForm(){
     }
 }
 
+
+export function removeForm(){
+    const formIsVisible = document.querySelector("form")
+    formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
+}
+
