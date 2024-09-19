@@ -75,6 +75,11 @@ export function createForm(){
     }
 }
 
+export function initForm(){
+    const contentDiv = document.querySelector("#content");
+    const form = createForm();
+    contentDiv.append(form);    
+}
 
 export function removeForm(){
     const formIsVisible = document.querySelector("form")
