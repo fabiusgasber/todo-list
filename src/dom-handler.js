@@ -20,3 +20,21 @@ export function createButton(type, textContent) {
     return btn;
 }
 
+export function createTodoContainer(todo){
+    const container = document.createElement("div");
+    container.classList.add("todo-container");
+
+    const title = document.createElement("h1");
+    title.textContent = todo.getTitle();
+
+    const description = document.createElement("p");
+    description.textContent = todo.getDescription();
+
+    const dueDate = createInput("date");
+    dueDate.value = todo.getDate().toISOString().split('T')[0];
+
+    container.append(title, description, dueDate);
+
+    return container;
+}
+
