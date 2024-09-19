@@ -6,3 +6,9 @@ export function createInput(type, name, id){
     return input;
 }
 
+export function createLabel(labelFor, textContent){
+    const label = document.createElement("label");
+    label.for = labelFor;
+    label.textContent = textContent;
+    return label;
+}
