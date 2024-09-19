@@ -15,3 +15,22 @@ function setUpListeners() {
 
 }
 
+
+function tabSwitch(e) {
+    const currentTab = e.target.id;
+    switch(currentTab) {
+        case "all":
+            loadProjects(getAllTasks());
+            break;
+        case "today":
+            loadProjects(loadToday());
+            break;
+        case "week":
+            loadWeek();
+            break;
+        case "important":
+            loadImportant();
+            break;
+    }
+}
+
