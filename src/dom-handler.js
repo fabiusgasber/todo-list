@@ -1,3 +1,6 @@
+import { getAllTasks } from "./projects";
+import { createTodo } from "./todo-items";
+
 export function createInput(type, name, id){
     const input = document.createElement("input");
     input.type = type;
@@ -78,3 +81,14 @@ export function removeForm(){
     formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
 }
 
+export function loadProjects(project) {
+    const main = document.querySelector("#content");
+    main.replaceChildren();
+    if (project.getTodos().length > 0) {
+    const todoContainers = project.getTodos().map(todo => createTodoContainer(todo));
+    todoContainers.forEach(container => main.append(container));
+    }
+    else {
+        return;
+    }
+}
