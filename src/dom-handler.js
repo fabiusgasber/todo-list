@@ -1,7 +1,7 @@
 import { getAllTasks } from "./projects";
 import { createTodo } from "./todo-items";
 
-export function createInput(type, name, id){
+function createInput(type, name, id){
     const input = document.createElement("input");
     input.type = type;
     name ? input.name = name : "";
@@ -9,21 +9,21 @@ export function createInput(type, name, id){
     return input;
 }
 
-export function createLabel(labelFor, textContent){
+function createLabel(labelFor, textContent){
     const label = document.createElement("label");
     label.for = labelFor;
     label.textContent = textContent;
     return label;
 }
 
-export function createButton(type, textContent) {
+function createButton(type, textContent) {
     const btn = document.createElement("button");
     type ? btn.type = type : "";
     btn.textContent = textContent;
     return btn;
 }
 
-export function createTodoContainer(todo){
+function createTodoContainer(todo){
     const container = document.createElement("div");
     container.classList.add("todo-container");
 
@@ -41,7 +41,7 @@ export function createTodoContainer(todo){
     return container;
 }
 
-export function createForm(){
+function createForm(){
     const formIsVisible = document.querySelector("#todo-form")
     if(formIsVisible){
         return;
@@ -75,15 +75,15 @@ export function createForm(){
     }
 }
 
+function removeForm(){
+    const formIsVisible = document.querySelector("form")
+    formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
+}
+
 export function initForm(){
     const contentDiv = document.querySelector("#content");
     const form = createForm();
     contentDiv.append(form);    
-}
-
-export function removeForm(){
-    const formIsVisible = document.querySelector("form")
-    formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
 }
 
 export function loadProjects(project) {
