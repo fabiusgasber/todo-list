@@ -34,7 +34,7 @@ function createTodoContainer(todo){
     description.textContent = todo.getDescription();
 
     const dueDate = createInput("date");
-    dueDate.value = todo.getDate().toISOString().split('T')[0];
+    dueDate.value = todo.getDate() ? todo.getDate().toISOString().split('T')[0] : "";
 
     container.append(title, description, dueDate);
 
@@ -64,7 +64,7 @@ function createForm(){
             const allTasks = getAllTasks();
             allTasks.addTodo(createTodo(title.value, description.value, date.valueAsDate));
             removeForm();
-            getProjects(allTasks);
+            loadProjects(allTasks);
         });
     
         const cancelBtn = createButton("button", "Cancel");    
