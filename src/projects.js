@@ -13,3 +13,19 @@ export function createProject(title) {
     
     return { getTitle, setTitle, getTodos, addTodo, removeTodo }
 }
+export function loadToday(){
+    let today = createProject("Today");
+    const allTasks = getAllTasks().getTodos();
+    let dueToday = allTasks.filter(task => sameDay(task.getDate(), new Date()));
+    dueToday.forEach(task => today.addTodo(task));
+    return today;
+}
+
+function sameDay(d1, d2) {
+    if(d1 && d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
+    }
+}
+  
