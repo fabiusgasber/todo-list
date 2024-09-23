@@ -12,6 +12,7 @@ export function createTodo(title = "", description = "", dueDate = null){
 
     const getDate = () => dueDate;
     const setDate = (date) => dueDate = new Date(date);
+    const getFormattedDate = () => isNaN(dueDate.getTime()) ? "" : format(dueDate, "yyyy-MM-dd");
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
