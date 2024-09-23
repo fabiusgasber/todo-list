@@ -16,7 +16,7 @@ export function createProject(title) {
 export function loadToday(){
     let today = createProject("Today");
     const allTasks = getAllTasks().getTodos();
-    let dueToday = allTasks.filter(task => sameDay(task.getDate(), new Date()));
+    let dueToday = allTasks.filter(task => isToday(task.getDate()));
     dueToday.forEach(task => today.addTodo(task));
     return today;
 }
