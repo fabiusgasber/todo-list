@@ -1,9 +1,10 @@
 import { Priority } from "./priorities";
-import { format } from "date-fns";
+import { format, parse} from "date-fns";
 
 export function createTodo(title = "", description = "", dueDate = null){
 
     let completed = false;
+
     const getCompleted = () => completed;
     const setCompleted = (hasCompleted) => completed = hasCompleted;
 
@@ -11,6 +12,7 @@ export function createTodo(title = "", description = "", dueDate = null){
     const getPriority = () => priority.getLevel();
     const setPriority = (level) => priority.setLevel(level);
 
+    dueDate = parse(dueDate, "yyyy-MM-dd", new Date());
     const getDate = () => dueDate;
     const setDate = (date) => dueDate = new Date(date);
     const getFormattedDate = () => isNaN(dueDate.getTime()) ? "" : format(dueDate, "yyyy-MM-dd");
