@@ -34,7 +34,7 @@ function createTodoContainer(todo){
     description.textContent = todo.getDescription();
 
     const dueDate = createInput("date");
-    dueDate.value = todo.getFormattedDate() ? todo.getFormattedDate() : "";
+    dueDate.value = todo.getDate() ? todo.getDate().toISOString().split('T')[0] : "";
 
     container.append(title, description, dueDate);
 
@@ -62,7 +62,7 @@ function createForm(){
         const submitBtn = createButton("button", "Submit");
         submitBtn.addEventListener("click", function() {
             const allTasks = getAllTasks();
-            allTasks.addTodo(createTodo(title.value, description.value, date.valueAsDate));
+            allTasks.addTodo(createTodo(title.value, description.value, date.value));
             removeForm();
             loadProjects(allTasks);
         });
