@@ -1,5 +1,5 @@
 import { initForm, loadProjects } from "./dom-handler";
-import { getAllTasks, loadToday } from "./projects";
+import { getAllTasks, loadToday, loadWeek } from "./projects";
 
 
 function init() {
@@ -27,7 +27,7 @@ function tabSwitch(e) {
             loadProjects(loadToday());
             break;
         case "week":
-            loadWeek();
+            loadProjects(loadWeek());
             break;
         case "important":
             loadImportant();
