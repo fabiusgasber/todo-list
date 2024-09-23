@@ -1,5 +1,5 @@
+import { DueDate } from "./duedate";
 import { Priority } from "./priorities";
-import { format, parse} from "date-fns";
 
 export function createTodo(title = "", description = "", dueDate = null){
 
@@ -12,10 +12,10 @@ export function createTodo(title = "", description = "", dueDate = null){
     const getPriority = () => priority.getLevel();
     const setPriority = (level) => priority.setLevel(level);
 
-    dueDate = parse(dueDate, "yyyy-MM-dd", new Date());
-    const getDate = () => dueDate;
-    const setDate = (date) => dueDate = new Date(date);
-    const getFormattedDate = () => isNaN(dueDate.getTime()) ? "" : format(dueDate, "yyyy-MM-dd");
+    dueDate = new DueDate(dueDate);
+    const getDate = () => dueDate.getDate();
+    const setDate = (date) => dueDate.setDate(date);
+    const getFormattedDate = () => dueDate.toString()
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
