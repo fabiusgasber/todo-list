@@ -1,4 +1,5 @@
 import { Priority } from "./priorities";
+import { format } from "date-fns";
 
 export function createTodo(title = "", description = "", dueDate = null){
 
@@ -26,6 +27,7 @@ export function createTodo(title = "", description = "", dueDate = null){
         getDescription, 
         setDescription, 
         getDate, 
+        getFormattedDate,
         setDate, 
         getCompleted, 
         setCompleted, 
