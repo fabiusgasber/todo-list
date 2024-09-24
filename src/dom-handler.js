@@ -3,8 +3,8 @@ import { project } from "./projects";
 
 export const domLoader = (() => {
 
-    const getQuery = (query) => {
-        return document.querySelector(query);
+    const getQuery = (query, elem = document) => {
+        return elem.querySelector(query);
     }
         
     const initForm = () => {
