@@ -1,5 +1,5 @@
-import { getAllTasks } from "./projects";
 import { createTodo } from "./todo-items";
+import { project } from "./projects";
 
 function createInput(type, name, id){
     const input = document.createElement("input");
@@ -61,10 +61,9 @@ function createForm(){
     
         const submitBtn = createButton("button", "Submit");
         submitBtn.addEventListener("click", function() {
-            const allTasks = getAllTasks();
-            allTasks.addTodo(createTodo(title.value, description.value, date.value));
+            project.addTodo(createTodo(title.value, description.value, date.value));
             removeForm();
-            loadProjects(allTasks);
+            loadProjects(project.getTodos());
         });
     
         const cancelBtn = createButton("button", "Cancel");    
