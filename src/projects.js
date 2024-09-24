@@ -1,4 +1,4 @@
-export function createProject(title) {
+export const project = (function (title) {
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
@@ -10,22 +10,10 @@ export function createProject(title) {
         const index = todoItems.indexOf(todo);
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
+
+    const loadToday = () => getTodos().filter(task => task.getDate().isDueToday());
+
+    const loadWeek = () => getTodos().filter(task => task.getDate().isDueNextWeek());
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo }
-}
-export function loadToday(){
-    let today = createProject("Today");
-    const allTasks = getAllTasks().getTodos();
-    let dueToday = allTasks.filter(task => task.getDate().isDueToday());
-    dueToday.forEach(task => today.addTodo(task));
-    return today;
-}
-
-
-export function loadWeek(){
-    let nextWeek = createProject("Next Week");
-    const allTasks = getAllTasks().getTodos();
-    let dueNextWeek = allTasks.filter(task => task.getDate().isDueNextWeek());
-    dueNextWeek.forEach(task => nextWeek.addTodo(task));
-    return nextWeek;
-}
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, loadToday, loadWeek }
+})();
