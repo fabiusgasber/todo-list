@@ -15,7 +15,7 @@ export const project = (function (title) {
 
     const getWeek = () => todoItems.filter(task => task.getDate().isDueNextWeek());
 
-    const loadWeek = () => getTodos().filter(task => task.getDate().isDueNextWeek());
+    const getImportant = () => todoItems.filter(task => task.getPriority().getLevel() === "high");
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, loadToday, loadWeek }
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant }
 })();
