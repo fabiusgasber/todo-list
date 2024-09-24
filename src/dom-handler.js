@@ -86,11 +86,11 @@ export function initForm(){
     contentDiv.append(form);    
 }
 
-export function loadProjects(project) {
+export function loadProjects(arr) {
     const main = document.querySelector("#content");
     main.replaceChildren();
-    if (project.getTodos().length > 0) {
-    const todoContainers = project.getTodos().map(todo => createTodoContainer(todo));
+    if (arr.length > 0) {
+    const todoContainers = arr.map(elem => createTodoContainer(elem));
     todoContainers.forEach(container => main.append(container));
     }
     else {
