@@ -11,7 +11,9 @@ export const project = (function (title) {
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
 
-    const loadToday = () => getTodos().filter(task => task.getDate().isDueToday());
+    const getToday = () => todoItems.filter(task => task.getDate().isDueToday());
+
+    const getWeek = () => todoItems.filter(task => task.getDate().isDueNextWeek());
 
     const loadWeek = () => getTodos().filter(task => task.getDate().isDueNextWeek());
     

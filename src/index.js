@@ -24,10 +24,10 @@ function tabSwitch(e) {
             loadProjects(getAllTasks());
             break;
         case "today":
-            loadProjects(loadToday());
+            loadProjects(project.getToday());
             break;
         case "week":
-            loadProjects(loadWeek());
+            loadProjects(project.getWeek());
             break;
         case "important":
             loadImportant();
