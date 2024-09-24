@@ -16,16 +16,16 @@ export function createProject(title) {
 export function loadToday(){
     let today = createProject("Today");
     const allTasks = getAllTasks().getTodos();
-    let dueToday = allTasks.filter(task => task.getDate().isDueToday()); // refactor isToday to duedate class
+    let dueToday = allTasks.filter(task => task.getDate().isDueToday());
     dueToday.forEach(task => today.addTodo(task));
     return today;
 }
 
-function sameDay(d1, d2) {
-    if(d1 && d2) {
-    return d1.getFullYear() === d2.getFullYear() &&
-      d1.getMonth() === d2.getMonth() &&
-      d1.getDate() === d2.getDate();
-    }
+
+export function loadWeek(){
+    let nextWeek = createProject("Next Week");
+    const allTasks = getAllTasks().getTodos();
+    let dueNextWeek = allTasks.filter(task => task.getDate().isDueNextWeek());
+    dueNextWeek.forEach(task => nextWeek.addTodo(task));
+    return nextWeek;
 }
-  
