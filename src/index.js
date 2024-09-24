@@ -1,4 +1,4 @@
-import { initForm, loadProjects } from "./dom-handler";
+import { domLoader } from "./dom-handler";
 import { project } from "./projects";
 
 function init() {
@@ -8,7 +8,7 @@ function init() {
 function setUpListeners() {
 
     const button = document.querySelector("#addTodo");
-    button.addEventListener("click", initForm);
+    button.addEventListener("click", domLoader.initForm);
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", tabSwitch));  
@@ -19,16 +19,16 @@ function tabSwitch(e) {
     const currentTab = e.target.id;
     switch(currentTab) {
         case "all":
-            loadProjects(project.getTodos());
+            domLoader.loadProjects(project.getTodos());
             break;
         case "today":
-            loadProjects(project.getToday());
+            domLoader.loadProjects(project.getToday());
             break;
         case "week":
-            loadProjects(project.getWeek());
+            domLoader.loadProjects(project.getWeek());
             break;
         case "important":
-            loadProjects(project.getImportant());
+            domLoader.loadProjects(project.getImportant());
             break;
     }
 }
