@@ -24,4 +24,8 @@ export class DueDate {
        return isNaN(this.#date.getTime()) ? "" : format(this.#date, "yyyy-MM-dd");
     }
 
+    isDueToday(){
+        return isToday(this.#date);
+    }
+
 }
