@@ -1,10 +1,8 @@
 import { initForm, loadProjects } from "./dom-handler";
-import { getAllTasks, loadToday, loadWeek } from "./projects";
-
+import { project } from "./projects";
 
 function init() {
     setUpListeners();
-    loadProjects(getAllTasks());
 }
 
 function setUpListeners() {
@@ -21,7 +19,7 @@ function tabSwitch(e) {
     const currentTab = e.target.id;
     switch(currentTab) {
         case "all":
-            loadProjects(getAllTasks());
+            loadProjects(project.getTodos());
             break;
         case "today":
             loadProjects(project.getToday());
@@ -30,7 +28,7 @@ function tabSwitch(e) {
             loadProjects(project.getWeek());
             break;
         case "important":
-            loadImportant();
+            loadProjects(project.getImportant());
             break;
     }
 }
