@@ -1,4 +1,4 @@
-import { parse, format } from "date-fns";
+import { parse, format, addDays, differenceInDays, isToday } from "date-fns";
 
 export class DueDate {
 
@@ -28,4 +28,10 @@ export class DueDate {
         return isToday(this.#date);
     }
 
+    isDueNextWeek(){
+        let today = new Date();
+        today = addDays(today, 6);
+        const difference = differenceInDays(today, this.#date);
+        return difference <= 6 && difference >= 0;
+    }
 }
