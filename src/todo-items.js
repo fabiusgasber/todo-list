@@ -9,13 +9,10 @@ export function createTodo(title = "", description = "", dueDate = null){
     const setCompleted = (hasCompleted) => completed = hasCompleted;
 
     let priority = new Priority("medium");
-    const getPriority = () => priority.getLevel();
-    const setPriority = (level) => priority.setLevel(level);
+    const getPriority = () => priority;
 
     dueDate = new DueDate(dueDate);
-    const getDate = () => dueDate.getDate();
-    const setDate = (date) => dueDate.setDate(date);
-    const getFormattedDate = () => dueDate.toString()
+    const getDate = () => dueDate;
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
@@ -29,12 +26,9 @@ export function createTodo(title = "", description = "", dueDate = null){
         getDescription, 
         setDescription, 
         getDate, 
-        getFormattedDate,
-        setDate, 
         getCompleted, 
         setCompleted, 
         getPriority, 
-        setPriority,
         isTodoItem : true,
     };
 }
