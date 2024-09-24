@@ -34,7 +34,7 @@ function createTodoContainer(todo){
     description.textContent = todo.getDescription();
 
     const dueDate = createInput("date");
-    dueDate.value = todo.getFormattedDate() ? todo.getFormattedDate() : "";
+    dueDate.value = todo.getDate().toString() ? todo.getDate().toString() : "";
 
     container.append(title, description, dueDate);
 
