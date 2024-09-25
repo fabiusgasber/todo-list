@@ -114,15 +114,8 @@ const domCreator = (() => {
             const dateLabel = createLabel("date", "Due Date");
             const date = createInput("date", "date", "date");
         
-            const submitBtn = createButton("button", "Submit");
-            submitBtn.addEventListener("click", function() {
-                project.addTodo(createTodo(title.value, description.value, date.value));
-                domLoader.removeForm();
-                domLoader.loadProjects(project.getTodos());
-            });
-        
-            const cancelBtn = createButton("button", "Cancel");    
-            cancelBtn.addEventListener("click", domLoader.removeForm());    
+            const submitBtn = createButton("button", "Submit", "submit-btn");        
+            const cancelBtn = createButton("button", "Cancel", "cancel-btn");    
         
             form.append(titleLabel, title, descriptionLabel, description, dateLabel, date, submitBtn, cancelBtn);
             return form;
