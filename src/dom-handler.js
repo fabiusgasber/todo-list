@@ -18,6 +18,16 @@ export const domLoader = (() => {
        return parent.append(child);
     }
 
+    const attachFormListeners = (form, submitSelector, cancelSelector, submitCallback, cancelCallback) => {
+        const submitElem = getQuery(submitSelector, form);
+        const cancelElem = getQuery(cancelSelector, form);
+        if(submitElem && cancelElem) {
+            submitElem.addEventListener("click", submitCallback);
+            cancelElem.addEventListener("click", cancelCallback);
+        }
+        else {
+            console.error("Buttons for event not found.")
+        }
     }
 
     const removeForm = () => {
