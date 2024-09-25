@@ -14,6 +14,10 @@ export const domLoader = (() => {
     const initForm = () => {
         const main = getQuery("#content");
         const form = domCreator.createForm();
+        attachFormListeners(form, "#submit-btn", "#cancel-btn", submitForm, removeForm);
+        appendChildToParent(form, main);
+    }
+
     const appendChildToParent = (child, parent) => {
        return parent.append(child);
     }
