@@ -74,14 +74,7 @@ const domCreator = (() => {
         id ? input.id = id : "";
         return input;
     }
-    
-    const createLabel = (labelFor, textContent) => {
-        const label = document.createElement("label");
-        label.for = labelFor;
-        label.textContent = textContent;
-        return label;
-    }
-    
+        
     const createButton = (type, textContent, id) => {
         const btn = document.createElement("button");
         type ? btn.type = type : "";
@@ -90,21 +83,19 @@ const domCreator = (() => {
         return btn;
     }
 
-    const createHeadline = (type, text) => {
-        const headline = document.createElement(type);
-        headline.textContent = text;
-        return headline;
+    const createTextContent = (tagName, text = "", labelFor) => {
+        const elem = document.createElement(tagName);
+        if(!elem){
+            console.warn(`Element tag name not valid ${tagName}`);
+        }
+        elem.textContent = text;
+        labelFor ? elem.for = labelFor : "";
+        return elem;
     }
 
-    const createPara = (text) => {
-        const para = document.createElement("p");
-        para.textContent = text;
-        return para;
-    }
-
-    const createDateInput = (dateStr) => {
+    const createDateInput = (dateStr = "") => {
         const date = createInput("date");
-        date.value = dateStr ? dateStr : "";
+        date.value = dateStr;
         return date;
     }
 
@@ -112,9 +103,9 @@ const domCreator = (() => {
         const container = document.createElement("div");
         container.classList.add("todo-container");
     
-        const title = createHeadline("h1", todo.getTitle());
+        const title = createTextContent("h1", todo.getTitle());
     
-        const description = createPara(todo.getDescription());
+        const description = createTextContent("p", todo.getDescription());
     
         const dueDate = createDateInput(todo.getDate().toString());
     
@@ -132,13 +123,13 @@ const domCreator = (() => {
             const form = document.createElement("form");
             form.id = "todo-form";
         
-            const titleLabel = createLabel("title", "Title");
+            const titleLabel = createTextContent("label", "Title", "title");
             const title = createInput("text", "title", "title");
         
-            const descriptionLabel = createLabel("description", "Description (optional)");
+            const descriptionLabel = createTextContent("label", "Description (optional)", "label");
             const description = createInput("text", "description", "description");
     
-            const dateLabel = createLabel("date", "Due Date");
+            const dateLabel = createTextContent("label", "Due Date", "date");
             const date = createInput("date", "date", "date");
         
             const submitBtn = createButton("button", "Submit", "submit-btn");        
