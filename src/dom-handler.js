@@ -99,15 +99,15 @@ const domCreator = (() => {
         return date;
     }
 
-    const createTodoContainer = (todo) => {
+    const createTodoContainer = () => {
         const container = document.createElement("div");
         container.classList.add("todo-container");
     
-        const title = createTextContent("h1", todo.getTitle());
+        const title = createTextContent("h1");
     
-        const description = createTextContent("p", todo.getDescription());
+        const description = createTextContent("p");
     
-        const dueDate = createDateInput(todo.getDate().toString());
+        const dueDate = createDateInput();
     
         container.append(title, description, dueDate);
     
