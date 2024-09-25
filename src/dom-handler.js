@@ -46,6 +46,16 @@ export const domLoader = (() => {
             return;
         }
     }
+
+    const submitForm = () => {
+        const form = getQuery("#todo-form");
+        const title = getQuery('#title', form);
+        const description = getQuery('#description', form);
+        const date = getQuery('#date', form);
+        project.addTodo(createTodo(title.value, description.value, date.value));
+        removeForm();
+        loadProjects(project.getTodos());
+    }
     
     return { getQuery, initForm, removeForm, loadProjects }
 })();
