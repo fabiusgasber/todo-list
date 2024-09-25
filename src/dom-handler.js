@@ -55,10 +55,11 @@ const domCreator = (() => {
         return label;
     }
     
-    const createButton = (type, textContent) => {
+    const createButton = (type, textContent, id) => {
         const btn = document.createElement("button");
         type ? btn.type = type : "";
-        btn.textContent = textContent;
+        id ? btn.id = id : "";
+        textContent ? btn.textContent = textContent : "";
         return btn;
     }
 
