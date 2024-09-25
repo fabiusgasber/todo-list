@@ -41,8 +41,8 @@ export const domLoader = (() => {
     
     const loadProjects = (arr) => {
         const main = getQuery("#content");
-        if (arr.length > 0 && main) {
-        main.replaceChildren();
+        main ? main.replaceChildren() : "";
+        if (arr.length > 0) {
         const todoContainers = arr.map(elem => domCreator.createTodoContainer(elem));
         todoContainers.forEach(container => main.append(container));
         }
