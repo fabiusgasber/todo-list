@@ -14,7 +14,10 @@ export const domLoader = (() => {
     const initForm = () => {
         const main = getQuery("#content");
         const form = domCreator.createForm();
-        main.append(form);    
+    const appendChildToParent = (child, parent) => {
+       return parent.append(child);
+    }
+
     }
 
     const removeForm = () => {
