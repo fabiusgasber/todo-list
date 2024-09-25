@@ -3,8 +3,12 @@ import { project } from "./projects";
 
 export const domLoader = (() => {
 
-    const getQuery = (query, elem = document) => {
-        return elem.querySelector(query);
+    const getQuery = (selector, elem = document) => {
+        const element = elem.querySelector(selector);
+        if(!element) {
+            return console.error(`Element not found: ${selector}`);
+        }
+        return element;
     }
         
     const initForm = () => {
