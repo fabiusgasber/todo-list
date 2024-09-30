@@ -99,18 +99,15 @@ const domCreator = (() => {
         return date;
     }
 
-    const createTodoContainer = () => {
-        const containerComponents = {
-            "title": createTextContent("h1"),
-            "description": createTextContent("p"),
-            "dueDate": createDateInput(),
+    const createTodoObj = (elem) => {
+        const containerObj = {
+            "title": createTextContent("h1", elem.getTitle()),
+            "description": createTextContent("p", elem.getDescription()),
+            "dueDate": createDateInput(elem.getDate().toString()),
         }
-        return containerComponents;
+        return containerObj;
     }
-    
-        return container;
-    }
-    
+
     const createForm = () => {
         const formIsVisible = domLoader.getQuery("#todo-form");
         if(formIsVisible){
