@@ -100,16 +100,13 @@ const domCreator = (() => {
     }
 
     const createTodoContainer = () => {
-        const container = document.createElement("div");
-        container.classList.add("todo-container");
-    
-        const title = createTextContent("h1");
-    
-        const description = createTextContent("p");
-    
-        const dueDate = createDateInput();
-    
-        container.append(title, description, dueDate);
+        const containerComponents = {
+            "title": createTextContent("h1"),
+            "description": createTextContent("p"),
+            "dueDate": createDateInput(),
+        }
+        return containerComponents;
+    }
     
         return container;
     }
