@@ -1,5 +1,6 @@
 import { createTodo } from "./todo-items";
 import { project } from "./projects";
+import { domCreator } from "./dom-creator";
 
 export const domLoader = (() => {
 
@@ -43,8 +44,11 @@ export const domLoader = (() => {
         const main = getQuery("#content");
         main ? main.replaceChildren() : "";
         if (arr.length > 0) {
-        const todoContainers = arr.map(elem => domCreator.createTodoContainer(elem));
-        todoContainers.forEach(container => main.append(container));
+            arr.forEach(elem => {
+                const todoHTMLObj = domCreator.createTodoHTMLObj(elem);
+                const todoDiv = domCreator.createTodoContainer(todoHTMLObj);
+                appendChildToParent(todoDiv, main);
+            });
         }
         else {
             return;
@@ -62,77 +66,4 @@ export const domLoader = (() => {
     }
     
     return { getQuery, initForm, removeForm, loadProjects }
-})();
-
-
-const domCreator = (() => {
-
-    const createInput = (type, name, id) => {
-        const input = document.createElement("input");
-        type ? input.type = type : "";
-        name ? input.name = name : "";
-        id ? input.id = id : "";
-        return input;
-    }
-        
-    const createButton = (type, textContent, id) => {
-        const btn = document.createElement("button");
-        type ? btn.type = type : "";
-        id ? btn.id = id : "";
-        textContent ? btn.textContent = textContent : "";
-        return btn;
-    }
-
-    const createTextContent = (tagName, text = "", labelFor) => {
-        const elem = document.createElement(tagName);
-        if(!elem){
-            console.warn(`Element tag name not valid ${tagName}`);
-        }
-        elem.textContent = text;
-        labelFor ? elem.for = labelFor : "";
-        return elem;
-    }
-
-    const createDateInput = (dateStr = "") => {
-        const date = createInput("date");
-        date.value = dateStr;
-        return date;
-    }
-
-    const createTodoObj = (elem) => {
-        const containerObj = {
-            "title": createTextContent("h1", elem.getTitle()),
-            "description": createTextContent("p", elem.getDescription()),
-            "dueDate": createDateInput(elem.getDate().toString()),
-        }
-        return containerObj;
-    }
-
-    const createForm = () => {
-        const formIsVisible = domLoader.getQuery("#todo-form");
-        if(formIsVisible){
-            return;
-        }
-        else {
-            const form = document.createElement("form");
-            form.id = "todo-form";
-        
-            const titleLabel = createTextContent("label", "Title", "title");
-            const title = createInput("text", "title", "title");
-        
-            const descriptionLabel = createTextContent("label", "Description (optional)", "label");
-            const description = createInput("text", "description", "description");
-    
-            const dateLabel = createTextContent("label", "Due Date", "date");
-            const date = createInput("date", "date", "date");
-        
-            const submitBtn = createButton("button", "Submit", "submit-btn");        
-            const cancelBtn = createButton("button", "Cancel", "cancel-btn");    
-        
-            form.append(titleLabel, title, descriptionLabel, description, dateLabel, date, submitBtn, cancelBtn);
-            return form;
-        }
-    }
-
-    return { createTodoContainer, createForm }
 })();
