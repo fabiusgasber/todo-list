@@ -51,31 +51,26 @@ export const domCreator = (() => {
         return todoDiv;
     } 
 
-    const createForm = () => {
+    const createFormHTMLObj = () => {
         const formIsVisible = domLoader.getQuery("#todo-form");
         if(formIsVisible){
             return;
         }
         else {
-            const form = document.createElement("form");
-            form.id = "todo-form";
-        
-            const titleLabel = createTextContent("label", "Title", "title");
-            const title = createInput("text", "title", "title");
-        
-            const descriptionLabel = createTextContent("label", "Description (optional)", "label");
-            const description = createInput("text", "description", "description");
-    
-            const dateLabel = createTextContent("label", "Due Date", "date");
-            const date = createInput("date", "date", "date");
-        
-            const submitBtn = createButton("button", "Submit", "submit-btn");        
-            const cancelBtn = createButton("button", "Cancel", "cancel-btn");    
-        
-            form.append(titleLabel, title, descriptionLabel, description, dateLabel, date, submitBtn, cancelBtn);
-            return form;
+
+            const formHTMLObj = {
+                "titleLabel": createTextContent("label", "Title", "title"),
+                "title": createInput("text", "title", "title"),
+                "descriptionLabel": createTextContent("label", "Description (optional)", "label"),
+                "description": createInput("text", "description", "description"),
+                "dateLabel": createTextContent("label", "Due Date", "date"),
+                "date": createInput("date", "date", "date"),
+                "submitBtn": createButton("button", "Submit", "submit-btn"),
+                "cancelBtn": createButton("button", "Cancel", "cancel-btn"),
+            }         
+            return formHTMLObj;
         }
     }
 
-    return { createForm, createTodoHTMLObj, createTodoContainer }
+    return { createFormHTMLObj, createTodoHTMLObj, createTodoContainer }
 })();
