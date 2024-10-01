@@ -43,12 +43,12 @@ export const domCreator = (() => {
         return htmlObj;
     }
 
-    const createTodoContainer = (obj) => {
-        const todoDiv = document.createElement("div");
+    const createTodoContainer = (elem, obj) => {
+        const container = document.createElement(elem);
         for(const property in obj){
-            todoDiv.append(obj[property]);
+            container.append(obj[property]);
         }
-        return todoDiv;
+        return container;
     } 
 
     const createFormHTMLObj = () => {
