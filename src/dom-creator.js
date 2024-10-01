@@ -52,13 +52,7 @@ export const domCreator = (() => {
     } 
 
     const createFormHTMLObj = () => {
-        const formIsVisible = domLoader.getQuery("#todo-form");
-        if(formIsVisible){
-            return;
-        }
-        else {
-
-            const formHTMLObj = {
+        const formHTMLObj = {
                 "titleLabel": createTextContent("label", "Title", "title"),
                 "title": createInput("text", "title", "title"),
                 "descriptionLabel": createTextContent("label", "Description (optional)", "label"),
@@ -67,9 +61,8 @@ export const domCreator = (() => {
                 "date": createInput("date", "date", "date"),
                 "submitBtn": createButton("button", "Submit", "submit-btn"),
                 "cancelBtn": createButton("button", "Cancel", "cancel-btn"),
-            }         
-            return formHTMLObj;
-        }
+        }         
+        return formHTMLObj;
     }
 
     return { createFormHTMLObj, createTodoHTMLObj, createTodoContainer }
