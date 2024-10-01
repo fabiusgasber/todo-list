@@ -47,7 +47,7 @@ export const domLoader = (() => {
         if (arr.length > 0) {
             arr.forEach(elem => {
                 const todoHTMLObj = domCreator.createTodoHTMLObj(elem);
-                const todoDiv = domCreator.createTodoContainer(todoHTMLObj);
+                const todoDiv = domCreator.createTodoContainer("div", todoHTMLObj);
                 appendChildToParent(todoDiv, main);
             });
         }
