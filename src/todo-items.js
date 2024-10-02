@@ -1,14 +1,14 @@
 import { DueDate } from "./duedate";
 import { Priority } from "./priorities";
 
-export function createTodo(title = "", description = "", dueDate = null){
+export function createTodo(title = "", description = "", dueDate = null, priority = "medium"){
 
     let completed = false;
 
     const getCompleted = () => completed;
     const setCompleted = (hasCompleted) => completed = hasCompleted;
 
-    let priority = new Priority("medium");
+    priority = new Priority(priority);
     const getPriority = () => priority;
 
     dueDate = new DueDate(dueDate);
