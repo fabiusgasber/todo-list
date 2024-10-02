@@ -18,6 +18,16 @@ export const domCreator = (() => {
         return btn;
     }
 
+    const createSelect = (name, id, option = "") => {
+        const select = createTextContent("select");
+        select.id = id;
+        select.name = name;
+        createOptions(select, Priority.acceptedLevels);
+        if (option != "") select.value = option;
+        return select;
+    }
+
+
     const createTextContent = (tagName, text = "", labelFor) => {
         const elem = document.createElement(tagName);
         if(!elem){
