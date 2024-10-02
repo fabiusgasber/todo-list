@@ -62,7 +62,8 @@ export const domLoader = (() => {
         const title = getQuery('#title', form);
         const description = getQuery('#description', form);
         const date = getQuery('#date', form);
-        project.addTodo(createTodo(title.value, description.value, date.value));
+        const priority = getQuery("select", form);
+        project.addTodo(createTodo(title.value, description.value, date.value, priority.value));
         removeForm();
         loadProjects(project.getTodos());
         getQuery("#addTodo").disabled = false;
