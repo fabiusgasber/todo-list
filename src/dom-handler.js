@@ -41,6 +41,7 @@ export const domLoader = (() => {
     const removeForm = () => {
         const formIsVisible = getQuery("#todo-form")
         formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
+        getQuery("#addTodo").disabled = false;
     }
     
     const loadProjects = (arr) => {
