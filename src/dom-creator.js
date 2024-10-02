@@ -1,4 +1,4 @@
-import { domLoader } from "./dom-handler";
+import { Priority } from "./priorities";
 
 export const domCreator = (() => {
 
@@ -56,6 +56,7 @@ export const domCreator = (() => {
             "title": createTextContent("h1", elem.getTitle()),
             "description": createTextContent("p", elem.getDescription()),
             "dueDate": createDateInput(elem.getDate().toString()),
+            "priority": createSelect("priorities", "priority-select", elem.getPriority().getLevel()),
         }
         return htmlObj;
     }
@@ -76,6 +77,7 @@ export const domCreator = (() => {
                 "description": createInput("text", "description", "description"),
                 "dateLabel": createTextContent("label", "Due Date", "date"),
                 "date": createInput("date", "date", "date"),
+                "priorities": createSelect("priorities", "priority-select"),
                 "submitBtn": createButton("button", "Submit", "submit-btn"),
                 "cancelBtn": createButton("button", "Cancel", "cancel-btn"),
         }         
