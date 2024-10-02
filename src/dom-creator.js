@@ -27,6 +27,13 @@ export const domCreator = (() => {
         return select;
     }
 
+    const createOptions = (select, options = []) => {
+        options.forEach(option => {
+            const optionElem = createTextContent("option", option);
+            optionElem.value = option;
+            select.appendChild(optionElem);
+         });
+    }
 
     const createTextContent = (tagName, text = "", labelFor) => {
         const elem = document.createElement(tagName);
