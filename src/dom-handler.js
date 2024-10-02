@@ -12,7 +12,8 @@ export const domLoader = (() => {
         return element;
     }
         
-    const initForm = () => {
+    const initForm = (e) => {
+        e.target.disabled = true;
         const main = getQuery("#content");
         const formObj = domCreator.createFormHTMLObj();
         const form = domCreator.createTodoContainer("form", formObj);
@@ -64,6 +65,7 @@ export const domLoader = (() => {
         project.addTodo(createTodo(title.value, description.value, date.value));
         removeForm();
         loadProjects(project.getTodos());
+        getQuery("#addTodo").disabled = false;
     }
     
     return { getQuery, initForm, removeForm, loadProjects }
