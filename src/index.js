@@ -4,6 +4,12 @@ import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navig
 function init() {
     setUpListeners();
 }
+const navigation = {
+    "all": new Navigation(new PageAll()),
+    "today": new Navigation(new PageToday()),
+    "week": new Navigation(new PageWeek()),
+    "important": new Navigation(new PageImportant()),
+}
 
 function setUpListeners() {
 
@@ -11,19 +17,13 @@ function setUpListeners() {
     button.addEventListener("click", () => domLoader.appendChildToParent(form, main));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
-    defaultProjects.forEach(project => project.addEventListener("click", tabSwitch));  
+    defaultProjects.forEach(project => project.addEventListener("click", (e) => tabSwitch(e, navigation)));  
 
 }
 
-function tabSwitch(e) {
+function tabSwitch(e, obj) {
     const currentTab = e.target.id;
-    const navigation = {
-        "all": new Navigation(new PageAll()),
-        "today": new Navigation(new PageToday()),
-        "week": new Navigation(new PageWeek()),
-        "important": new Navigation(new PageImportant()),
-    }
-    const page = navigation[currentTab];
+    const page = obj[currentTab];
     if(page){
         page.navigateTo();
     }
