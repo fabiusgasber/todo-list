@@ -1,5 +1,5 @@
 import { domLoader } from "./dom-handler";
-import { project } from "./projects";
+import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
 
 function init() {
     setUpListeners();
@@ -17,19 +17,15 @@ function setUpListeners() {
 
 function tabSwitch(e) {
     const currentTab = e.target.id;
-    switch(currentTab) {
-        case "all":
-            domLoader.loadProjects(project.getTodos());
-            break;
-        case "today":
-            domLoader.loadProjects(project.getToday());
-            break;
-        case "week":
-            domLoader.loadProjects(project.getWeek());
-            break;
-        case "important":
-            domLoader.loadProjects(project.getImportant());
-            break;
+    const navigation = {
+        "all": new Navigation(new PageAll()),
+        "today": new Navigation(new PageToday()),
+        "week": new Navigation(new PageWeek()),
+        "important": new Navigation(new PageImportant()),
+    }
+    const page = navigation[currentTab];
+    if(page){
+        page.navigateTo();
     }
 }
 
