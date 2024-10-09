@@ -11,16 +11,6 @@ export const domLoader = (() => {
         }
         return element;
     }
-        
-    const initForm = (e) => {
-        e.target.disabled = true;
-        const main = getQuery("#content");
-        const formObj = domCreator.createFormHTMLObj();
-        const form = domCreator.createTodoContainer("form", formObj);
-        form.id = "todo-form";
-        attachFormListeners(form, "#submit-btn", "#cancel-btn", submitForm, removeForm);
-        appendChildToParent(form, main);
-    }
 
     const appendChildToParent = (child, parent) => {
        return parent.append(child);
@@ -71,5 +61,5 @@ export const domLoader = (() => {
         getQuery("#addTodo").disabled = false;
     }
     
-    return { getQuery, initForm, removeForm, loadProjects }
+    return { getQuery, initForm, removeForm, loadProjects, appendChildToParent }
 })();
