@@ -8,7 +8,7 @@ function init() {
 function setUpListeners() {
 
     const button = document.querySelector("#addTodo");
-    button.addEventListener("click", domLoader.initForm);
+    button.addEventListener("click", () => domLoader.appendChildToParent(form, main));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", tabSwitch));  
