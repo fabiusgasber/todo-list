@@ -1,4 +1,4 @@
-import { domLoader } from "./dom-handler";
+import { domLoader } from "./dom-loader";
 import { project } from "./projects";
 
 export class Navigation {

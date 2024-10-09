@@ -1,4 +1,4 @@
-import { domLoader } from "./dom-handler";
+import { domLoader } from "./dom-loader";
 import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
 
 function init() {
