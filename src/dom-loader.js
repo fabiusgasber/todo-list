@@ -16,18 +16,6 @@ export const domLoader = (() => {
        return parent.append(child);
     }
 
-    const attachFormListeners = (form, submitSelector, cancelSelector, submitCallback, cancelCallback) => {
-        const submitElem = getQuery(submitSelector, form);
-        const cancelElem = getQuery(cancelSelector, form);
-        if(submitElem && cancelElem) {
-            submitElem.addEventListener("click", submitCallback);
-            cancelElem.addEventListener("click", cancelCallback);
-        }
-        else {
-            console.error("Buttons for event not found.")
-        }
-    }
-
     const removeForm = () => {
         const formIsVisible = getQuery("#todo-form")
         formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
@@ -61,5 +49,5 @@ export const domLoader = (() => {
         getQuery("#addTodo").disabled = false;
     }
     
-    return { getQuery, initForm, removeForm, loadProjects, appendChildToParent }
+    return { getQuery, removeForm, loadProjects, appendChildToParent }
 })();
