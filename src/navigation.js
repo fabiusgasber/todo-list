@@ -6,6 +6,10 @@ export class Navigation {
         this.page = page;
     }
 
+    execute(){
+        this.navigateTo();
+    }
+
     navigateTo(){
         this.page.navigateTo();
     }
