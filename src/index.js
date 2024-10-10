@@ -1,3 +1,4 @@
+import { ButtonHandler, FormCancelAction, FormSubmitAction } from "./button-handler";
 import { domLoader } from "./dom-loader";
 import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
 
@@ -22,8 +23,10 @@ function setUpListeners() {
     const button = document.querySelector("#addTodo");
     button.addEventListener("click", () => domLoader.appendChildToParent(form, main));
 
+    form.addEventListener("click", (e) => handleClick(e, logicHandler.buttonAction));
+
     const defaultProjects = Array.from(document.querySelectorAll("li"));
-    defaultProjects.forEach(project => project.addEventListener("click", (e) => tabSwitch(e, navigation)));  
+    defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.navigation)));  
 
 }
 
