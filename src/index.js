@@ -4,11 +4,17 @@ import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navig
 function init() {
     setUpListeners();
 }
-const navigation = {
-    "all": new Navigation(new PageAll()),
-    "today": new Navigation(new PageToday()),
-    "week": new Navigation(new PageWeek()),
-    "important": new Navigation(new PageImportant()),
+const logicHandler = {
+    navigation: {
+        "all": new Navigation(new PageAll()),
+        "today": new Navigation(new PageToday()),
+        "week": new Navigation(new PageWeek()),
+        "important": new Navigation(new PageImportant()),
+    },
+    buttonAction: {
+        "submit-btn": new ButtonHandler(new FormSubmitAction),
+        "cancel-btn": new ButtonHandler(new FormCancelAction),
+    },
 }
 
 function setUpListeners() {
