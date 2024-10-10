@@ -27,11 +27,11 @@ function setUpListeners() {
 
 }
 
-function tabSwitch(e, obj) {
-    const currentTab = e.target.id;
-    const page = obj[currentTab];
-    if(page){
-        page.navigateTo();
+function handleClick(e, obj) {
+    const id = e.target.id;
+    const element = obj[id];
+    if(element && typeof element.execute() === "function"){
+        element.execute();
     }
 }
 
