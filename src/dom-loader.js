@@ -49,5 +49,5 @@ export const domLoader = (() => {
         getQuery("#addTodo").disabled = false;
     }
     
-    return { getQuery, removeForm, loadProjects, appendChildToParent }
+    return { getQuery, removeForm, loadProjects, appendChildToParent, submitForm }
 })();
