@@ -1,10 +1,17 @@
 import { ButtonHandler, FormCancelAction, FormSubmitAction } from "./button-handler";
+import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
 
 function init() {
     setUpListeners();
 }
+
+const main = domLoader.getQuery("#content");
+const formObj = domCreator.createFormHTMLObj();
+const form = domCreator.createTodoContainer("form", formObj);
+form.id = "todo-form";
+
 const logicHandler = {
     navigation: {
         "all": new Navigation(new PageAll()),
