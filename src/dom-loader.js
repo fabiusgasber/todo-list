@@ -18,7 +18,7 @@ export const domLoader = (() => {
 
     const removeElement = (element) => {
         if(element && typeof element.remove === "function"){
-            element.remove(element);
+            element.remove();
         }
         else {
             console.warn(`${element} not found or does not contain remove function...`);
