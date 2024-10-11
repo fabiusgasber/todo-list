@@ -16,10 +16,13 @@ export const domLoader = (() => {
        return parent.append(child);
     }
 
-    const removeForm = () => {
-        const formIsVisible = getQuery("#todo-form")
-        formIsVisible ? formIsVisible.remove() : console.warn("To do form not found");
-        getQuery("#addTodo").disabled = false;
+    const removeElement = (element) => {
+        if(element && typeof element.remove === "function"){
+            element.remove(element);
+        }
+        else {
+            console.warn(`${element} not found or does not contain remove function...`);
+        }
     }
     
     const loadProjects = (arr) => {
