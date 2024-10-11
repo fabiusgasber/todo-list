@@ -24,6 +24,15 @@ export const domLoader = (() => {
             console.warn(`${element} not found or does not contain remove function...`);
         }
     }
+
+    const resetElement = (element) => {
+        if(element && typeof element.reset === "function"){
+            element.reset();
+        }
+        else {
+            console.warn(`${element} not found or does not contain reset function...`);
+        }
+    }
     
     const loadProjects = (arr) => {
         const main = getQuery("#content");
@@ -52,5 +61,5 @@ export const domLoader = (() => {
         getQuery("#addTodo").disabled = false;
     }
     
-    return { getQuery, removeForm, loadProjects, appendChildToParent, submitForm }
+    return { getQuery, removeElement, resetElement, loadProjects, appendChildToParent, submitForm }
 })();
