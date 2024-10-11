@@ -20,12 +20,12 @@ const logicHandler = {
         "important": new Navigation(new PageImportant()),
     },
     buttonAction: {
-        "submit-btn": new ButtonHandler(new FormSubmitAction),
-        "cancel-btn": new ButtonHandler(new FormCancelAction),
+        "submit-btn": new ButtonHandler(new FormSubmitAction()),
+        "cancel-btn": new ButtonHandler(new FormCancelAction()),
     },
 }
 
-function setUpListeners() {
+const setUpListeners = () => {
 
     const button = document.querySelector("#addTodo");
     button.addEventListener("click", () => domLoader.appendChildToParent(form, main));
