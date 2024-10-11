@@ -6,10 +6,6 @@ export class ButtonHandler {
     }
 
     execute(e){
-        this.handleEvent(e);
-    }
-
-    handleEvent(e){
         this.action.handleEvent(e);
     }
 }
@@ -19,8 +15,8 @@ class Action {
 }
 
 export class FormSubmitAction extends Action {
-    handleEvent(){
-        domLoader.submitForm();
+    handleEvent(e){
+        domLoader.submitForm(e.target.parentElement);
     }
 }
 
