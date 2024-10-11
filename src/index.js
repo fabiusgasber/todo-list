@@ -37,11 +37,11 @@ function setUpListeners() {
 
 }
 
-function handleClick(e, obj) {
+const handleClick = (e, obj) => {
     const id = e.target.id;
     const element = obj[id];
-    if(element && typeof element.execute() === "function"){
-        element.execute();
+    if(element && typeof element.execute === "function"){
+        element.execute(e);
     }
 }
 
