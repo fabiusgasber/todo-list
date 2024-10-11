@@ -5,12 +5,12 @@ export class ButtonHandler {
         this.action = action;
     }
 
-    execute(){
-        this.handleEvent();
+    execute(e){
+        this.handleEvent(e);
     }
 
-    handleEvent(){
-        this.action.handleEvent();
+    handleEvent(e){
+        this.action.handleEvent(e);
     }
 }
 
@@ -25,7 +25,7 @@ export class FormSubmitAction extends Action {
 }
 
 export class FormCancelAction extends Action {
-    handleEvent(){
-        domLoader.removeForm();
+    handleEvent(e){
+        domLoader.removeElement(e.target.parentElement);
     }
 }
