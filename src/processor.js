@@ -30,14 +30,16 @@ export class PriorityProcessor extends Processor {
 }
 
 export const processor = (() => {
+
+    const parseInput = (inputArr) => {
+      return inputArr.map(input => processor[input.type].process(input.value))
+    }
    
     const processor = {
      "text": new TextProcessor(),
      "date": new DateProcessor(),
      "select-one": new PriorityProcessor(),
     }
- 
-    const getProcessor = () => processor;
- 
-    return { getProcessor }
+  
+    return { parseInput }
  })();
