@@ -26,6 +26,8 @@ export class FormSubmitAction extends Action {
 
 export class FormCancelAction extends Action {
     handleEvent(e){
-        domLoader.removeElement(e.target.parentElement);
+        const element = e.target.parentElement;
+        domLoader.removeElement(element);
+        domLoader.resetElement(element);
     }
 }
