@@ -7,10 +7,6 @@ export class Navigation {
     }
 
     execute(){
-        this.navigateTo();
-    }
-
-    navigateTo(){
         this.page.navigateTo();
     }
 }
