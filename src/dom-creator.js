@@ -2,24 +2,22 @@ import { Priority } from "./priorities";
 
 export const domCreator = (() => {
 
-    const createInput = (type, name, id) => {
-        const input = document.createElement("input");
-        type ? input.type = type : "";
-        name ? input.name = name : "";
-        id ? input.id = id : "";
-        return input;
-    }
-        
-    const createButton = (type, textContent, id) => {
-        const btn = document.createElement("button");
-        type ? btn.type = type : "";
-        id ? btn.id = id : "";
-        textContent ? btn.textContent = textContent : "";
-        return btn;
+    const createElement = (tagName, text, attributes) => {
+        const element = document.createElement(tagName);
+        if(!element){
+            console.warn(`Wrong tag name. Element could not be created ${tagName}.`);
+        }
+        else {
+            element.textContent = text;
+            for(const prop in attributes){
+                element.setAttribute(prop, attributes[prop]);
+            }    
+            return element;    
+        }
     }
 
     const createSelect = (name, id, option = "") => {
-        const select = createTextContent("select");
+        const select = createElement("select");
         select.id = id;
         select.name = name;
         createOptions(select, Priority.acceptedLevels);
@@ -29,36 +27,10 @@ export const domCreator = (() => {
 
     const createOptions = (select, options = []) => {
         options.forEach(option => {
-            const optionElem = createTextContent("option", option);
+            const optionElem = createElement("option", option);
             optionElem.value = option;
             select.appendChild(optionElem);
          });
-    }
-
-    const createTextContent = (tagName, text = "", labelFor) => {
-        const elem = document.createElement(tagName);
-        if(!elem){
-            console.warn(`Element tag name not valid ${tagName}`);
-        }
-        elem.textContent = text;
-        labelFor ? elem.for = labelFor : "";
-        return elem;
-    }
-
-    const createDateInput = (dateStr = "") => {
-        const date = createInput("date");
-        date.value = dateStr;
-        return date;
-    }
-
-    const createTodoHTMLObj = (elem) => {
-        const htmlObj = {
-            "title": createTextContent("h1", elem.getTitle()),
-            "description": createTextContent("p", elem.getDescription()),
-            "dueDate": createDateInput(elem.getDate().toString()),
-            "priority": createSelect("priorities", "priority-select", elem.getPriority().getLevel()),
-        }
-        return htmlObj;
     }
 
     const createTodoContainer = (elem, obj) => {
@@ -71,18 +43,15 @@ export const domCreator = (() => {
 
     const createFormHTMLObj = () => {
         const formHTMLObj = {
-                "titleLabel": createTextContent("label", "Title", "title"),
-                "title": createInput("text", "title", "title"),
-                "descriptionLabel": createTextContent("label", "Description (optional)", "label"),
-                "description": createInput("text", "description", "description"),
-                "dateLabel": createTextContent("label", "Due Date", "date"),
-                "date": createInput("date", "date", "date"),
+                "title": createElement("input", "", { name: "title", id: "title", placeholder: "Title"}),
+                "description": createElement("input", "", { name: "description", id: "description", placeholder: "Description" }),
+                "date": createElement("input", "", { name: "date", id: "date", type: "date" }),
                 "priorities": createSelect("priorities", "priority-select"),
-                "submitBtn": createButton("button", "Submit", "submit-btn"),
-                "cancelBtn": createButton("button", "Cancel", "cancel-btn"),
+                "submitBtn": createElement("button", "Submit", { type: "button", id: "submit-btn" }),
+                "cancelBtn": createElement("button", "Cancel", { type: "button", id: "cancel-btn" }),
         }         
         return formHTMLObj;
     }
 
-    return { createFormHTMLObj, createTodoHTMLObj, createTodoContainer }
+    return { createFormHTMLObj, createTodoContainer, createElement }
 })();
