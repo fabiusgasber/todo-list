@@ -1,6 +1,6 @@
 import { createTodo } from "./todo-items";
 import { project } from "./projects";
-import { domCreator } from "./dom-creator";
+import { processor } from "./processor";
 
 export const domLoader = (() => {
 
@@ -40,7 +40,7 @@ export const domLoader = (() => {
         project.addTodo(createTodo(parsedInputs));
         removeElement(form);
         resetElement(form);
-}
+    }
     
-    return { getQuery, removeElement, resetElement, loadProjects, appendChildToParent, submitForm }
+    return { getQuery, removeElement, resetElement, appendChildToParent, submitForm }
 })();
