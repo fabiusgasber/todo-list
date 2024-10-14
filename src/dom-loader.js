@@ -34,21 +34,6 @@ export const domLoader = (() => {
         }
     }
     
-    const loadProjects = (arr) => {
-        const main = getQuery("#content");
-        main ? main.replaceChildren() : "";
-        if (arr.length > 0) {
-            arr.forEach(elem => {
-                const todoHTMLObj = domCreator.createTodoHTMLObj(elem);
-                const todoDiv = domCreator.createTodoContainer("div", todoHTMLObj);
-                appendChildToParent(todoDiv, main);
-            });
-        }
-        else {
-            return;
-        }
-    }
-    
     const submitForm = (form) => {
         const inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
         const parsedInputs = processor.parseInput(inputArr);
