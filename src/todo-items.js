@@ -1,6 +1,3 @@
-import { DueDate } from "./duedate";
-import { Priority } from "./priorities";
-
 export function createTodo(inputs){
 
     let completed = false;
@@ -16,14 +13,10 @@ export function createTodo(inputs){
         }
     }
 
-    const getDate = () => getInfo(DueDate);
-    const getPriority = () => getInfo(Priority);
-
     return { 
         getCompleted, 
         setCompleted,
-        getDate,
-        getPriority,
+        getInfo,
         isTodoItem : true,
     };
 }

@@ -1,3 +1,6 @@
+import { DueDate } from "./duedate";
+import { Priority } from "./priorities";
+
 export const project = (function (title) {
 
     const getTitle = () => title;
@@ -11,11 +14,11 @@ export const project = (function (title) {
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
 
-    const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
+    const getToday = () => todoItems.filter(task => task.getInfo(DueDate)?.isDueToday());
 
-    const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
+    const getWeek = () => todoItems.filter(task => task.getInfo(DueDate)?.isDueNextWeek());
 
-    const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
+    const getImportant = () => todoItems.filter(task => task.getInfo(Priority)?.getLevel() === "high");
     
     return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant }
 })();
