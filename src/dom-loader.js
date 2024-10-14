@@ -48,18 +48,14 @@ export const domLoader = (() => {
             return;
         }
     }
-
-    const submitForm = () => {
-        const form = getQuery("#todo-form");
-        const title = getQuery('#title', form);
-        const description = getQuery('#description', form);
-        const date = getQuery('#date', form);
-        const priority = getQuery("select", form);
-        project.addTodo(createTodo(title.value, description.value, date.value, priority.value));
-        removeForm();
-        loadProjects(project.getTodos());
-        getQuery("#addTodo").disabled = false;
-    }
+    
+    const submitForm = (form) => {
+        const inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
+        const parsedInputs = processor.parseInput(inputArr);
+        project.addTodo(createTodo(parsedInputs));
+        removeElement(form);
+        resetElement(form);
+}
     
     return { getQuery, removeElement, resetElement, loadProjects, appendChildToParent, submitForm }
 })();
