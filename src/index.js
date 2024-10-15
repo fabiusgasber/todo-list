@@ -1,7 +1,6 @@
-import { ButtonHandler, FormCancelAction, FormSubmitAction } from "./button-handler";
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
-import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
+import { logicHandler } from "./logic-handler";
 
 function init() {
     setUpListeners();
@@ -12,28 +11,15 @@ const formObj = domCreator.createFormHTMLObj();
 const form = domCreator.createTodoContainer("form", formObj);
 form.id = "todo-form";
 
-const logicHandler = {
-    navigation: {
-        "all": new Navigation(new PageAll()),
-        "today": new Navigation(new PageToday()),
-        "week": new Navigation(new PageWeek()),
-        "important": new Navigation(new PageImportant()),
-    },
-    buttonAction: {
-        "submit-btn": new ButtonHandler(new FormSubmitAction()),
-        "cancel-btn": new ButtonHandler(new FormCancelAction()),
-    },
-}
-
 const setUpListeners = () => {
 
     const button = document.querySelector("#addTodo");
     button.addEventListener("click", () => domLoader.appendChildToParent(form, main));
 
-    form.addEventListener("click", (e) => handleClick(e, logicHandler.buttonAction));
+    form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
-    defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.navigation)));  
+    defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
 
 }
 
