@@ -17,11 +17,15 @@ export const project = (function (title) {
         });
     }
 
+    const toString = (arr) => {
+        return getInfo(arr).map(object => Object.values(object));
+    }
+
     const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
 
     const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
 
     const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant, getInfoObject }
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant, toString }
 })();
