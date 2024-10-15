@@ -11,11 +11,17 @@ export const project = (function (title) {
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
 
+    const getInfoObject = (arr) => {
+        return arr.map(todoItem => {
+            return ({text: todoItem.getText(), date: todoItem.getDate().toString(), priority: todoItem.getPriority().getLevel()});
+        });
+    }
+
     const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
 
     const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
 
     const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant }
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant, getInfoObject }
 })();
