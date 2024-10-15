@@ -36,7 +36,12 @@ export const processor = (() => {
     }
 
     const parseInput = (inputArr) => {
-      return inputArr.map(input => processor[input.type].process(input.value))
+        if(checkArray(inputArr)){
+            return inputArr.map(input => processor[input.type].process(input.value))
+        }
+        else {
+            console.warn(`Inputs empty or in the wrong format ${inputArr}`);
+        }
     }
    
     const processor = {
@@ -45,5 +50,5 @@ export const processor = (() => {
      "select-one": new PriorityProcessor(),
     }
   
-    return { parseInput }
+    return { parseInput, checkArray }
  })();
