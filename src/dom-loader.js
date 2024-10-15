@@ -17,20 +17,15 @@ export const domLoader = (() => {
     }
 
     const removeElement = (element) => {
-        if(element && typeof element.remove === "function"){
+        if(element && typeof element.remove === "function" && typeof element.reset === "function"){
+            element.remove();
+            element.reset();
+        }
+        else if (element && typeof element.remove === "function") {
             element.remove();
         }
         else {
             console.warn(`${element} not found or does not contain remove function...`);
-        }
-    }
-
-    const resetElement = (element) => {
-        if(element && typeof element.reset === "function"){
-            element.reset();
-        }
-        else {
-            console.warn(`${element} not found or does not contain reset function...`);
         }
     }
     
@@ -38,9 +33,7 @@ export const domLoader = (() => {
         const inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
         const parsedInputs = processor.parseInput(inputArr);
         project.addTodo(createTodo(parsedInputs));
-        removeElement(form);
-        resetElement(form);
     }
     
-    return { getQuery, removeElement, resetElement, appendChildToParent, submitForm }
+    return { getQuery, removeElement, appendChildToParent, submitForm }
 })();

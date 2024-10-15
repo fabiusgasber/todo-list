@@ -16,7 +16,9 @@ class Action {
 
 export class FormSubmitAction extends Action {
     handleEvent(e){
-        domLoader.submitForm(e.target.parentElement);
+        const element = e.target.parentElement;
+        domLoader.submitForm(element);
+        domLoader.removeElement(element);
     }
 }
 
@@ -24,6 +26,5 @@ export class FormCancelAction extends Action {
     handleEvent(e){
         const element = e.target.parentElement;
         domLoader.removeElement(element);
-        domLoader.resetElement(element);
     }
 }
