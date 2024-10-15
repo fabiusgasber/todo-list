@@ -1,6 +1,7 @@
 import { createTodo } from "./todo-items";
 import { project } from "./projects";
 import { processor } from "./processor";
+import { domCreator } from "./dom-creator";
 
 export const domLoader = (() => {
 
@@ -28,6 +29,19 @@ export const domLoader = (() => {
             console.warn(`${element} not found or does not contain remove function...`);
         }
     }
+
+    const showOnPage = (project) => {
+        const main = getQuery("#content");
+        main.replaceChildren();
+        project.forEach(todo => {
+            const div = document.createElement("div");
+            const text = todo.getText().map(text => domCreator.createElement("div", text));
+            const date = domCreator.createElement("div", todo.getDate().toString());
+            const priority = domCreator.createElement("div", todo.getPriority().getLevel());
+            div.append(...text, date, priority);
+            main.append(div);
+        });
+    }
     
     const submitForm = (form) => {
         let inputArr = [];
@@ -43,5 +57,5 @@ export const domLoader = (() => {
         }
     }
     
-    return { getQuery, removeElement, appendChildToParent, submitForm }
+    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage }
 })();
