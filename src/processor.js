@@ -31,6 +31,10 @@ export class PriorityProcessor extends Processor {
 
 export const processor = (() => {
 
+    const checkArray = (arr) => {
+        return arr && arr.length > 0;
+    }
+
     const parseInput = (inputArr) => {
       return inputArr.map(input => processor[input.type].process(input.value))
     }
