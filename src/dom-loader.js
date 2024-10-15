@@ -30,9 +30,17 @@ export const domLoader = (() => {
     }
     
     const submitForm = (form) => {
-        const inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
-        const parsedInputs = processor.parseInput(inputArr);
-        project.addTodo(createTodo(parsedInputs));
+        let inputArr = [];
+        let parsedInputs = [];
+        if(form && processor.checkArray(form.children)){
+            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
+        }
+        if(processor.checkArray(inputArr)){
+            parsedInputs = processor.parseInput(inputArr);
+        }
+        if(processor.checkArray(parsedInputs)){
+            project.addTodo(createTodo(parsedInputs));
+        }
     }
     
     return { getQuery, removeElement, appendChildToParent, submitForm }
