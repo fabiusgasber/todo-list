@@ -1,3 +1,6 @@
+import { DueDate } from "./duedate";
+import { Priority } from "./priorities";
+
 export function createTodo(inputs){
 
     let completed = false;
@@ -13,10 +16,22 @@ export function createTodo(inputs){
         }
     }
 
+    const getText = () => inputs.filter(input => typeof input === 'string' || input instanceof String);
+
+    const getDate = () => {
+        return getInfo(DueDate);
+    }
+
+    const getPriority = () => {
+        return getInfo(Priority);
+    }
+
     return { 
         getCompleted, 
         setCompleted,
-        getInfo,
+        getText,
+        getDate,
+        getPriority,
         isTodoItem : true,
     };
 }
