@@ -11,9 +11,9 @@ export const project = (function (title) {
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
 
-    const getInfoObject = (arr) => {
+    const getInfo = (arr) => {
         return arr.map(todoItem => {
-            return ({text: todoItem.getText(), date: todoItem.getDate().toString(), priority: todoItem.getPriority().getLevel()});
+            return ({"text": todoItem.getText(), "date": todoItem.getDate().toString(), "priority": todoItem.getPriority().getLevel()});
         });
     }
 
