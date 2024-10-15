@@ -17,24 +17,24 @@ class Page {
 
 export class PageAll extends Page {
     navigateTo(){
-        console.log(project.getTodos());
+        domLoader.showOnPage(project.getTodos());
     }
 }
 
 export class PageToday extends Page {
     navigateTo(){
-        console.log(project.getToday());
+        domLoader.showOnPage(project.getToday());
     }
 }
 
 export class PageWeek extends Page {
     navigateTo(){
-        console.log(project.getWeek());
+        domLoader.showOnPage(project.getWeek());
     }
 }
 
 export class PageImportant extends Page {
     navigateTo(){
-        console.log(project.getImportant());
+        domLoader.showOnPage(project.getImportant());
     }
 }
