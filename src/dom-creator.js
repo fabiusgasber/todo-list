@@ -53,7 +53,7 @@ export const domCreator = (() => {
             },
             projectForm: {
                 "name": createElement("input", "", { type: "text", placeholder: "Enter your projects name..." }),
-                "submitBtn": createElement("button", "Submit", { type: "button", class: "project-submit-btn" }),
+                "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),
                 "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
             }
         }         
