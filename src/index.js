@@ -30,8 +30,8 @@ const setUpListeners = () => {
 }
 
 const handleClick = (e, obj) => {
-    const className = e.target.className;
-    const element = obj[className];
+    const identifier = e.target.id || e.target.className;
+    const element = obj[identifier];
     if(element && typeof element.execute === "function"){
         element.execute(e);
     }
