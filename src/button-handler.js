@@ -28,3 +28,11 @@ export class FormCancelAction extends Action {
         domLoader.removeElement(element);
     }
 }
+
+export class FormProjectSubmitAction extends Action {
+    handleEvent(e){
+        const element = e.target.parentElement;
+        domLoader.submitProject(element);
+        domLoader.removeElement(element);
+    }
+}
