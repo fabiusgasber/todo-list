@@ -38,7 +38,9 @@ export const domLoader = (() => {
             const text = todo.getText().map(text => domCreator.createElement("div", text));
             const date = domCreator.createElement("div", todo.getDate().toString());
             const priority = domCreator.createElement("div", todo.getPriority().getLevel());
-            div.append(...text, date, priority);
+            const editBtn = domCreator.createElement("button", "Edit", { type: "submit" })
+            const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" })
+            div.append(...text, date, priority, editBtn, deleteBtn);
             main.append(div);
         });
     }
