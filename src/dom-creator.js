@@ -43,12 +43,19 @@ export const domCreator = (() => {
 
     const createFormHTMLObj = () => {
         const formHTMLObj = {
-                "title": createElement("input", "", { name: "title", id: "title", placeholder: "Title"}),
-                "description": createElement("input", "", { name: "description", id: "description", placeholder: "Description" }),
-                "date": createElement("input", "", { name: "date", id: "date", type: "date" }),
+            todoForm: {
+                "title": createElement("input", "", { name: "title", class: "title", placeholder: "Title"}),
+                "description": createElement("input", "", { name: "description", class: "description", placeholder: "Description" }),
+                "date": createElement("input", "", { name: "date", class: "date", type: "date" }),
                 "priorities": createSelect("priorities", "priority-select"),
-                "submitBtn": createElement("button", "Submit", { type: "button", id: "submit-btn" }),
-                "cancelBtn": createElement("button", "Cancel", { type: "button", id: "cancel-btn" }),
+                "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),
+                "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
+            },
+            projectForm: {
+                "name": createElement("input", "", { type: "text", placeholder: "Enter your projects name..." }),
+                "submitBtn": createElement("button", "Submit", { type: "button" }),
+                "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
+            }
         }         
         return formHTMLObj;
     }
