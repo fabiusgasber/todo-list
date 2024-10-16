@@ -29,11 +29,11 @@ const setUpListeners = () => {
 
 }
 
-const handleClick = (e, obj) => {
+const handleClick = (e, obj, submitFtn, cancelFtn) => {
     const identifier = e.target.id || e.target.className;
     const element = obj[identifier];
     if(element && typeof element.execute === "function"){
-        element.execute(e);
+        element.execute(e, submitFtn, cancelFtn);
     }
 }
 
