@@ -20,6 +20,7 @@ const setUpListeners = () => {
 
     const addProjectBtn = document.querySelector("#addProject");
     addProjectBtn.addEventListener("click", () => domLoader.appendChildToParent(projectForm, main));
+    projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction));
 
     form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction));
 
