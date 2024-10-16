@@ -1,5 +1,5 @@
 import { createTodo } from "./todo-items";
-import { defaultProject } from "./projects";
+import { createProject, defaultProject } from "./projects";
 import { processor } from "./processor";
 import { domCreator } from "./dom-creator";
 
@@ -45,6 +45,15 @@ export const domLoader = (() => {
         });
     }
     
+    const submitProject = (form) => {
+        const ul = getQuery("#ownProjects")
+        const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
+        const userProject = createProject(textInput.value);
+        const li = domCreator.createElement("li", userProject.getTitle());
+        li.addEventListener("click", () => showOnPage(userProject.getTodos()));
+        appendChildToParent(li, ul);
+    }
+    
     const submitForm = (form) => {
         let inputArr = [];
         let parsedInputs = [];
@@ -59,5 +68,5 @@ export const domLoader = (() => {
         }
     }
     
-    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage }
+    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage, submitProject }
 })();
