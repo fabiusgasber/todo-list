@@ -14,12 +14,14 @@ export function createProject(title) {
     return { getTitle, setTitle, getTodos, addTodo, removeTodo }
 };
 
+export const defaultProject = (function defaultProject () {
+    const allTasks = createProject("default");
 
-    const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
+    const getToday = () => allTasks.getTodos().filter(task => task.getDate()?.isDueToday());
 
-    const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
+    const getWeek = () => allTasks.getTodos().filter(task => task.getDate()?.isDueNextWeek());
 
-    const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
-    
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant }
+    const getImportant = () => allTasks.getTodos().filter(task => task.getPriority()?.getLevel() === "high");
+
+    return { allTasks, getToday, getWeek, getImportant };
 })();
