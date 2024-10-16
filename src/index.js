@@ -20,9 +20,9 @@ const setUpListeners = () => {
 
     const addProjectBtn = document.querySelector("#addProject");
     addProjectBtn.addEventListener("click", () => domLoader.appendChildToParent(projectForm, main));
-    projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction));
+    projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitProject, domLoader.removeElement));
 
-    form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction));
+    form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitForm, domLoader.removeElement));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
