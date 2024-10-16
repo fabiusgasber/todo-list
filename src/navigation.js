@@ -1,5 +1,5 @@
 import { domLoader } from "./dom-loader";
-import { project } from "./projects";
+import { defaultProject } from "./projects";
 
 export class Navigation {
     constructor(page){
@@ -17,24 +17,24 @@ class Page {
 
 export class PageAll extends Page {
     navigateTo(){
-        domLoader.showOnPage(project.getTodos());
+        domLoader.showOnPage(defaultProject.allTasks.getTodos());
     }
 }
 
 export class PageToday extends Page {
     navigateTo(){
-        domLoader.showOnPage(project.getToday());
+        domLoader.showOnPage(defaultProject.getToday());
     }
 }
 
 export class PageWeek extends Page {
     navigateTo(){
-        domLoader.showOnPage(project.getWeek());
+        domLoader.showOnPage(defaultProject.getWeek());
     }
 }
 
 export class PageImportant extends Page {
     navigateTo(){
-        domLoader.showOnPage(project.getImportant());
+        domLoader.showOnPage(defaultProject.getImportant());
     }
 }

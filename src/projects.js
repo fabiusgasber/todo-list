@@ -1,4 +1,4 @@
-export const project = (function (title) {
+export function createProject(title) {
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
@@ -10,12 +10,18 @@ export const project = (function (title) {
         const index = todoItems.indexOf(todo);
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
-
-    const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
-
-    const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
-
-    const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant }
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo }
+};
+
+export const defaultProject = (function defaultProject () {
+    const allTasks = createProject("default");
+
+    const getToday = () => allTasks.getTodos().filter(task => task.getDate()?.isDueToday());
+
+    const getWeek = () => allTasks.getTodos().filter(task => task.getDate()?.isDueNextWeek());
+
+    const getImportant = () => allTasks.getTodos().filter(task => task.getPriority()?.getLevel() === "high");
+
+    return { allTasks, getToday, getWeek, getImportant };
 })();

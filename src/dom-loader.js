@@ -1,5 +1,5 @@
 import { createTodo } from "./todo-items";
-import { project } from "./projects";
+import { defaultProject } from "./projects";
 import { processor } from "./processor";
 import { domCreator } from "./dom-creator";
 
@@ -55,7 +55,7 @@ export const domLoader = (() => {
             parsedInputs = processor.parseInput(inputArr);
         }
         if(processor.checkArray(parsedInputs)){
-            project.addTodo(createTodo(parsedInputs));
+            defaultProject.allTasks.addTodo(createTodo(parsedInputs));
         }
     }
     
