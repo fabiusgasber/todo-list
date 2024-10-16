@@ -1,4 +1,4 @@
-export const project = (function (title) {
+export function createProject(title) {
 
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
@@ -10,6 +10,10 @@ export const project = (function (title) {
         const index = todoItems.indexOf(todo);
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
+    
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo }
+};
+
 
     const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
 
