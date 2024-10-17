@@ -49,6 +49,7 @@ export const domLoader = (() => {
         const ul = getQuery("#ownProjects")
         const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
         const userProject = createProject(textInput.value);
+        defaultProject.addProject(userProject);
         const li = domCreator.createElement("li", userProject.getTitle());
         li.addEventListener("click", () => showOnPage(userProject.getTodos()));
         appendChildToParent(li, ul);
