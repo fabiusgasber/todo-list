@@ -16,7 +16,7 @@ export function createTodo(inputs){
         }
     }
 
-    const getProject = () => inputs.find(input => input.isProject === true);
+    const getProject = () => inputs.find(input => input && input.hasOwnProperty("isProject") && input.isProject === true);
 
     const getText = () => inputs.filter(input => typeof input === 'string' || input instanceof String);
 

@@ -67,7 +67,7 @@ export const domLoader = (() => {
         if(processor.checkArray(parsedInputs)){
             const todo = createTodo(parsedInputs);
             defaultProject.allTasks.addTodo(todo);
-            if (todo.getProject() !== defaultProject.allTasks){
+            if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
                 todo.getProject().addTodo(todo);
             }
         }
