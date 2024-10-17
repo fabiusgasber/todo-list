@@ -17,11 +17,16 @@ export function createProject(title) {
 export const defaultProject = (function defaultProject () {
     const allTasks = createProject("default");
 
+    const projectArr = [allTasks];
+
+    const getProjects = () => projectArr.map(project => project.getTitle());
+    const addProject = (project) => projectArr.push(project); 
+
     const getToday = () => allTasks.getTodos().filter(task => task.getDate()?.isDueToday());
 
     const getWeek = () => allTasks.getTodos().filter(task => task.getDate()?.isDueNextWeek());
 
     const getImportant = () => allTasks.getTodos().filter(task => task.getPriority()?.getLevel() === "high");
 
-    return { allTasks, getToday, getWeek, getImportant };
+    return { allTasks, getToday, getWeek, getImportant, getProjects, addProject };
 })();
