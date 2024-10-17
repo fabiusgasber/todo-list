@@ -16,6 +16,8 @@ export function createTodo(inputs){
         }
     }
 
+    const getProject = () => inputs.find(input => input.isProject === true);
+
     const getText = () => inputs.filter(input => typeof input === 'string' || input instanceof String);
 
     const getDate = () => {
@@ -32,6 +34,7 @@ export function createTodo(inputs){
         getText,
         getDate,
         getPriority,
+        getProject,
         isTodoItem : true,
     };
 }
