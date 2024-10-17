@@ -37,7 +37,7 @@ export const processor = (() => {
 
     const parseInput = (inputArr) => {
         if(checkArray(inputArr)){
-            return inputArr.map(input => processor[input.type].process(input.value))
+            return inputArr.map(input => processor[input.id].process(input.value))
         }
         else {
             console.warn(`Inputs empty or in the wrong format ${inputArr}`);
@@ -45,9 +45,11 @@ export const processor = (() => {
     }
    
     const processor = {
-     "text": new TextProcessor(),
+     "title": new TextProcessor(),
+     "description": new TextProcessor(),
      "date": new DateProcessor(),
-     "select-one": new PriorityProcessor(),
+     "priority-select": new PriorityProcessor(),
+     "projects-select": new TextProcessor(),
     }
   
     return { parseInput, checkArray }

@@ -45,9 +45,9 @@ export const domCreator = (() => {
     const createFormHTMLObj = () => {
         const formHTMLObj = {
             todoForm: {
-                "title": createElement("input", "", { name: "title", class: "title", placeholder: "Title"}),
-                "description": createElement("input", "", { name: "description", class: "description", placeholder: "Description" }),
-                "date": createElement("input", "", { name: "date", class: "date", type: "date" }),
+                "title": createElement("input", "", { name: "title", class: "title", placeholder: "Title", id: "title"}),
+                "description": createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" }),
+                "date": createElement("input", "", { name: "date", class: "date", type: "date", id: "date" }),
                 "priorities": createSelect("priorities", "priority-select", Priority.acceptedLevels),
                 "projects": createSelect("projects", "projects-select", defaultProject.getProjects()),
                 "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),

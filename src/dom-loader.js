@@ -59,7 +59,7 @@ export const domLoader = (() => {
         let inputArr = [];
         let parsedInputs = [];
         if(form && processor.checkArray(form.children)){
-            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
+            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
         }
         if(processor.checkArray(inputArr)){
             parsedInputs = processor.parseInput(inputArr);
