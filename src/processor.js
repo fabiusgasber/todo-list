@@ -1,5 +1,6 @@
 import { DueDate } from "./duedate";
 import { Priority } from "./priorities";
+import { defaultProject } from "./projects";
 
 class Processor {
     constructor(value){
@@ -29,6 +30,13 @@ export class PriorityProcessor extends Processor {
     }
 }
 
+export class ProjectProcessor extends Processor {
+    process(value){
+       const chosenProject = defaultProject.getProjects().find(project => project.getTitle() === value);
+       return chosenProject;
+    }
+}
+
 export const processor = (() => {
 
     const checkArray = (arr) => {
@@ -49,7 +57,7 @@ export const processor = (() => {
      "description": new TextProcessor(),
      "date": new DateProcessor(),
      "priority-select": new PriorityProcessor(),
-     "projects-select": new TextProcessor(),
+     "projects-select": new ProjectProcessor(),
     }
   
     return { parseInput, checkArray }
