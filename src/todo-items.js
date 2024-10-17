@@ -20,13 +20,9 @@ export function createTodo(inputs){
 
     const getText = () => inputs.filter(input => typeof input === 'string' || input instanceof String);
 
-    const getDate = () => {
-        return getInfo(DueDate);
-    }
+    const getDate = () => getInfo(DueDate);
 
-    const getPriority = () => {
-        return getInfo(Priority);
-    }
+    const getPriority = () => getInfo(Priority);
 
     return { 
         getCompleted, 
