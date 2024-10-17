@@ -3,7 +3,7 @@ import { defaultProject } from "./projects";
 
 export const domCreator = (() => {
 
-    const createElement = (tagName, text, attributes) => {
+    const createElement = (tagName, text, attributes, selectOptions, optionValue) => {
         const element = document.createElement(tagName);
         if(!element){
             console.warn(`Wrong tag name. Element could not be created ${tagName}.`);
@@ -12,26 +12,19 @@ export const domCreator = (() => {
             element.textContent = text;
             for(const prop in attributes){
                 element.setAttribute(prop, attributes[prop]);
-            }    
+            }
+            if(selectOptions && Array.isArray(selectOptions) && element.tagName === "SELECT"){
+                selectOptions.forEach(option => {
+                    const optionElem = createElement("option", option);
+                    optionElem.value = option;
+                    element.appendChild(optionElem);    
+                })
+            }
+            if(optionValue){
+                element.value = optionValue;
+            }
             return element;    
         }
-    }
-
-    const createSelect = (name, id, selectOptions, option = "") => {
-        const select = createElement("select");
-        select.id = id;
-        select.name = name;
-        createOptions(select, selectOptions);
-        if (option != "") select.value = option;
-        return select;
-    }
-
-    const createOptions = (select, options = []) => {
-        options.forEach(option => {
-            const optionElem = createElement("option", option);
-            optionElem.value = option;
-            select.appendChild(optionElem);
-         });
     }
 
     const createTodoContainer = (elem, obj) => {
@@ -48,8 +41,8 @@ export const domCreator = (() => {
                 "title": createElement("input", "", { name: "title", class: "title", placeholder: "Title", id: "title"}),
                 "description": createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" }),
                 "date": createElement("input", "", { name: "date", class: "date", type: "date", id: "date" }),
-                "priorities": createSelect("priorities", "priority-select", Priority.acceptedLevels),
-                "projects": createSelect("projects", "projects-select", defaultProject.getProjects().map(projects => projects.getTitle())),
+                "priorities": createElement("select", "", { name: "priorities", id: "priority-select" }, Priority.acceptedLevels),
+                "projects": createElement("select", "", { name: "projects", id: "projects-select" }, defaultProject.getProjects().map(projects => projects.getTitle())),
                 "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),
                 "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
             },
