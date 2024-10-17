@@ -7,8 +7,6 @@ function init() {
 }
 
 const main = domLoader.getQuery("#content");
-const projectFormObj = domCreator.createFormHTMLObj().projectForm;
-const projectForm = domCreator.createTodoContainer("form", projectFormObj);
 
 const setUpListeners = () => {
 
@@ -20,9 +18,14 @@ const setUpListeners = () => {
         form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitForm, domLoader.removeElement));
         domLoader.appendChildToParent(form, main);
     });
+
     const addProjectBtn = document.querySelector("#addProject");
-    addProjectBtn.addEventListener("click", () => domLoader.appendChildToParent(projectForm, main));
-    projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitProject, domLoader.removeElement));
+    addProjectBtn.addEventListener("click", () => {
+        const projectFormObj = domCreator.createFormHTMLObj().projectForm;
+        const projectForm = domCreator.createTodoContainer("form", projectFormObj);
+        projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitProject, domLoader.removeElement));
+        domLoader.appendChildToParent(projectForm, main);
+    });
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
