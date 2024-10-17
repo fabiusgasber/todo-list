@@ -1,4 +1,5 @@
 import { Priority } from "./priorities";
+import { defaultProject } from "./projects";
 
 export const domCreator = (() => {
 
@@ -16,11 +17,11 @@ export const domCreator = (() => {
         }
     }
 
-    const createSelect = (name, id, option = "") => {
+    const createSelect = (name, id, selectOptions, option = "") => {
         const select = createElement("select");
         select.id = id;
         select.name = name;
-        createOptions(select, Priority.acceptedLevels);
+        createOptions(select, selectOptions);
         if (option != "") select.value = option;
         return select;
     }
