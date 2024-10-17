@@ -19,7 +19,7 @@ export const defaultProject = (function defaultProject () {
 
     const projectArr = [allTasks];
 
-    const getProjects = () => projectArr.map(project => project.getTitle());
+    const getProjects = () => projectArr;
     const addProject = (project) => projectArr.push(project); 
 
     const getToday = () => allTasks.getTodos().filter(task => task.getDate()?.isDueToday());

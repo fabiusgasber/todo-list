@@ -49,7 +49,7 @@ export const domCreator = (() => {
                 "description": createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" }),
                 "date": createElement("input", "", { name: "date", class: "date", type: "date", id: "date" }),
                 "priorities": createSelect("priorities", "priority-select", Priority.acceptedLevels),
-                "projects": createSelect("projects", "projects-select", defaultProject.getProjects()),
+                "projects": createSelect("projects", "projects-select", defaultProject.getProjects().map(projects => projects.getTitle())),
                 "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),
                 "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
             },
