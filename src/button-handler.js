@@ -1,12 +1,10 @@
-import { domLoader } from "./dom-loader";
-
 export class ButtonHandler {
     constructor(action){
         this.action = action;
     }
 
-    execute(e){
-        this.action.handleEvent(e);
+    execute(e, submitFtn, cancelFtn){
+        this.action.handleEvent(e, submitFtn, cancelFtn);
     }
 }
 
@@ -15,16 +13,16 @@ class Action {
 }
 
 export class FormSubmitAction extends Action {
-    handleEvent(e){
-        const element = e.target.parentElement;
-        domLoader.submitForm(element);
-        domLoader.removeElement(element);
+    handleEvent(e, submitFtn, cancelFtn){
+        const form = e.target.parentElement;
+        submitFtn(form);
+        cancelFtn(form);
     }
 }
 
 export class FormCancelAction extends Action {
-    handleEvent(e){
-        const element = e.target.parentElement;
-        domLoader.removeElement(element);
+    handleEvent(e, submitFtn, cancelFtn){
+        const form = e.target.parentElement;
+        cancelFtn(form);
     }
 }

@@ -7,27 +7,33 @@ function init() {
 }
 
 const main = domLoader.getQuery("#content");
-const formObj = domCreator.createFormHTMLObj();
-const form = domCreator.createTodoContainer("form", formObj);
-form.id = "todo-form";
+const projectFormObj = domCreator.createFormHTMLObj().projectForm;
+const projectForm = domCreator.createTodoContainer("form", projectFormObj);
 
 const setUpListeners = () => {
 
     const button = document.querySelector("#addTodo");
-    button.addEventListener("click", () => domLoader.appendChildToParent(form, main));
-
-    form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction));
+    button.addEventListener("click", () => {
+        const formObj = domCreator.createFormHTMLObj().todoForm;
+        const form = domCreator.createTodoContainer("form", formObj);
+        form.id = "todo-form";
+        form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitForm, domLoader.removeElement));
+        domLoader.appendChildToParent(form, main);
+    });
+    const addProjectBtn = document.querySelector("#addProject");
+    addProjectBtn.addEventListener("click", () => domLoader.appendChildToParent(projectForm, main));
+    projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, domLoader.submitProject, domLoader.removeElement));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
 
 }
 
-const handleClick = (e, obj) => {
-    const id = e.target.id;
-    const element = obj[id];
+const handleClick = (e, obj, submitFtn, cancelFtn) => {
+    const identifier = e.target.id || e.target.className;
+    const element = obj[identifier];
     if(element && typeof element.execute === "function"){
-        element.execute(e);
+        element.execute(e, submitFtn, cancelFtn);
     }
 }
 

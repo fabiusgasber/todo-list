@@ -1,5 +1,6 @@
 import { DueDate } from "./duedate";
 import { Priority } from "./priorities";
+import { defaultProject } from "./projects";
 
 class Processor {
     constructor(value){
@@ -29,6 +30,13 @@ export class PriorityProcessor extends Processor {
     }
 }
 
+export class ProjectProcessor extends Processor {
+    process(value){
+       const chosenProject = defaultProject.getProjects().find(project => project.getTitle() === value);
+       return chosenProject;
+    }
+}
+
 export const processor = (() => {
 
     const checkArray = (arr) => {
@@ -37,7 +45,7 @@ export const processor = (() => {
 
     const parseInput = (inputArr) => {
         if(checkArray(inputArr)){
-            return inputArr.map(input => processor[input.type].process(input.value))
+            return inputArr.map(input => processor[input.id].process(input.value))
         }
         else {
             console.warn(`Inputs empty or in the wrong format ${inputArr}`);
@@ -45,9 +53,11 @@ export const processor = (() => {
     }
    
     const processor = {
-     "text": new TextProcessor(),
+     "title": new TextProcessor(),
+     "description": new TextProcessor(),
      "date": new DateProcessor(),
-     "select-one": new PriorityProcessor(),
+     "priority-select": new PriorityProcessor(),
+     "projects-select": new ProjectProcessor(),
     }
   
     return { parseInput, checkArray }

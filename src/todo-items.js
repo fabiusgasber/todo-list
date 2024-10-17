@@ -16,15 +16,13 @@ export function createTodo(inputs){
         }
     }
 
+    const getProject = () => inputs.find(input => input && input.hasOwnProperty("isProject") && input.isProject === true);
+
     const getText = () => inputs.filter(input => typeof input === 'string' || input instanceof String);
 
-    const getDate = () => {
-        return getInfo(DueDate);
-    }
+    const getDate = () => getInfo(DueDate);
 
-    const getPriority = () => {
-        return getInfo(Priority);
-    }
+    const getPriority = () => getInfo(Priority);
 
     return { 
         getCompleted, 
@@ -32,6 +30,7 @@ export function createTodo(inputs){
         getText,
         getDate,
         getPriority,
+        getProject,
         isTodoItem : true,
     };
 }

@@ -1,5 +1,5 @@
 import { createTodo } from "./todo-items";
-import { defaultProject } from "./projects";
+import { createProject, defaultProject } from "./projects";
 import { processor } from "./processor";
 import { domCreator } from "./dom-creator";
 
@@ -45,19 +45,33 @@ export const domLoader = (() => {
         });
     }
     
+    const submitProject = (form) => {
+        const ul = getQuery("#ownProjects")
+        const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
+        const userProject = createProject(textInput.value);
+        defaultProject.addProject(userProject);
+        const li = domCreator.createElement("li", userProject.getTitle());
+        li.addEventListener("click", () => showOnPage(userProject.getTodos()));
+        appendChildToParent(li, ul);
+    }
+    
     const submitForm = (form) => {
         let inputArr = [];
         let parsedInputs = [];
         if(form && processor.checkArray(form.children)){
-            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value }));
+            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
         }
         if(processor.checkArray(inputArr)){
             parsedInputs = processor.parseInput(inputArr);
         }
         if(processor.checkArray(parsedInputs)){
-            defaultProject.allTasks.addTodo(createTodo(parsedInputs));
+            const todo = createTodo(parsedInputs);
+            defaultProject.allTasks.addTodo(todo);
+            if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
+                todo.getProject().addTodo(todo);
+            }
         }
     }
     
-    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage }
+    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage, submitProject }
 })();
