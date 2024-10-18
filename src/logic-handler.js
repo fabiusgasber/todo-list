@@ -1,4 +1,4 @@
-import { ButtonHandler, FormCancelAction, FormSubmitAction, ProjectDeleteAction } from "./button-handler";
+import { ButtonHandler, FormCancelAction, FormSubmitAction, ProjectDeleteAction, TodoDeleteAction } from "./button-handler";
 import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
 
 export const logicHandler = (() => {
@@ -14,6 +14,7 @@ export const logicHandler = (() => {
             "submit-btn": new ButtonHandler(new FormSubmitAction()),
             "cancel-btn": new ButtonHandler(new FormCancelAction()),
             "deleteProject-btn": new ButtonHandler(new ProjectDeleteAction()),
+            "deleteTodo-btn": new ButtonHandler(new TodoDeleteAction()),
         },
     }
 

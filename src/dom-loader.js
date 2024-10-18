@@ -39,19 +39,7 @@ export const domLoader = (() => {
             const date = domCreator.createElement("div", todo.getDate().toString());
             const priority = domCreator.createElement("div", todo.getPriority().getLevel());
             const editBtn = domCreator.createElement("button", "Edit", { type: "submit" })
-            const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" })
-            deleteBtn.addEventListener("click", (e) => {
-                if(project === defaultProject.allTasks.getTodos()){
-                    defaultProject.allTasks.removeTodo(todo);
-                    if(todo.getProject().getTodos().includes(todo)){
-                        todo.getProject().removeTodo(todo);
-                    }
-                }
-                else {
-                    todo.getProject().removeTodo(todo);
-                }
-                removeElement(e.target.parentElement);
-            });
+            const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit", id: "deleteTodo-btn" })
             div.append(...text, date, priority, editBtn, deleteBtn);
             main.append(div);
         });
