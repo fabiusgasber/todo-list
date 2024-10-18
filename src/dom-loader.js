@@ -63,6 +63,12 @@ export const domLoader = (() => {
         const userProject = createProject(textInput.value);
         defaultProject.addProject(userProject);
         const li = domCreator.createElement("li", userProject.getTitle());
+        const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" });
+        deleteBtn.addEventListener("click", (e) => {
+            defaultProject.removeProject(userProject);
+            e.target.parentElement.remove();
+        });
+        li.append(deleteBtn);
         li.addEventListener("click", () => showOnPage(userProject.getTodos()));
         appendChildToParent(li, ul);
     }
