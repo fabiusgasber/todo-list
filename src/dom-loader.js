@@ -40,6 +40,18 @@ export const domLoader = (() => {
             const priority = domCreator.createElement("div", todo.getPriority().getLevel());
             const editBtn = domCreator.createElement("button", "Edit", { type: "submit" })
             const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" })
+            deleteBtn.addEventListener("click", () => {
+                if(project === defaultProject.allTasks.getTodos()){
+                    defaultProject.allTasks.removeTodo(todo);
+                    if(todo.getProject().getTodos().includes(todo)){
+                        todo.getProject().removeTodo(todo);
+                    }
+                }
+                else {
+                    todo.getProject().removeTodo(todo);
+                }
+                showOnPage(todo.getProject().getTodos());
+            });
             div.append(...text, date, priority, editBtn, deleteBtn);
             main.append(div);
         });
@@ -51,6 +63,12 @@ export const domLoader = (() => {
         const userProject = createProject(textInput.value);
         defaultProject.addProject(userProject);
         const li = domCreator.createElement("li", userProject.getTitle());
+        const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" });
+        deleteBtn.addEventListener("click", (e) => {
+            defaultProject.removeProject(userProject);
+            e.target.parentElement.remove();
+        });
+        li.append(deleteBtn);
         li.addEventListener("click", () => showOnPage(userProject.getTodos()));
         appendChildToParent(li, ul);
     }
