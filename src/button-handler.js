@@ -26,3 +26,10 @@ export class FormCancelAction extends Action {
         options["cancelFtn"](form);
     }
 }
+
+export class ProjectDeleteAction extends Action {
+    handleEvent(e, options){
+        console.dir(e.target.parentElement);
+        options.cancelFtn(e.target.parentElement);
+    }
+}
