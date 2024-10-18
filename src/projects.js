@@ -21,6 +21,10 @@ export const defaultProject = (function defaultProject () {
 
     const getProjects = () => projectArr;
     const addProject = (project) => projectArr.push(project); 
+    const removeProject = (project) => {
+        const index = projectArr.indexOf(project);
+        index !== -1 ? projectArr.splice(index, 1) : console.warn(`Project not found ${project}`);
+    }
 
     const getToday = () => allTasks.getTodos().filter(task => task.getDate()?.isDueToday());
 
@@ -28,5 +32,5 @@ export const defaultProject = (function defaultProject () {
 
     const getImportant = () => allTasks.getTodos().filter(task => task.getPriority()?.getLevel() === "high");
 
-    return { allTasks, getToday, getWeek, getImportant, getProjects, addProject };
+    return { allTasks, getToday, getWeek, getImportant, getProjects, addProject, removeProject };
 })();
