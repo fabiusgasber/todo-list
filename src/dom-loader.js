@@ -63,7 +63,7 @@ export const domLoader = (() => {
         const userProject = createProject(textInput.value);
         defaultProject.addProject(userProject);
         const li = domCreator.createElement("li");
-        const p = domCreator.createElement("p", userProject.getTitle());
+        const p = domCreator.createElement("p", userProject.getTitle(), { id: "projectTitle" });
         const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit", id: "deleteProject-btn" });
         li.append(p, deleteBtn);
         li.addEventListener("click", () => showOnPage(userProject.getTodos()));
