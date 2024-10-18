@@ -3,8 +3,8 @@ export class ButtonHandler {
         this.action = action;
     }
 
-    execute(e, submitFtn, cancelFtn){
-        this.action.handleEvent(e, submitFtn, cancelFtn);
+    execute(e, options){
+        this.action.handleEvent(e, options);
     }
 }
 
@@ -13,16 +13,16 @@ class Action {
 }
 
 export class FormSubmitAction extends Action {
-    handleEvent(e, submitFtn, cancelFtn){
+    handleEvent(e, options){
         const form = e.target.parentElement;
-        submitFtn(form);
-        cancelFtn(form);
+        options["submitFtn"](form);
+        options["cancelFtn"](form);
     }
 }
 
 export class FormCancelAction extends Action {
-    handleEvent(e, submitFtn, cancelFtn){
+    handleEvent(e, options){
         const form = e.target.parentElement;
-        cancelFtn(form);
+        options["cancelFtn"](form);
     }
 }
