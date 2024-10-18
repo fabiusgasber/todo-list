@@ -15,7 +15,12 @@ class Action {
 export class FormSubmitAction extends Action {
     handleEvent(e, options){
         const form = e.target.parentElement;
-        options["submitFtn"](form);
+        if(options["submitForm"] && form.id === "todo-form"){
+            options["submitForm"](form);
+        }
+        if(options["submitProject"] && form.id !== "todo-form"){
+            options["submitProject"](form);
+        }
         options["cancelFtn"](form);
     }
 }
@@ -33,6 +38,6 @@ export class ProjectDeleteAction extends Action {
        const projectTitle = Array.from(e.target.parentElement.children).find(element => element.id === "projectTitle");
        const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
        defaultProject.removeProject(userProject);
-       options.cancelFtn(e.target.parentElement);
+       options["cancelFtn"](e.target.parentElement);
     }
 }

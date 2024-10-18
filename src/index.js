@@ -7,16 +7,18 @@ function init() {
     setUpListeners();
 }
 
-const main = domLoader.getQuery("#content");
-
 const setUpListeners = () => {
+
+    const main = domLoader.getQuery("#content");
+
+    const body = domLoader.getQuery("body");
+    body.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "submitForm": domLoader.submitForm, "submitProject": domLoader.submitProject, "cancelFtn": domLoader.removeElement, "defaultProject": defaultProject }));
 
     const button = document.querySelector("#addTodo");
     button.addEventListener("click", () => {
         const formObj = domCreator.createFormHTMLObj().todoForm;
         const form = domCreator.createTodoContainer("form", formObj);
         form.id = "todo-form";
-        form.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "submitFtn": domLoader.submitForm, "cancelFtn": domLoader.removeElement }));
         domLoader.appendChildToParent(form, main);
     });
 
@@ -24,12 +26,8 @@ const setUpListeners = () => {
     addProjectBtn.addEventListener("click", () => {
         const projectFormObj = domCreator.createFormHTMLObj().projectForm;
         const projectForm = domCreator.createTodoContainer("form", projectFormObj);
-        projectForm.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "submitFtn": domLoader.submitProject, "cancelFtn": domLoader.removeElement }));
         domLoader.appendChildToParent(projectForm, main);
     });
-
-    const ownProjects = domLoader.getQuery("#ownProjects");
-    ownProjects.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "cancelFtn": domLoader.removeElement, "defaultProject": defaultProject }));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
