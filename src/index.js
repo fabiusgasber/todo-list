@@ -1,6 +1,7 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
+import { defaultProject } from "./projects";
 
 function init() {
     setUpListeners();
@@ -28,7 +29,7 @@ const setUpListeners = () => {
     });
 
     const ownProjects = domLoader.getQuery("#ownProjects");
-    ownProjects.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "cancelFtn": domLoader.removeElement }));
+    ownProjects.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "cancelFtn": domLoader.removeElement, "defaultProject": defaultProject }));
 
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  

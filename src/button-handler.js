@@ -29,7 +29,10 @@ export class FormCancelAction extends Action {
 
 export class ProjectDeleteAction extends Action {
     handleEvent(e, options){
-        console.dir(e.target.parentElement);
-        options.cancelFtn(e.target.parentElement);
+       const defaultProject = options["defaultProject"];
+       const projectTitle = Array.from(e.target.parentElement.children).find(element => element.id === "projectTitle");
+       const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
+       defaultProject.removeProject(userProject);
+       options.cancelFtn(e.target.parentElement);
     }
 }
