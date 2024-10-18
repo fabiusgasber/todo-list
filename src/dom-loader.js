@@ -40,7 +40,7 @@ export const domLoader = (() => {
             const priority = domCreator.createElement("div", todo.getPriority().getLevel());
             const editBtn = domCreator.createElement("button", "Edit", { type: "submit" })
             const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" })
-            deleteBtn.addEventListener("click", () => {
+            deleteBtn.addEventListener("click", (e) => {
                 if(project === defaultProject.allTasks.getTodos()){
                     defaultProject.allTasks.removeTodo(todo);
                     if(todo.getProject().getTodos().includes(todo)){
@@ -50,7 +50,7 @@ export const domLoader = (() => {
                 else {
                     todo.getProject().removeTodo(todo);
                 }
-                showOnPage(todo.getProject().getTodos());
+                removeElement(e.target.parentElement);
             });
             div.append(...text, date, priority, editBtn, deleteBtn);
             main.append(div);
@@ -66,7 +66,7 @@ export const domLoader = (() => {
         const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" });
         deleteBtn.addEventListener("click", (e) => {
             defaultProject.removeProject(userProject);
-            e.target.parentElement.remove();
+            removeElement(e.target.parentElement);
         });
         li.append(deleteBtn);
         li.addEventListener("click", () => showOnPage(userProject.getTodos()));
