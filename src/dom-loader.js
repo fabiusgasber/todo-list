@@ -34,7 +34,7 @@ export const domLoader = (() => {
         const main = getQuery("#content");
         main.replaceChildren();
         project.forEach(todo => {
-            const div = document.createElement("div");
+            const div = domCreator.createElement("div", "", { class: "todoDiv" } );
             const text = todo.getText().map(text => domCreator.createElement("div", text));
             const date = domCreator.createElement("div", todo.getDate().toString());
             const priority = domCreator.createElement("div", todo.getPriority().getLevel());
