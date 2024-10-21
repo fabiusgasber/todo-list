@@ -1,3 +1,4 @@
+import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { defaultProject } from "./projects";
 
@@ -17,24 +18,37 @@ class Page {
 
 export class PageAll extends Page {
     navigateTo(){
-        domLoader.showOnPage(defaultProject.allTasks.getTodos(), defaultProject.allTasks);
+        const main = domLoader.getQuery("#content");
+        main.replaceChildren();
+        const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getTodos(), defaultProject.allTasks)
+        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
     }
 }
 
 export class PageToday extends Page {
     navigateTo(){
-        domLoader.showOnPage(defaultProject.getToday(), defaultProject.allTasks);
+        const main = domLoader.getQuery("#content");
+        main.replaceChildren();
+        const todoDivs = domCreator.createTodoDivs(defaultProject.getToday(), defaultProject.allTasks)
+        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
     }
 }
 
 export class PageWeek extends Page {
     navigateTo(){
-        domLoader.showOnPage(defaultProject.getWeek(), defaultProject.allTasks);
+        const main = domLoader.getQuery("#content");
+        main.replaceChildren();
+        const todoDivs = domCreator.createTodoDivs(defaultProject.getWeek(), defaultProject.allTasks)
+        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
     }
 }
 
 export class PageImportant extends Page {
     navigateTo(){
-        domLoader.showOnPage(defaultProject.getImportant(), defaultProject.allTasks);
+        const main = domLoader.getQuery("#content");
+        main.replaceChildren();
+        const todoDivs = domCreator.createTodoDivs(defaultProject.getImportant(), defaultProject.allTasks)
+        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
+
     }
 }
