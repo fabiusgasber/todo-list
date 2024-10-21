@@ -30,7 +30,7 @@ export const domLoader = (() => {
         }
     }
 
-    const showOnPage = (project) => {
+    const showOnPage = (projectArr, project) => {
         const main = getQuery("#content");
         main.replaceChildren();
         project.forEach(todo => {
@@ -54,7 +54,7 @@ export const domLoader = (() => {
         const p = domCreator.createElement("p", userProject.getTitle(), { id: "projectTitle" });
         const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit", id: "deleteProject-btn" });
         li.append(p, deleteBtn);
-        li.addEventListener("click", () => showOnPage(userProject.getTodos()));
+        li.addEventListener("click", () => showOnPage(userProject.getTodos(), userProject));
         appendChildToParent(li, ul);
     }
     
