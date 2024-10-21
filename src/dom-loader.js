@@ -33,8 +33,8 @@ export const domLoader = (() => {
     const showOnPage = (projectArr, project) => {
         const main = getQuery("#content");
         main.replaceChildren();
-        project.forEach(todo => {
-            const div = domCreator.createElement("div", "", { class: "todoDiv" } );
+        projectArr.forEach((todo) => {
+            const div = domCreator.createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
             const text = todo.getText().map(text => domCreator.createElement("div", text));
             const date = domCreator.createElement("div", todo.getDate().toString());
             const priority = domCreator.createElement("div", todo.getPriority().getLevel());
