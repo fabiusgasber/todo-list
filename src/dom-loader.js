@@ -29,21 +29,6 @@ export const domLoader = (() => {
             console.warn(`${element} not found or does not contain remove function...`);
         }
     }
-
-    const showOnPage = (projectArr, project) => {
-        const main = getQuery("#content");
-        main.replaceChildren();
-        projectArr.forEach((todo) => {
-            const div = domCreator.createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
-            const text = todo.getText().map(text => domCreator.createElement("div", text));
-            const date = domCreator.createElement("div", todo.getDate().toString());
-            const priority = domCreator.createElement("div", todo.getPriority().getLevel());
-            const editBtn = domCreator.createElement("button", "Edit", { type: "submit" })
-            const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit", id: "deleteTodo-btn" })
-            div.append(...text, date, priority, editBtn, deleteBtn);
-            main.append(div);
-        });
-    }
     
     const submitProject = (form) => {
         const ul = getQuery("#ownProjects")
@@ -76,5 +61,5 @@ export const domLoader = (() => {
         }
     }
     
-    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage, submitProject }
+    return { getQuery, removeElement, appendChildToParent, submitForm, submitProject }
 })();

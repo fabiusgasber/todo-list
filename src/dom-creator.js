@@ -27,6 +27,21 @@ export const domCreator = (() => {
         }
     }
 
+    const createTodoDivs = (projectArr, project) => {
+        const todoDivs = projectArr.map((todo) => {
+            const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
+            const text = todo.getText().map(text => createElement("div", text));
+            const date = createElement("div", todo.getDate().toString());
+            const priority = createElement("div", todo.getPriority().getLevel());
+            const editBtn = createElement("button", "Edit", { type: "submit" });
+            const deleteBtn = createElement("button", "Delete", { type: "submit", id: "deleteTodo-btn" });
+            div.append(...text, date, priority, editBtn, deleteBtn);
+            return div;
+        });
+        return todoDivs;
+    }
+
+
     const createTodoContainer = (elem, obj) => {
         const container = document.createElement(elem);
         for(const property in obj){
@@ -55,5 +70,5 @@ export const domCreator = (() => {
         return formHTMLObj;
     }
 
-    return { createFormHTMLObj, createTodoContainer, createElement }
+    return { createFormHTMLObj, createTodoContainer, createElement, createTodoDivs }
 })();
