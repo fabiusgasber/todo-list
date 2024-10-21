@@ -41,3 +41,17 @@ export class ProjectDeleteAction extends Action {
        options["cancelFtn"](e.target.parentElement);
     }
 }
+
+export class TodoDeleteAction extends Action {
+    handleEvent(e, options){
+        const defProject = options["defaultProject"];
+        const projectID = e.target.parentElement.getAttribute("projectID");
+        const todoID = e.target.parentElement.getAttribute("todoID");
+        const project = defProject.getProjects().find(project => project.uuID == projectID);
+        const todo = project.getTodos().find(todo => todo.uuID == todoID);
+        if(todo && project){
+            project.removeTodo(todo);
+            options["cancelFtn"](e.target.parentElement);
+        }
+    }
+}
