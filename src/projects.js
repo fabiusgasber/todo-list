@@ -11,7 +11,7 @@ export function createProject(title) {
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, isProject: true };
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, isProject: true, uuID: Math.floor(Math.random() * 10000) };
 };
 
 export const defaultProject = (function defaultProject () {
