@@ -12,16 +12,50 @@ class Action {
     handleEvent(){};
 }
 
-export class FormSubmitAction extends Action {
-    handleEvent(e, options){
+export class TodoSubmitAction extends Action {
+    handleEvent(e){
         const form = e.target.parentElement;
-        if(options["submitForm"] && form.id === "todo-form"){
-            options["submitForm"](form);
+        if(form && processor.checkArray(form.children)){
+            let inputArr = [];
+            let parsedInputs = [];
+            if(form && processor.checkArray(form.children)){
+                inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
+            }
+            if(processor.checkArray(inputArr)){
+                parsedInputs = processor.parseInput(inputArr);
+            }
+            if(processor.checkArray(parsedInputs)){
+                const todo = createTodo(parsedInputs);
+                defaultProject.allTasks.addTodo(todo);
+                if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
+                    todo.getProject().addTodo(todo);
+                }
+            }
+    
         }
-        if(options["submitProject"] && form.id !== "todo-form"){
-            options["submitProject"](form);
+        domLoader.removeElement(form);
+    }
+}
+
+export class ProjectSubmitAction extends Action {
+    handleEvent(e){
+        const form = e.target.parentElement;
+        if(form && processor.checkArray(form.children)){
+            const main = domLoader.getQuery("#content");
+            const ul = domLoader.getQuery("#ownProjects");
+            const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
+            const userProject = createProject(textInput.value);
+            defaultProject.addProject(userProject);
+            const li = domCreator.createProjectListItem(userProject.getTitle());
+            li.addEventListener("click", () => {
+                main.replaceChildren();
+                const todoDivs = domCreator.createTodoDivs(userProject.getTodos(), userProject);
+                todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
+            });
+            domLoader.appendChildToParent(li, ul);
+    
         }
-        options["cancelFtn"](form);
+        domLoader.removeElement(form);
     }
 }
 

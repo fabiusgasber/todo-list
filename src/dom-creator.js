@@ -67,12 +67,12 @@ export const domCreator = (() => {
                 "date": createElement("input", "", { name: "date", class: "date", type: "date", id: "date" }),
                 "priorities": createElement("select", "", { name: "priorities", id: "priority-select" }, Priority.acceptedLevels),
                 "projects": createElement("select", "", { name: "projects", id: "projects-select" }, defaultProject.getProjects().map(projects => projects.getTitle())),
-                "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),
+                "submitBtn": createElement("button", "Submit", { type: "button", class: "todo-submit-btn" }),
                 "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
             },
             projectForm: {
                 "name": createElement("input", "", { type: "text", placeholder: "Enter your projects name..." }),
-                "submitBtn": createElement("button", "Submit", { type: "button", class: "submit-btn" }),
+                "submitBtn": createElement("button", "Submit", { type: "button", class: "project-submit-btn" }),
                 "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
             }
         }         
