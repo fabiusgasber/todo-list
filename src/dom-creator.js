@@ -41,6 +41,14 @@ export const domCreator = (() => {
         return todoDivs;
     }
 
+    const createProjectListItem = (customProject) => {
+        const li = createElement("li");
+        const p = createElement("p", customProject.getTitle(), { id: "projectTitle" });
+        const deleteBtn = createElement("button", "Delete", { type: "submit", id: "deleteProject-btn" });
+        li.append(p, deleteBtn);
+        return li;
+    } 
+
 
     const createTodoContainer = (elem, obj) => {
         const container = document.createElement(elem);
@@ -70,5 +78,5 @@ export const domCreator = (() => {
         return formHTMLObj;
     }
 
-    return { createFormHTMLObj, createTodoContainer, createElement, createTodoDivs }
+    return { createFormHTMLObj, createTodoContainer, createElement, createTodoDivs, createProjectListItem}
 })();

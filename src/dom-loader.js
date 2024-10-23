@@ -30,16 +30,18 @@ export const domLoader = (() => {
         }
     }
     
-    const submitProject = (form) => {
+    const submitProject = (form) => {  
         const ul = getQuery("#ownProjects")
         const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
         const userProject = createProject(textInput.value);
         defaultProject.addProject(userProject);
-        const li = domCreator.createElement("li");
-        const p = domCreator.createElement("p", userProject.getTitle(), { id: "projectTitle" });
-        const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit", id: "deleteProject-btn" });
-        li.append(p, deleteBtn);
-        li.addEventListener("click", () => showOnPage(userProject.getTodos(), userProject));
+        const li = domCreator.createProjectListItem(userProject)
+        li.addEventListener("click", () => {
+            const main = getQuery("#content");
+            main.replaceChildren();
+            const todoDivs = domCreator.createTodoDivs(userProject.getTodos(), userProject);
+            todoDivs.forEach(todoDiv => appendChildToParent(todoDiv, main));
+        });
         appendChildToParent(li, ul);
     }
     
