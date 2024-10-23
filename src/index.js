@@ -1,7 +1,6 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
-import { defaultProject } from "./projects";
 
 function init() {
     setUpListeners();
@@ -12,7 +11,7 @@ const setUpListeners = () => {
     const main = domLoader.getQuery("#content");
 
     const body = domLoader.getQuery("body");
-    body.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction, { "submitForm": domLoader.submitForm, "submitProject": domLoader.submitProject, "cancelFtn": domLoader.removeElement, "defaultProject": defaultProject }));
+    body.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction ));
 
     const button = document.querySelector("#addTodo");
     button.addEventListener("click", () => {
@@ -34,11 +33,11 @@ const setUpListeners = () => {
 
 }
 
-const handleClick = (e, obj, options) => {
+const handleClick = (e, obj) => {
     const identifier = e.target.id || e.target.className;
     const element = obj[identifier];
     if(element && typeof element.execute === "function"){
-        element.execute(e, options);
+        element.execute(e);
     }
 }
 
