@@ -1,8 +1,3 @@
-import { createTodo } from "./todo-items";
-import { createProject, defaultProject } from "./projects";
-import { processor } from "./processor";
-import { domCreator } from "./dom-creator";
-
 export const domLoader = (() => {
 
     const getQuery = (selector, elem = document) => {
@@ -30,38 +25,5 @@ export const domLoader = (() => {
         }
     }
     
-    const submitProject = (form) => {  
-        const ul = getQuery("#ownProjects")
-        const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
-        const userProject = createProject(textInput.value);
-        defaultProject.addProject(userProject);
-        const li = domCreator.createProjectListItem(userProject.getTitle());
-        li.addEventListener("click", () => {
-            const main = getQuery("#content");
-            main.replaceChildren();
-            const todoDivs = domCreator.createTodoDivs(userProject.getTodos(), userProject);
-            todoDivs.forEach(todoDiv => appendChildToParent(todoDiv, main));
-        });
-        appendChildToParent(li, ul);
-    }
-    
-    const submitForm = (form) => {
-        let inputArr = [];
-        let parsedInputs = [];
-        if(form && processor.checkArray(form.children)){
-            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
-        }
-        if(processor.checkArray(inputArr)){
-            parsedInputs = processor.parseInput(inputArr);
-        }
-        if(processor.checkArray(parsedInputs)){
-            const todo = createTodo(parsedInputs);
-            defaultProject.allTasks.addTodo(todo);
-            if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
-                todo.getProject().addTodo(todo);
-            }
-        }
-    }
-    
-    return { getQuery, removeElement, appendChildToParent, submitForm, submitProject }
+    return { getQuery, removeElement, appendChildToParent }
 })();
