@@ -33,19 +33,20 @@ export const domCreator = (() => {
             const text = todo.getText().map(text => createElement("div", text));
             const date = createElement("div", todo.getDate().toString());
             const priority = createElement("div", todo.getPriority().getLevel());
-            const editBtn = createElement("button", "Edit", { type: "submit" });
-            const deleteBtn = createElement("button", "Delete", { type: "submit", id: "deleteTodo-btn" });
+            const editBtn = createElement("button", "Edit", { type: "submit", class: "editTodo-btn" });
+            const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteTodo-btn" });
             div.append(...text, date, priority, editBtn, deleteBtn);
             return div;
         });
         return todoDivs;
     }
 
-    const createProjectListItem = (customProject) => {
-        const li = createElement("li");
-        const p = createElement("p", customProject.getTitle(), { id: "projectTitle" });
-        const deleteBtn = createElement("button", "Delete", { type: "submit", id: "deleteProject-btn" });
-        li.append(p, deleteBtn);
+    const createProjectListItem = (text) => {
+        const li = createElement("li", "", { class: "project-li" });
+        const p = createElement("p", text, { class: "projectTitle" });
+        const editBtn = createElement("button", "Edit", { type: "submit", class: "editProject-btn"  })
+        const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteProject-btn" });
+        li.append(p, editBtn, deleteBtn);
         return li;
     } 
 
