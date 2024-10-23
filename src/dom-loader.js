@@ -35,7 +35,7 @@ export const domLoader = (() => {
         const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
         const userProject = createProject(textInput.value);
         defaultProject.addProject(userProject);
-        const li = domCreator.createProjectListItem(userProject)
+        const li = domCreator.createProjectListItem(userProject.getTitle());
         li.addEventListener("click", () => {
             const main = getQuery("#content");
             main.replaceChildren();
