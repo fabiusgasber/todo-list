@@ -1,3 +1,9 @@
+import { domCreator } from "./dom-creator";
+import { domLoader } from "./dom-loader";
+import { processor } from "./processor";
+import { createProject, defaultProject } from "./projects";
+import { createTodo } from "./todo-items";
+
 export class ButtonHandler {
     constructor(action){
         this.action = action;
@@ -60,34 +66,32 @@ export class ProjectSubmitAction extends Action {
 }
 
 export class FormCancelAction extends Action {
-    handleEvent(e, options){
+    handleEvent(e){
         const form = e.target.parentElement;
-        options["cancelFtn"](form);
+        domLoader.removeElement(form);
     }
 }
 
 export class ProjectDeleteAction extends Action {
-    handleEvent(e, options){
-       const defaultProject = options["defaultProject"];
+    handleEvent(e){
        const projectTitle = Array.from(e.target.parentElement.children).find(element => element.className === "projectTitle");
        if(projectTitle && typeof projectTitle.textContent === "string" || projectTitle.textContent instanceof String){
         const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
         defaultProject.removeProject(userProject);
-        options["cancelFtn"](e.target.parentElement);
+        domLoader.removeElement(e.target.parentElement);
        }
     }
 }
 
 export class TodoDeleteAction extends Action {
-    handleEvent(e, options){
-        const defProject = options["defaultProject"];
+    handleEvent(e){
         const projectID = e.target.parentElement.getAttribute("projectID");
         const todoID = e.target.parentElement.getAttribute("todoID");
-        const project = defProject.getProjects().find(project => project.uuID == projectID);
+        const project = defaultProject.getProjects().find(project => project.uuID == projectID);
         const todo = project.getTodos().find(todo => todo.uuID == todoID);
         if(todo && project){
             project.removeTodo(todo);
-            options["cancelFtn"](e.target.parentElement);
+            domLoader.removeElement(e.target.parentElement);
         }
     }
 }
