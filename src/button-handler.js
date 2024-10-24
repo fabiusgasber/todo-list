@@ -95,3 +95,22 @@ export class TodoDeleteAction extends Action {
         }
     }
 }
+
+export class AddTodoAction extends Action {
+    handleEvent(){
+        const main = domLoader.getQuery("#content");
+        const formObj = domCreator.createFormHTMLObj().todoForm;
+        const form = domCreator.createTodoContainer("form", formObj);
+        form.id = "todo-form";
+        domLoader.appendChildToParent(form, main);
+    }
+}
+
+export class AddProjectAction extends Action {
+    handleEvent(){
+        const main = domLoader.getQuery("#content");
+        const projectFormObj = domCreator.createFormHTMLObj().projectForm;
+        const projectForm = domCreator.createTodoContainer("form", projectFormObj);
+        domLoader.appendChildToParent(projectForm, main);
+    }
+}
