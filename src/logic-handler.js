@@ -1,14 +1,15 @@
 import { ButtonHandler, FormCancelAction, TodoSubmitAction, ProjectDeleteAction, ProjectSubmitAction, TodoDeleteAction } from "./button-handler";
-import { Navigation, PageAll, PageImportant, PageToday, PageWeek } from "./navigation";
+import { Navigation, PageAll } from "./navigation";
+import { defaultProject } from "./projects";
 
 export const logicHandler = (() => {
 
     const handler = {
         navigation: {
-            "all": new Navigation(new PageAll()),
-            "today": new Navigation(new PageToday()),
-            "week": new Navigation(new PageWeek()),
-            "important": new Navigation(new PageImportant()),
+            "all": new Navigation(new PageAll(), defaultProject.allTasks.getTodos, defaultProject.allTasks),
+            "today": new Navigation(new PageAll(), defaultProject.allTasks.getToday, defaultProject.allTasks),
+            "week": new Navigation(new PageAll(), defaultProject.allTasks.getWeek, defaultProject.allTasks),
+            "important": new Navigation(new PageAll(), defaultProject.allTasks.getImportant, defaultProject.allTasks),
         },
         buttonAction: {
             "todo-submit-btn": new ButtonHandler(new TodoSubmitAction()),

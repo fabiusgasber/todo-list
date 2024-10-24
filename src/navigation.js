@@ -1,14 +1,15 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
-import { defaultProject } from "./projects";
 
 export class Navigation {
-    constructor(page){
+    constructor(page, todoArrFt, projectArr){
         this.page = page;
+        this.todoArrFt = todoArrFt;
+        this.projectArr = projectArr;
     }
 
     execute(){
-        this.page.navigateTo();
+        this.page.navigateTo(this.todoArrFt, this.projectArr);
     }
 }
 
@@ -17,38 +18,13 @@ class Page {
 }
 
 export class PageAll extends Page {
-    navigateTo(){
-        const main = domLoader.getQuery("#content");
-        main.replaceChildren();
-        const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getTodos(), defaultProject.allTasks)
-        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
-    }
-}
-
-export class PageToday extends Page {
-    navigateTo(){
-        const main = domLoader.getQuery("#content");
-        main.replaceChildren();
-        const todoDivs = domCreator.createTodoDivs(defaultProject.getToday(), defaultProject.allTasks)
-        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
-    }
-}
-
-export class PageWeek extends Page {
-    navigateTo(){
-        const main = domLoader.getQuery("#content");
-        main.replaceChildren();
-        const todoDivs = domCreator.createTodoDivs(defaultProject.getWeek(), defaultProject.allTasks)
-        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
-    }
-}
-
-export class PageImportant extends Page {
-    navigateTo(){
-        const main = domLoader.getQuery("#content");
-        main.replaceChildren();
-        const todoDivs = domCreator.createTodoDivs(defaultProject.getImportant(), defaultProject.allTasks)
-        todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
-
+    navigateTo(todoArrFt, projectArr){
+        if(todoArrFt && projectArr && typeof todoArrFt === "function"){
+            const todoArr = todoArrFt();
+            const main = domLoader.getQuery("#content");
+            main.replaceChildren();
+            const todoDivs = domCreator.createTodoDivs(todoArr, projectArr);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+        }
     }
 }
