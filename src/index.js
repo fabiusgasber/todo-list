@@ -1,5 +1,6 @@
 import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
+import "./styles.css"
 
 function init() {
     setUpListeners();
