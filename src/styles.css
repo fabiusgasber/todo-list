@@ -4,3 +4,9 @@
     padding-inline-start: 0;
 }
 
+body {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    column-gap: 1rem;
+}
+
