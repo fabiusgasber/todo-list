@@ -108,9 +108,9 @@ export class AddTodoAction extends Action {
 
 export class AddProjectAction extends Action {
     handleEvent(){
-        const main = domLoader.getQuery("#content");
+        const projectList = domLoader.getQuery("#ownProjects");
         const projectFormObj = domCreator.createFormHTMLObj().projectForm;
         const projectForm = domCreator.createTodoContainer("form", projectFormObj);
-        domLoader.appendChildToParent(projectForm, main);
+        domLoader.appendChildToParent(projectForm, projectList);
     }
 }
