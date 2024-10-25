@@ -24,6 +24,11 @@ ul {
     list-style-type: none;
 }
 
+.button-div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 nav li:hover {
     cursor: pointer;
 }

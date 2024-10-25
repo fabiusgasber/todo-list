@@ -69,9 +69,11 @@ export const domCreator = (() => {
         const name = createElement("input", "", { type: "text", placeholder: "Enter your projects name..." });
         const submitBtn = createElement("button", "Submit", { type: "button", class: "project-submit-btn" });
         const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
-        form.append(name, submitBtn, cancelBtn);
+        const buttonDiv = createElement("div", "", { class: "button-div" });
+        buttonDiv.append(submitBtn, cancelBtn);
+        form.append(name, buttonDiv);
         return form;
     }
 
-    return { createProjectForm, createTodoForm, createElement, createTodoDivs, createProjectListItem}
+    return { createElement, createProjectForm, createTodoForm, createTodoDivs, createProjectListItem}
 })();
