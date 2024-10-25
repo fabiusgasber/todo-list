@@ -46,7 +46,9 @@ export const domCreator = (() => {
         const p = createElement("p", text, { class: "projectTitle" });
         const editBtn = createElement("button", "Edit", { type: "submit", class: "editProject-btn"  })
         const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteProject-btn" });
-        li.append(p, editBtn, deleteBtn);
+        const buttonDiv = createElement("div", "", { class: "button-div" });
+        buttonDiv.append(editBtn, deleteBtn);
+        li.append(p, buttonDiv);
         return li;
     } 
 
