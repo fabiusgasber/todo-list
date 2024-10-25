@@ -20,7 +20,7 @@ class Action {
 
 export class TodoSubmitAction extends Action {
     handleEvent(e){
-        const form = e.target.parentElement;
+        const form = e.target.form;
         if(form && processor.checkArray(form.children)){
             let inputArr = [];
             let parsedInputs = [];
@@ -45,7 +45,7 @@ export class TodoSubmitAction extends Action {
 
 export class ProjectSubmitAction extends Action {
     handleEvent(e){
-        const form = e.target.parentElement;
+        const form = e.target.form;
         if(form && processor.checkArray(form.children)){
             const main = domLoader.getQuery("#content");
             const ul = domLoader.getQuery("#ownProjects");
@@ -67,8 +67,9 @@ export class ProjectSubmitAction extends Action {
 
 export class FormCancelAction extends Action {
     handleEvent(e){
-        const form = e.target.parentElement;
-        domLoader.removeElement(form);
+        if(e && e.target.form){
+            domLoader.removeElement(e.target.form);
+        }
     }
 }
 
