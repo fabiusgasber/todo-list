@@ -75,11 +75,12 @@ export class FormCancelAction extends Action {
 
 export class ProjectDeleteAction extends Action {
     handleEvent(e){
-       const projectTitle = Array.from(e.target.closest(".project-li").children).find(element => element.className === "projectTitle");
+       const projectItem = e.target.closest(".project-li");
+       const projectTitle = Array.from(projectItem.children).find(element => element.className === "projectTitle");
        if(projectTitle && typeof projectTitle.textContent === "string" || projectTitle.textContent instanceof String){
         const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
         defaultProject.removeProject(userProject);
-        domLoader.removeElement(e.target.parentElement);
+        domLoader.removeElement(projectItem);
        }
     }
 }
