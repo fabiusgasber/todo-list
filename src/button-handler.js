@@ -75,7 +75,7 @@ export class FormCancelAction extends Action {
 
 export class ProjectDeleteAction extends Action {
     handleEvent(e){
-       const projectTitle = Array.from(e.target.parentElement.children).find(element => element.className === "projectTitle");
+       const projectTitle = Array.from(e.target.closest(".project-li").children).find(element => element.className === "projectTitle");
        if(projectTitle && typeof projectTitle.textContent === "string" || projectTitle.textContent instanceof String){
         const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
         defaultProject.removeProject(userProject);
