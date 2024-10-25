@@ -99,18 +99,16 @@ export class TodoDeleteAction extends Action {
 export class AddTodoAction extends Action {
     handleEvent(){
         const main = domLoader.getQuery("#content");
-        const formObj = domCreator.createFormHTMLObj().todoForm;
-        const form = domCreator.createTodoContainer("form", formObj);
-        form.id = "todo-form";
-        domLoader.appendChildToParent(form, main);
+        const todoForm = domCreator.createTodoForm();
+        todoForm.id = "todo-form";
+        domLoader.appendChildToParent(todoForm, main);
     }
 }
 
 export class AddProjectAction extends Action {
     handleEvent(){
         const projectList = domLoader.getQuery("#ownProjects");
-        const projectFormObj = domCreator.createFormHTMLObj().projectForm;
-        const projectForm = domCreator.createTodoContainer("form", projectFormObj);
+        const projectForm = domCreator.createProjectForm();
         domLoader.appendChildToParent(projectForm, projectList);
     }
 }

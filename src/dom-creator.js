@@ -51,33 +51,27 @@ export const domCreator = (() => {
     } 
 
 
-    const createTodoContainer = (elem, obj) => {
-        const container = document.createElement(elem);
-        for(const property in obj){
-            container.append(obj[property]);
-        }
-        return container;
-    } 
-
-    const createFormHTMLObj = () => {
-        const formHTMLObj = {
-            todoForm: {
-                "title": createElement("input", "", { name: "title", class: "title", placeholder: "Title", id: "title"}),
-                "description": createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" }),
-                "date": createElement("input", "", { name: "date", class: "date", type: "date", id: "date" }),
-                "priorities": createElement("select", "", { name: "priorities", id: "priority-select" }, Priority.acceptedLevels),
-                "projects": createElement("select", "", { name: "projects", id: "projects-select" }, defaultProject.getProjects().map(projects => projects.getTitle())),
-                "submitBtn": createElement("button", "Submit", { type: "button", class: "todo-submit-btn" }),
-                "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
-            },
-            projectForm: {
-                "name": createElement("input", "", { type: "text", placeholder: "Enter your projects name..." }),
-                "submitBtn": createElement("button", "Submit", { type: "button", class: "project-submit-btn" }),
-                "cancelBtn": createElement("button", "Cancel", { type: "button", class: "cancel-btn" }),
-            }
-        }         
-        return formHTMLObj;
+    const createTodoForm = () => {
+        const form = createElement("form");
+        const title = createElement("input", "", { name: "title", class: "title", placeholder: "Title", id: "title"});
+        const description = createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" });
+        const date = createElement("input", "", { name: "date", class: "date", type: "date", id: "date" });
+        const priorities = createElement("select", "", { name: "priorities", id: "priority-select" }, Priority.acceptedLevels);
+        const projects = createElement("select", "", { name: "projects", id: "projects-select" }, defaultProject.getProjects().map(projects => projects.getTitle()));
+        const submitBtn = createElement("button", "Submit", { type: "button", class: "todo-submit-btn" });
+        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
+        form.append(title, description, date, priorities, projects, submitBtn, cancelBtn);
+        return form;
     }
 
-    return { createFormHTMLObj, createTodoContainer, createElement, createTodoDivs, createProjectListItem}
+    const createProjectForm = () => {
+        const form = createElement("form");
+        const name = createElement("input", "", { type: "text", placeholder: "Enter your projects name..." });
+        const submitBtn = createElement("button", "Submit", { type: "button", class: "project-submit-btn" });
+        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
+        form.append(name, submitBtn, cancelBtn);
+        return form;
+    }
+
+    return { createProjectForm, createTodoForm, createElement, createTodoDivs, createProjectListItem}
 })();
