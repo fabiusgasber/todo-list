@@ -10,8 +10,14 @@ export function createProject(title) {
         const index = todoItems.indexOf(todo);
         index !== -1 ? todoItems.splice(index, 1) : console.warn("To do item was not found");
     }
+
+    const getToday = () => todoItems.filter(task => task.getDate()?.isDueToday());
+
+    const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
+
+    const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, isProject: true };
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant, isProject: true, uuID: Math.floor(Math.random() * 10000) };
 };
 
 export const defaultProject = (function defaultProject () {
@@ -26,11 +32,5 @@ export const defaultProject = (function defaultProject () {
         index !== -1 ? projectArr.splice(index, 1) : console.warn(`Project not found ${project}`);
     }
 
-    const getToday = () => allTasks.getTodos().filter(task => task.getDate()?.isDueToday());
-
-    const getWeek = () => allTasks.getTodos().filter(task => task.getDate()?.isDueNextWeek());
-
-    const getImportant = () => allTasks.getTodos().filter(task => task.getPriority()?.getLevel() === "high");
-
-    return { allTasks, getToday, getWeek, getImportant, getProjects, addProject, removeProject };
+    return { allTasks, getProjects, addProject, removeProject };
 })();

@@ -40,9 +40,9 @@ export class ProjectProcessor extends Processor {
 export const processor = (() => {
 
     const checkArray = (arr) => {
-        return arr && arr.length > 0;
-    }
-
+        return (Array.isArray(arr) || arr instanceof HTMLCollection || arr instanceof NodeList) && arr.length > 0;
+    };
+    
     const parseInput = (inputArr) => {
         if(checkArray(inputArr)){
             return inputArr.map(input => processor[input.id].process(input.value))

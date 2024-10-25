@@ -1,8 +1,3 @@
-import { createTodo } from "./todo-items";
-import { createProject, defaultProject } from "./projects";
-import { processor } from "./processor";
-import { domCreator } from "./dom-creator";
-
 export const domLoader = (() => {
 
     const getQuery = (selector, elem = document) => {
@@ -29,67 +24,6 @@ export const domLoader = (() => {
             console.warn(`${element} not found or does not contain remove function...`);
         }
     }
-
-    const showOnPage = (project) => {
-        const main = getQuery("#content");
-        main.replaceChildren();
-        project.forEach(todo => {
-            const div = document.createElement("div");
-            const text = todo.getText().map(text => domCreator.createElement("div", text));
-            const date = domCreator.createElement("div", todo.getDate().toString());
-            const priority = domCreator.createElement("div", todo.getPriority().getLevel());
-            const editBtn = domCreator.createElement("button", "Edit", { type: "submit" })
-            const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" })
-            deleteBtn.addEventListener("click", () => {
-                if(project === defaultProject.allTasks.getTodos()){
-                    defaultProject.allTasks.removeTodo(todo);
-                    if(todo.getProject().getTodos().includes(todo)){
-                        todo.getProject().removeTodo(todo);
-                    }
-                }
-                else {
-                    todo.getProject().removeTodo(todo);
-                }
-                showOnPage(todo.getProject().getTodos());
-            });
-            div.append(...text, date, priority, editBtn, deleteBtn);
-            main.append(div);
-        });
-    }
     
-    const submitProject = (form) => {
-        const ul = getQuery("#ownProjects")
-        const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
-        const userProject = createProject(textInput.value);
-        defaultProject.addProject(userProject);
-        const li = domCreator.createElement("li", userProject.getTitle());
-        const deleteBtn = domCreator.createElement("button", "Delete", { type: "submit" });
-        deleteBtn.addEventListener("click", (e) => {
-            defaultProject.removeProject(userProject);
-            e.target.parentElement.remove();
-        });
-        li.append(deleteBtn);
-        li.addEventListener("click", () => showOnPage(userProject.getTodos()));
-        appendChildToParent(li, ul);
-    }
-    
-    const submitForm = (form) => {
-        let inputArr = [];
-        let parsedInputs = [];
-        if(form && processor.checkArray(form.children)){
-            inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
-        }
-        if(processor.checkArray(inputArr)){
-            parsedInputs = processor.parseInput(inputArr);
-        }
-        if(processor.checkArray(parsedInputs)){
-            const todo = createTodo(parsedInputs);
-            defaultProject.allTasks.addTodo(todo);
-            if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
-                todo.getProject().addTodo(todo);
-            }
-        }
-    }
-    
-    return { getQuery, removeElement, appendChildToParent, submitForm, showOnPage, submitProject }
+    return { getQuery, removeElement, appendChildToParent }
 })();

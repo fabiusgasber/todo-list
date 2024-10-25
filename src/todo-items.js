@@ -31,6 +31,7 @@ export function createTodo(inputs){
         getDate,
         getPriority,
         getProject,
+        uuID: Math.floor(Math.random() * 100000),
         isTodoItem : true,
     };
 }
