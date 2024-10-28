@@ -21,7 +21,7 @@ export class PageAll extends Page {
     navigateTo(todoArrFt, projectArr){
         if(todoArrFt && projectArr && typeof todoArrFt === "function"){
             const todoArr = todoArrFt();
-            const main = domLoader.getQuery("#content");
+            const main = domLoader.getQuery("#main");
             main.replaceChildren();
             const todoDivs = domCreator.createTodoDivs(todoArr, projectArr);
             todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
