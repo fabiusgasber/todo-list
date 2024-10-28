@@ -61,7 +61,7 @@ nav li:hover {
     flex: 1;
 }
 
-.todo-date, .todo-priority, .todoDiv .button-div {
+.todoDiv > *:not(.todo-text) {
     display: flex;
     flex: 1;
 }
