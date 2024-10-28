@@ -1,5 +1,6 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
+import { Navigation, PageAll } from "./navigation";
 import { processor } from "./processor";
 import { createProject, defaultProject } from "./projects";
 import { createTodo } from "./todo-items";
@@ -48,7 +49,7 @@ export class ProjectSubmitAction extends Action {
     handleEvent(e){
         const form = e.target.form;
         if(form && processor.checkArray(form.children)){
-            const main = domLoader.getQuery("#content");
+            const main = domLoader.getQuery("#main");
             const ul = domLoader.getQuery("#ownProjects");
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
@@ -70,6 +71,8 @@ export class FormCancelAction extends Action {
     handleEvent(e){
         if(e && e.target.form){
             domLoader.removeElement(e.target.form);
+            domLoader.getQuery("#addTodo").style.display = "block";
+            domLoader.getQuery("#addProject").style.display = "block";
         }
     }
 }
@@ -101,7 +104,8 @@ export class TodoDeleteAction extends Action {
 
 export class AddTodoAction extends Action {
     handleEvent(){
-        const main = domLoader.getQuery("#content");
+        domLoader.getQuery("#addTodo").style.display = "none";
+        const main = domLoader.getQuery("#add-todo");
         const todoForm = domCreator.createTodoForm();
         todoForm.id = "todo-form";
         domLoader.appendChildToParent(todoForm, main);
@@ -110,7 +114,8 @@ export class AddTodoAction extends Action {
 
 export class AddProjectAction extends Action {
     handleEvent(){
-        const projectList = domLoader.getQuery("#ownProjects");
+        domLoader.getQuery("#addProject").style.display = "none";
+        const projectList = domLoader.getQuery("#add-project");
         const projectForm = domCreator.createProjectForm();
         domLoader.appendChildToParent(projectForm, projectList);
     }
