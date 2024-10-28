@@ -91,8 +91,9 @@ export class ProjectDeleteAction extends Action {
 
 export class TodoDeleteAction extends Action {
     handleEvent(e){
-        const projectID = e.target.parentElement.getAttribute("projectID");
-        const todoID = e.target.parentElement.getAttribute("todoID");
+        const todoDiv = e.target.closest(".todoDiv");
+        const projectID = todoDiv.getAttribute("projectID");
+        const todoID = todoDiv.getAttribute("todoID");
         const project = defaultProject.getProjects().find(project => project.uuID == projectID);
         const todo = project.getTodos().find(todo => todo.uuID == todoID);
         if(todo && project){
