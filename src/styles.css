@@ -5,10 +5,21 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: anton;
+    src: url(fonts/Anton/Anton-Regular.ttf);
+}
+
+@font-face {
+    font-family: roboto;
+    src: url(fonts/Roboto/Roboto-Regular.ttf);
+}
+
 body {
     display: grid;
     grid-template-columns: 1fr 2fr;
     column-gap: 1rem;
+    font-family: roboto;
 }
 
 ul {
@@ -64,4 +75,8 @@ nav li:hover {
 .todoDiv > *:not(.todo-text) {
     display: flex;
     flex: 1;
+}
+
+button {
+    font-family: inherit;
 }
