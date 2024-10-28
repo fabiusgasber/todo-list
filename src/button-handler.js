@@ -36,6 +36,7 @@ export class TodoSubmitAction extends Action {
                 if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
                     todo.getProject().addTodo(todo);
                 }
+                new Navigation(new PageAll(), todo.getProject().getTodos, todo.getProject()).execute();
             }
     
         }
