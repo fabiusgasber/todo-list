@@ -98,7 +98,7 @@ export class TodoDeleteAction extends Action {
         const todo = project.getTodos().find(todo => todo.uuID == todoID);
         if(todo && project){
             project.removeTodo(todo);
-            domLoader.removeElement(e.target.parentElement);
+            domLoader.removeElement(todoDiv);
         }
     }
 }
