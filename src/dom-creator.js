@@ -30,11 +30,11 @@ export const domCreator = (() => {
     const createTodoDivs = (projectArr, project) => {
         const todoDivs = projectArr.map((todo) => {
             const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
-            const textContent = createElement("div", "", { class: "text-content" });
+            const textContent = createElement("div", "", { class: "todo-text" });
             const todoText = todo.getText().map(text => createElement("p", text));
             textContent.append(...todoText);
-            const date = createElement("div", todo.getDate().toString(), );
-            const priority = createElement("div", todo.getPriority().getLevel());
+            const date = createElement("p", todo.getDate().toString());
+            const priority = createElement("p", todo.getPriority().getLevel());
             const buttonDiv = createElement("div", "", { class: "button-div" });
             const editBtn = createElement("button", "Edit", { type: "submit", class: "editTodo-btn" });
             const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteTodo-btn" });
