@@ -40,7 +40,7 @@ export class TodoSubmitAction extends Action {
             }
     
         }
-        domLoader.removeElement(form);
+        new FormCancelAction().handleEvent(e);
     }
 }
 
@@ -62,7 +62,7 @@ export class ProjectSubmitAction extends Action {
             domLoader.appendChildToParent(li, ul);
     
         }
-        domLoader.removeElement(form);
+        new FormCancelAction().handleEvent(e);
     }
 }
 
