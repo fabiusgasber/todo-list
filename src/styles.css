@@ -91,3 +91,7 @@ button {
     justify-content: space-evenly;
     align-items: center;
 }
+
+.inactive {
+    display: none;
+}
