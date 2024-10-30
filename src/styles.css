@@ -37,9 +37,15 @@ ul {
     list-style-type: none;
 }
 
-.button-div {
-    display: flex;
-    justify-content: space-evenly;
+
+li {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-rows: 1fr;
+    justify-items: center;
+    row-gap: 1rem;
+}
 }
 
 nav li:hover {
