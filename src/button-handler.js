@@ -50,7 +50,7 @@ export class ProjectSubmitAction extends Action {
         const form = e.target.form;
         if(form && processor.checkArray(form.children)){
             const main = domLoader.getQuery("#main");
-            const ul = domLoader.getQuery("#ownProjects");
+            const ul = domLoader.getQuery("#projects");
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
             defaultProject.addProject(userProject);
