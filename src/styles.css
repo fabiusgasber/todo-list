@@ -85,3 +85,9 @@ nav li:hover {
 button {
     font-family: inherit;
 }
+
+.button-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
