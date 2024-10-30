@@ -1,6 +1,3 @@
-import { Priority } from "./priorities";
-import { defaultProject } from "./projects";
-
 export const domCreator = (() => {
 
     const createElement = (tagName, text, attributes, selectOptions, optionValue) => {
@@ -56,30 +53,16 @@ export const domCreator = (() => {
         return li;
     } 
 
-
-    const createTodoForm = () => {
+    const createForm = () => {
         const form = createElement("form");
-        const title = createElement("input", "", { name: "title", class: "title", placeholder: "Title", id: "title"});
-        const description = createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" });
-        const date = createElement("input", "", { name: "date", class: "date", type: "date", id: "date" });
-        const priorities = createElement("select", "", { name: "priorities", id: "priority-select" }, Priority.acceptedLevels);
-        const projects = createElement("select", "", { name: "projects", id: "projects-select" }, defaultProject.getProjects().map(projects => projects.getTitle()));
-        const submitBtn = createElement("button", "Submit", { type: "button", class: "todo-submit-btn" });
-        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
-        form.append(title, description, date, priorities, projects, submitBtn, cancelBtn);
-        return form;
-    }
-
-    const createProjectForm = () => {
-        const form = createElement("form");
-        const name = createElement("input", "", { type: "text", placeholder: "Enter your projects name..." });
-        const submitBtn = createElement("button", "Add", { type: "button", class: "project-submit-btn" });
-        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
+        const name = createElement("input", "", { type: "text", placeholder: "Enter your name..." });
+        const submitBtn = createElement("button", "Add", { type: "button", class: "form-submit-btn" });
+        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "form-cancel-btn" });
         const buttonDiv = createElement("div", "", { class: "button-div" });
         buttonDiv.append(submitBtn, cancelBtn);
         form.append(name, buttonDiv);
         return form;
     }
 
-    return { createElement, createProjectForm, createTodoForm, createTodoDivs, createProjectListItem}
+    return { createElement, createForm, createTodoDivs, createProjectListItem}
 })();
