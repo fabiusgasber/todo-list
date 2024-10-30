@@ -103,21 +103,17 @@ export class TodoDeleteAction extends Action {
     }
 }
 
-export class AddTodoAction extends Action {
-    handleEvent(){
-        domLoader.getQuery("#addTodo").style.display = "none";
-        const main = domLoader.getQuery("#add-todo");
-        const todoForm = domCreator.createTodoForm();
-        todoForm.id = "todo-form";
-        domLoader.appendChildToParent(todoForm, main);
-    }
-}
-
-export class AddProjectAction extends Action {
-    handleEvent(){
-        domLoader.getQuery("#addProject").style.display = "none";
-        const projectList = domLoader.getQuery("#add-project");
-        const projectForm = domCreator.createProjectForm();
-        domLoader.appendChildToParent(projectForm, projectList);
+export class AddItemAction extends Action {
+    handleEvent(e){
+        e.target.closest(".add-btn").classList.add("inactive");
+        const container = e.target.closest(".add-item");
+        let form = domLoader.getQuery("form");
+        if(form) {
+            Array.from(document.querySelectorAll(".add-btn")).filter(button => button !== e.target.closest(".add-btn")).forEach(button => button.classList.remove("inactive"));
+        }
+        else {
+          form = domCreator.createForm();
+        }
+        domLoader.appendChildToParent(form, container);
     }
 }
