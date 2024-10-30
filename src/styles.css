@@ -1,8 +1,10 @@
-:root, ul, p {
+:root, ul, p, h1 {
     margin-block-start: 0;
     margin-block-end: 0;
     padding-inline-start: 0;
     box-sizing: border-box;
+    --main-accent-color: #FFD700;
+    --main-gap: 1rem;
 }
 
 @font-face {
@@ -35,6 +37,7 @@ ul {
     justify-items: center;
     align-items: start;
     list-style-type: none;
+    min-height: 300px;
 }
 
 
@@ -46,6 +49,9 @@ li {
     justify-items: center;
     row-gap: 1rem;
 }
+
+nav {
+    border: 1px solid var(--main-accent-color)
 }
 
 nav li:hover {
@@ -64,6 +70,7 @@ nav li:hover {
     display: flex;
     flex: 2;
     justify-content: start;
+    padding: 1rem;
 }
 
 .todo-text p {
