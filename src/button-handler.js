@@ -19,42 +19,18 @@ class Action {
     handleEvent(){};
 }
 
-export class TodoSubmitAction extends Action {
+export class FormSubmitAction extends Action {
     handleEvent(e){
         const form = e.target.form;
-        if(form && processor.checkArray(form.children)){
-            let inputArr = [];
-            let parsedInputs = [];
-            if(form && processor.checkArray(form.children)){
-                inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
-            }
-            if(processor.checkArray(inputArr)){
-                parsedInputs = processor.parseInput(inputArr);
-            }
-            if(processor.checkArray(parsedInputs)){
-                const todo = createTodo(parsedInputs);
-                defaultProject.allTasks.addTodo(todo);
-                if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
-                    todo.getProject().addTodo(todo);
-                }
-                new Navigation(new PageAll(), todo.getProject().getTodos, todo.getProject()).execute();
-            }
-    
-        }
-        new FormCancelAction().handleEvent(e);
-    }
-}
-
-export class ProjectSubmitAction extends Action {
-    handleEvent(e){
-        const form = e.target.form;
-        if(form && processor.checkArray(form.children)){
+        const container = e.target.closest(".add-item");
+        const button = Array.from(container.children).find(button => button.classList.contains("add-btn"));
+        if(form && processor.checkArray(form.children) && button.id === "addProject"){
             const main = domLoader.getQuery("#main");
             const ul = domLoader.getQuery("#projects");
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
             defaultProject.addProject(userProject);
-            const li = domCreator.createProjectListItem(userProject.getTitle());
+            const li = domCreator.createProjectListItem(userProject.getTitle(), userProject);
             li.addEventListener("click", () => {
                 main.replaceChildren();
                 const todoDivs = domCreator.createTodoDivs(userProject.getTodos(), userProject);
@@ -63,17 +39,12 @@ export class ProjectSubmitAction extends Action {
             domLoader.appendChildToParent(li, ul);
     
         }
-        new FormCancelAction().handleEvent(e);
-    }
-}
-
-export class FormCancelAction extends Action {
-    handleEvent(e){
-        if(e && e.target.form){
-            domLoader.removeElement(e.target.form);
-            domLoader.getQuery("#addTodo").style.display = "block";
-            domLoader.getQuery("#addProject").style.display = "block";
+        else if (form && processor.checkArray(form.children) && button.id === "addTodo") {
+            const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
+            const todo = createTodo(textInput.value);
+            todo.setProject(defaultProject.allTasks);
         }
+        new FormCancelAction().handleEvent(e);
     }
 }
 
@@ -103,7 +74,7 @@ export class TodoDeleteAction extends Action {
     }
 }
 
-export class AddItemAction extends Action {
+export class FormAddAction extends Action {
     handleEvent(e){
         e.target.closest(".add-btn").classList.add("inactive");
         const container = e.target.closest(".add-item");
@@ -115,5 +86,63 @@ export class AddItemAction extends Action {
           form = domCreator.createForm();
         }
         domLoader.appendChildToParent(form, container);
+    }
+}
+
+export class FormCancelAction extends Action {
+    handleEvent(e){
+        if(e && e.target.form){
+            domLoader.removeElement(e.target.form);
+            document.querySelectorAll(".add-btn").forEach(button => button.classList.remove("inactive"));
+        }
+    }
+}
+
+export class ChangeItemAction extends Action {
+    handleEvent(e){
+        const container = e.target.closest(".todoDiv");
+        const todoID = container.getAttribute("todoid");
+        const projectID = container.getAttribute("projectid");
+        const project = defaultProject.getProjects().find(projectItem => projectItem.uuID == projectID);
+        const todo = project.getTodos().find(todoItem => todoItem.uuID == todoID);
+        if (e.target.className && e.target.classList.contains("priority-select")) {
+            todo.getPriority().setLevel(e.target.value);
+        }
+        else if(e.target.tagName === "INPUT" && e.target.getAttribute("type") === "date"){
+            todo.getDate().setDate(e.target.value);
+        }
+    }
+}
+
+export class ChangeTextAction extends Action {
+    handleEvent(e){
+        if(e.target.classList.contains("todo-text")){
+            const container = e.target.closest(".todoDiv");
+            const todoID = container.getAttribute("todoid");
+            const projectID = container.getAttribute("projectid");
+            const project = defaultProject.getProjects().find(projectItem => projectItem.uuID == projectID);
+            const todo = project.getTodos().find(todoItem => todoItem.uuID == todoID);
+            const textContainer = e.target;
+            const textInput = domCreator.createElement("input", "", { value: e.target.textContent });
+            textInput.addEventListener("focusout", (e) => {
+                todo.setTitle(e.target.value);
+                textContainer.replaceChildren();
+                textContainer.textContent = e.target.value;
+           });
+            textContainer.replaceChildren(textInput);
+        }
+        else if(e.target.classList.contains("projectTitle")){
+            const container = e.target.closest(".project-li");
+            const textContainer = e.target;
+            const projectID = container.getAttribute("projectid");
+            const project = defaultProject.getProjects().find(projectItem => projectItem.uuID == projectID);
+            const textInput = domCreator.createElement("input", "", { value: e.target.textContent });
+            textInput.addEventListener("focusout", (e) => {
+                project.setTitle(e.target.value);
+                textContainer.replaceChildren();
+                textContainer.textContent = e.target.value;
+           });
+            textContainer.replaceChildren(textInput);
+        }    
     }
 }

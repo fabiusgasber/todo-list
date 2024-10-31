@@ -1,3 +1,5 @@
+import { Priority } from "./priorities";
+
 export const domCreator = (() => {
 
     const createElement = (tagName, text, attributes, selectOptions, optionValue) => {
@@ -28,27 +30,25 @@ export const domCreator = (() => {
         const todoDivs = projectArr.map((todo) => {
             const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
             const textContent = createElement("div", "", { class: "todo-text" });
-            const todoText = todo.getText().map(text => createElement("p", text));
-            textContent.append(...todoText);
-            const date = createElement("p", todo.getDate().toString());
-            const priority = createElement("p", todo.getPriority().getLevel());
+            const title = todo.getTitle();
+            textContent.append(title);
+            const date = createElement("input", "", { type: "date", value: todo.getDate().toString()});
+            const priority = createElement("select", "", { class: "priority-select" }, Priority.acceptedLevels, todo.getPriority().getLevel());
             const buttonDiv = createElement("div", "", { class: "button-div" });
-            const editBtn = createElement("button", "Edit", { type: "submit", class: "editTodo-btn" });
             const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteTodo-btn" });
-            buttonDiv.append(editBtn, deleteBtn);
+            buttonDiv.append(deleteBtn);
             div.append(textContent, date, priority, buttonDiv);
             return div;
         });
         return todoDivs;
     }
 
-    const createProjectListItem = (text) => {
-        const li = createElement("li", "", { class: "project-li" });
+    const createProjectListItem = (text, project) => {
+        const li = createElement("li", "", { class: "project-li", projectID: `${ project.uuID }` });
         const p = createElement("p", text, { class: "projectTitle" });
-        const editBtn = createElement("button", "Edit", { type: "submit", class: "editProject-btn"  })
         const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteProject-btn" });
         const buttonDiv = createElement("div", "", { class: "button-div" });
-        buttonDiv.append(editBtn, deleteBtn);
+        buttonDiv.append(deleteBtn);
         li.append(p, buttonDiv);
         return li;
     } 

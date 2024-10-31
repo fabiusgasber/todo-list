@@ -1,37 +1,44 @@
 import { DueDate } from "./duedate";
 import { Priority } from "./priorities";
 
-export function createTodo(inputs){
+export function createTodo(title){
 
     let completed = false;
+    let project = null;
+    let todoTitle = title;
+
     const getCompleted = () => completed;
     const setCompleted = (hasCompleted) => completed = hasCompleted;
 
-    const getInfo = (className) => {
-        if(className && typeof className.prototype === "object"){
-           return inputs.find(input => input instanceof className);
-        }
-        else {
-          return console.warn(`Invalid class name ${className}`);
+    const getTitle = () => todoTitle;
+    const setTitle = (newTitle) => todoTitle = newTitle;
+
+    const getProject = () => project;
+    const setProject = (newProject) => {
+        if (newProject && typeof newProject.addTodo === "function") {
+            project = newProject;
+            project.addTodo(todo);
         }
     }
 
-    const getProject = () => inputs.find(input => input && input.hasOwnProperty("isProject") && input.isProject === true);
+    const dueDate = new DueDate("");
+    const getDate = () => dueDate;
 
-    const getText = () => inputs.filter(input => typeof input === 'string' || input instanceof String);
+    const priority = new Priority();
+    const getPriority = () => priority;
 
-    const getDate = () => getInfo(DueDate);
-
-    const getPriority = () => getInfo(Priority);
-
-    return { 
+    const todo = { 
         getCompleted, 
         setCompleted,
-        getText,
+        getTitle,
+        setTitle,
         getDate,
         getPriority,
         getProject,
+        setProject,
         uuID: Math.floor(Math.random() * 100000),
         isTodoItem : true,
     };
+
+    return todo;
 }

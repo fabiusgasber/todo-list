@@ -1,3 +1,4 @@
+import { ButtonHandler, ChangeItemAction, ChangeTextAction } from "./button-handler";
 import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
 import "./styles.css"
@@ -14,6 +15,13 @@ const setUpListeners = () => {
     const defaultProjects = Array.from(document.querySelectorAll("li"));
     defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
 
+    const main = document.querySelector("#main");
+    main.addEventListener("input", (e) => new ButtonHandler(new ChangeItemAction()).execute(e));
+
+    main.addEventListener("click", (e) => new ButtonHandler(new ChangeTextAction()).execute(e));
+
+    const projectContainer = domLoader.getQuery("#projects");
+    projectContainer.addEventListener("click", (e) => new ButtonHandler(new ChangeTextAction()).execute(e));
 }
 
 const handleClick = (e, obj) => {
