@@ -78,3 +78,18 @@ button {
 .inactive {
     display: none;
 }
+
+.add-btn {
+    appearance: none;
+    padding: 10px 25px;
+    font-size: 15px;
+    background-color: transparent;
+    border: 2px solid black;
+    box-shadow: 5px 5px 0px 0px black;
+    font-weight: bold;
+}
+
+.add-btn:hover {
+    background-color: var(--main-accent-color);
+    transition-duration: 0.5s;
+}
