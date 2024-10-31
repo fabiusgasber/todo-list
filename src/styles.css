@@ -105,3 +105,11 @@ button {
     background-color: var(--main-accent-color);
     transition-duration: 0.5s;
 }
+
+body > h1 {
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-size: 50px;
+    font-weight: 900;
+    font-family: poppins;
+}
