@@ -17,6 +17,12 @@
     src: url(fonts/Roboto/Roboto-Regular.ttf);
 }
 
+@font-face {
+    font-family: poppins;
+    src: url(fonts/Poppins/Poppins-Black.ttf);
+    font-weight: 900;
+}
+
 body {
     display: grid;
     grid-template-columns: 1fr 3fr;
