@@ -102,7 +102,7 @@ button {
     font-weight: bold;
 }
 
-.add-btn:hover {
+.add-btn:hover, .checker:hover {
     background-color: var(--main-accent-color);
     transition-duration: 0.5s;
 }
@@ -165,9 +165,20 @@ input, select {
     opacity: 0.7;
 }
 
-.delete-div {
+.delete-div, .deleteProject-btn {
     border: none;
     background-color: red;
     background-image: url(/icons8-delete-500.png);
     background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.deleteProject-btn {
+    width: 15px;
+    height: 15px;
+}
+
+.delete-div:hover {
+    background-color: rgb(197, 0, 0);
+    transition-duration: 0.5s;
 }
