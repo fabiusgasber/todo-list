@@ -1,4 +1,4 @@
-import { ButtonHandler, FormSubmitAction, FormCancelAction, ProjectDeleteAction, TodoDeleteAction, FormAddAction } from "./button-handler";
+import { ButtonHandler, FormSubmitAction, FormCancelAction, ProjectDeleteAction, TodoDeleteAction, FormAddAction, TodoCompleteAction } from "./button-handler";
 import { Navigation, PageAll } from "./navigation";
 import { defaultProject } from "./projects";
 
@@ -15,9 +15,11 @@ export const logicHandler = (() => {
             "form-submit-btn": new ButtonHandler(new FormSubmitAction()),
             "form-cancel-btn": new ButtonHandler(new FormCancelAction()),
             "deleteProject-btn": new ButtonHandler(new ProjectDeleteAction()),
-            "deleteTodo-btn": new ButtonHandler(new TodoDeleteAction()),
+            "delete-div": new ButtonHandler(new TodoDeleteAction()),
             "addTodo": new ButtonHandler(new FormAddAction()),
             "addProject": new ButtonHandler(new FormAddAction()),
+            "checker": new ButtonHandler(new TodoCompleteAction()),
+            "checker checked": new ButtonHandler(new TodoCompleteAction()),
         },
     }
 

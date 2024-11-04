@@ -146,3 +146,11 @@ export class ChangeTextAction extends Action {
         }    
     }
 }
+
+export class TodoCompleteAction extends Action {
+    handleEvent(e){
+       e.target.classList.toggle("checked");
+       e.target.nextSibling.classList.toggle("line-through");
+       e.target.nextSibling.classList.toggle("faded");
+    }
+}

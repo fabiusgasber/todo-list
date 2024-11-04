@@ -33,11 +33,12 @@ export const domCreator = (() => {
             const title = todo.getTitle();
             textContent.append(title);
             const date = createElement("input", "", { type: "date", value: todo.getDate().toString()});
+            const checker = createElement("div", "", { class: "checker" });
+            const priorityDiv = createElement("div", "", { class: "select-wrapper" });
             const priority = createElement("select", "", { class: "priority-select" }, Priority.acceptedLevels, todo.getPriority().getLevel());
-            const buttonDiv = createElement("div", "", { class: "button-div" });
-            const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteTodo-btn" });
-            buttonDiv.append(deleteBtn);
-            div.append(textContent, date, priority, buttonDiv);
+            priorityDiv.append(priority);
+            const deleteDiv = createElement("div", "", { class: "delete-div" });
+            div.append(checker, textContent, date, priorityDiv, deleteDiv);
             return div;
         });
         return todoDivs;
