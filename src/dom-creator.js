@@ -56,7 +56,7 @@ export const domCreator = (() => {
 
     const createForm = () => {
         const form = createElement("form");
-        const name = createElement("input", "", { type: "text", placeholder: "Enter your name..." });
+        const name = createElement("input", "", { type: "text", placeholder: "Enter your title..." });
         const submitBtn = createElement("button", "Add", { type: "button", class: "form-submit-btn" });
         const cancelBtn = createElement("button", "Cancel", { type: "button", class: "form-cancel-btn" });
         const buttonDiv = createElement("div", "", { class: "button-div" });
