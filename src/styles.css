@@ -56,6 +56,8 @@ ul {
 .project-li {
     display: flex;
     gap: 1rem;
+    align-items: center;
+    justify-content: center;
 }
 
 nav li:hover {
@@ -176,9 +178,35 @@ input, select {
 .deleteProject-btn {
     width: 15px;
     height: 15px;
+    border-radius: 50%;
 }
 
-.delete-div:hover {
+.delete-div:hover, .deleteProject-btn:hover {
     background-color: rgb(197, 0, 0);
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+form input {
+    box-shadow: var(--main-box-shadow) black;
+}
+
+form .button-div {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+form .button-div button {
+    appearance: none;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    background-color: transparent;
+    border: 2px solid black;
+    box-shadow: var(--main-box-shadow) black;
+}
+
+form .button-div button:hover {
+    background-color: var(--main-accent-color);
     transition-duration: 0.5s;
 }
