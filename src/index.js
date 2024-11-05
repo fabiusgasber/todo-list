@@ -1,6 +1,8 @@
 import { ButtonHandler, ChangeItemAction, ChangeTextAction } from "./button-handler";
+import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
+import { defaultProject } from "./projects";
 import "./styles.css"
 
 function init() {
@@ -12,8 +14,38 @@ const setUpListeners = () => {
     const body = domLoader.getQuery("body");
     body.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.buttonAction ));
 
-    const defaultProjects = Array.from(document.querySelectorAll("li"));
-    defaultProjects.forEach(project => project.addEventListener("click", (e) => handleClick(e, logicHandler.getLogicObject()?.navigation)));  
+    const nav = document.querySelector("nav");
+    nav.addEventListener("click", (e) => {
+        const li = e.target.closest("li");
+        if(li){
+          domLoader.getQuery("#main").replaceChildren();
+          const projectID = li.getAttribute("projectid");
+          domLoader.getQuery("#main").append(domCreator.createElement("h1", e.target.textContent, { id: "page-title", projectid: projectID}));
+          if(projectID){
+            const project = defaultProject.getProjects().find(project => project.uuID == projectID);
+            const todoDivs = domCreator.createTodoDivs(project.getTodos(), project);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+          }
+          else if(li.getAttribute("id") === "all"){
+            li.classList.add("active");
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getTodos(), defaultProject.allTasks);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+          }
+          else if(li.getAttribute("id") === "today"){
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getToday(), defaultProject.allTasks);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+          }
+          else if(li.getAttribute("id") === "week"){
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getWeek(), defaultProject.allTasks);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+          }
+          else if(li.getAttribute("id") === "important"){
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getImportant(), defaultProject.allTasks);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+          }
+
+        }
+    });
 
     const main = document.querySelector("#main");
     main.addEventListener("input", (e) => new ButtonHandler(new ChangeItemAction()).execute(e));

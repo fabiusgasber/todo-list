@@ -1,6 +1,5 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
-import { Navigation, PageAll } from "./navigation";
 import { processor } from "./processor";
 import { createProject, defaultProject } from "./projects";
 import { createTodo } from "./todo-items";
@@ -25,24 +24,26 @@ export class FormSubmitAction extends Action {
         const container = e.target.closest(".add-item");
         const button = Array.from(container.children).find(button => button.classList.contains("add-btn"));
         if(form && processor.checkArray(form.children) && button.id === "addProject"){
-            const main = domLoader.getQuery("#main");
             const ul = domLoader.getQuery("#projects");
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
             defaultProject.addProject(userProject);
             const li = domCreator.createProjectListItem(userProject.getTitle(), userProject);
-            li.addEventListener("click", () => {
-                main.replaceChildren();
-                const todoDivs = domCreator.createTodoDivs(userProject.getTodos(), userProject);
-                todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
-            });
             domLoader.appendChildToParent(li, ul);
-    
         }
         else if (form && processor.checkArray(form.children) && button.id === "addTodo") {
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const todo = createTodo(textInput.value);
-            todo.setProject(defaultProject.allTasks);
+            const projectTitle = domLoader.getQuery("#page-title");
+            const projectID = projectTitle.getAttribute("projectid");
+            const project = defaultProject.getProjects().find(project => project.uuID == projectID);
+            if (project){
+                todo.setProject(project)
+                defaultProject.allTasks.addTodo(todo);
+            }
+            else {
+               todo.setProject(defaultProject.allTasks);
+            }
         }
         new FormCancelAction().handleEvent(e);
     }
@@ -68,6 +69,7 @@ export class TodoDeleteAction extends Action {
         const project = defaultProject.getProjects().find(project => project.uuID == projectID);
         const todo = project.getTodos().find(todo => todo.uuID == todoID);
         if(todo && project){
+            defaultProject.allTasks.removeTodo(todo);
             project.removeTodo(todo);
             domLoader.removeElement(todoDiv);
         }
@@ -131,19 +133,6 @@ export class ChangeTextAction extends Action {
            });
             textContainer.replaceChildren(textInput);
         }
-        else if(e.target.classList.contains("projectTitle")){
-            const container = e.target.closest(".project-li");
-            const textContainer = e.target;
-            const projectID = container.getAttribute("projectid");
-            const project = defaultProject.getProjects().find(projectItem => projectItem.uuID == projectID);
-            const textInput = domCreator.createElement("input", "", { value: e.target.textContent });
-            textInput.addEventListener("focusout", (e) => {
-                project.setTitle(e.target.value);
-                textContainer.replaceChildren();
-                textContainer.textContent = e.target.value;
-           });
-            textContainer.replaceChildren(textInput);
-        }    
     }
 }
 
