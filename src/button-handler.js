@@ -1,6 +1,5 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
-import { processor } from "./processor";
 import { createProject, defaultProject } from "./projects";
 import { createTodo } from "./todo-items";
 
@@ -23,7 +22,7 @@ export class FormSubmitAction extends Action {
         const form = e.target.form;
         const container = e.target.closest(".add-item");
         const button = Array.from(container.children).find(button => button.classList.contains("add-btn"));
-        if(form && processor.checkArray(form.children) && button.id === "addProject"){
+        if(form && form.children && button.id === "addProject"){
             const ul = domLoader.getQuery("#projects");
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
@@ -31,7 +30,7 @@ export class FormSubmitAction extends Action {
             const li = domCreator.createProjectListItem(userProject.getTitle(), userProject);
             domLoader.appendChildToParent(li, ul);
         }
-        else if (form && processor.checkArray(form.children) && button.id === "addTodo") {
+        else if (form && form.children && button.id === "addTodo") {
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const todo = createTodo(textInput.value);
             const projectTitle = domLoader.getQuery("#page-title");
@@ -40,9 +39,13 @@ export class FormSubmitAction extends Action {
             if (project){
                 todo.setProject(project)
                 defaultProject.allTasks.addTodo(todo);
+                const nav = document.querySelector("#projects");
+                const li = Array.from(nav.children).find(project => project.getAttribute("projectid") == projectID);
+                li.click();
             }
             else {
                todo.setProject(defaultProject.allTasks);
+               domLoader.getQuery("#all").click();
             }
         }
         new FormCancelAction().handleEvent(e);
