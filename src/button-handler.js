@@ -29,6 +29,7 @@ export class FormSubmitAction extends Action {
             defaultProject.addProject(userProject);
             const li = domCreator.createProjectListItem(userProject.getTitle(), userProject);
             domLoader.appendChildToParent(li, ul);
+            li.click();
         }
         else if (form && form.children && button.id === "addTodo") {
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
