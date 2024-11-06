@@ -41,7 +41,6 @@ body {
 header {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
-    border: 2px solid black;
 }
 
 ul {
@@ -49,7 +48,7 @@ ul {
     grid-template-columns: 1fr;
     grid-auto-rows: minmax(50px, 1fr);
     justify-items: center;
-    align-items: start;
+    align-items: center;
     list-style-type: none;
 }
 
@@ -58,6 +57,10 @@ ul {
     gap: 1rem;
     align-items: center;
     justify-content: center;
+}
+
+nav {
+    border: 2px solid black;
 }
 
 nav li:hover {
@@ -74,10 +77,12 @@ nav li:hover {
 .todoDiv {
     display: grid;
     align-items: center;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
     gap: 1rem;
-    border: 2px solid var(--main-accent-color);
+    border: 2px solid black;
     justify-items: center;
+    box-shadow: var(--main-box-shadow);
+    background-color: var(--main-accent-color);
 }
 
 button {
@@ -104,7 +109,7 @@ button {
     font-weight: bold;
 }
 
-.add-btn:hover, .checker:hover {
+.add-btn:hover {
     background-color: var(--main-accent-color);
     transition-duration: 0.5s;
 }
@@ -152,13 +157,11 @@ input, select {
     border-radius: 50%;
     height: 25px;
     width: 25px;
-    border: 1px solid black;
+    border: 2px solid black;
 }
 
 .checker.checked {
-    border: 1px solid var(--main-accent-color);
-    background-color: var(--main-accent-color);
-    background-image: url(/icons8-check-500.png);
+    background-image: url(/icons8-done-500.png);
     background-size: cover;
 }
 
@@ -169,8 +172,7 @@ input, select {
 
 .delete-div, .deleteProject-btn {
     border: none;
-    background-color: red;
-    background-image: url(/icons8-delete-500.png);
+    background-image: url(/icons8-delete-480.png);
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -182,10 +184,19 @@ input, select {
 }
 
 .delete-div:hover, .deleteProject-btn:hover {
-    background-color: rgb(197, 0, 0);
-    transition-duration: 0.5s;
     cursor: pointer;
+    animation-name: shake;
+    animation-duration: 0.2s;
 }
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }  
+  }
 
 form input {
     box-shadow: var(--main-box-shadow) black;
@@ -209,4 +220,18 @@ form .button-div button {
 form .button-div button:hover {
     background-color: var(--main-accent-color);
     transition-duration: 0.5s;
+}
+
+#projects li, li {
+    font-family: monospace;
+    font-size: inherit;
+}
+
+#projects li:hover:not(.project-li), .project-li .projectTitle:hover {
+    background-color: var(--main-accent-color);
+    transition-duration: 0.5s;
+}
+
+.todoDiv.done {
+    background-color: green;
 }
