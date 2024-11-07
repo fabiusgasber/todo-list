@@ -95,6 +95,11 @@ export class TodoDeleteAction extends Action {
         if(todo && project){
             defaultProject.allTasks.removeTodo(todo);
             project.removeTodo(todo);
+            let storedData = userStorage.getData("projects");
+            let storedProject = storedData.find(data => data.projectID == projectID);
+            let storedTodo = storedProject.todos.find(data => data.todoID == todoID);
+            storedProject.todos.splice(storedProject.todos.indexOf(storedTodo), 1);
+            userStorage.addData("projects", storedData);
             domLoader.removeElement(todoDiv);
         }
     }
@@ -165,5 +170,6 @@ export class TodoCompleteAction extends Action {
        e.target.classList.toggle("checked");
        e.target.nextSibling.classList.toggle("line-through");
        e.target.nextSibling.classList.toggle("faded");
+       e.target.closest(".todoDiv").classList.toggle("done");
     }
 }
