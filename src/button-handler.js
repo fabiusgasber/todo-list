@@ -136,12 +136,18 @@ export class ChangeItemAction extends Action {
         const projectID = container.getAttribute("projectid");
         const project = defaultProject.getProjects().find(projectItem => projectItem.uuID == projectID);
         const todo = project.getTodos().find(todoItem => todoItem.uuID == todoID);
+        let storedData = userStorage.getData("projects");
+        let storedProject = storedData.find(data => data.projectID == projectID);
+        let storedTodo = storedProject.todos.find(data => data.todoID == todoID);
         if (e.target.className && e.target.classList.contains("priority-select")) {
             todo.getPriority().setLevel(e.target.value);
+            storedTodo.priority = todo.getPriority().getLevel();
         }
         else if(e.target.tagName === "INPUT" && e.target.getAttribute("type") === "date"){
             todo.getDate().setDate(e.target.value);
+            storedTodo.date = todo.getDate().toString();
         }
+        userStorage.addData("projects", storedData);
     }
 }
 
