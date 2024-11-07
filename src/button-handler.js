@@ -47,9 +47,21 @@ export class FormSubmitAction extends Action {
                 const nav = document.querySelector("#projects");
                 const li = Array.from(nav.children).find(project => project.getAttribute("projectid") == projectID);
                 li.click();
+                let storedData = userStorage.getData("projects");
+                const storedProject = storedData.find(data => data.projectID === project.uuID);
+                storedProject.todos = project.getTodos().map(todo => ({title: todo.getTitle(), completed: todo.getCompleted(), date: todo.getDate().toString(), priority: todo.getPriority().getLevel()}));
+                userStorage.addData("projects", storedData);
             }
             else {
                todo.setProject(defaultProject.allTasks);
+               let storedData = userStorage.getData("projects");
+               let storedProject = storedData.find(data => data.projectID === defaultProject.allTasks.uuID);
+               if(!storedProject) {
+                storedData.push({title: defaultProject.allTasks.getTitle(), todos: defaultProject.allTasks.getTodos(), projectID: defaultProject.allTasks.uuID});
+                storedProject = storedData.find(data => data.projectID === defaultProject.allTasks.uuID);
+               }
+               storedProject.todos = defaultProject.allTasks.getTodos().map(todo => ({title: todo.getTitle(), completed: todo.getCompleted(), date: todo.getDate().toString(), priority: todo.getPriority().getLevel(), todoID: todo.uuID}));
+               userStorage.addData("projects", storedData);
                domLoader.getQuery("#all").click();
             }
         }
