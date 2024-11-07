@@ -1,6 +1,7 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { createProject, defaultProject } from "./projects";
+import { userStorage } from "./user-storage";
 import { createTodo } from "./todo-items";
 
 export class ButtonHandler {
@@ -27,6 +28,9 @@ export class FormSubmitAction extends Action {
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
             defaultProject.addProject(userProject);
+            let storedData = userStorage.getData("projects");
+            storedData.push({title: userProject.getTitle(), todos: userProject.getTodos(), projectID: userProject.uuID});
+            userStorage.addData("projects", storedData);
             const li = domCreator.createProjectListItem(userProject.getTitle(), userProject);
             domLoader.appendChildToParent(li, ul);
             li.click();
