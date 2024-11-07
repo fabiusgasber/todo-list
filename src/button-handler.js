@@ -75,6 +75,10 @@ export class ProjectDeleteAction extends Action {
        const projectTitle = Array.from(projectItem.children).find(element => element.className === "projectTitle");
        if(projectTitle && typeof projectTitle.textContent === "string" || projectTitle.textContent instanceof String){
         const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
+        let storedData = userStorage.getData("projects");
+        let storedProject = storedData.find(data => data.projectID === userProject.uuID);
+        storedData.splice(storedData.indexOf(storedProject), 1);
+        userStorage.addData("projects", storedData);
         defaultProject.removeProject(userProject);
         domLoader.removeElement(projectItem);
        }
