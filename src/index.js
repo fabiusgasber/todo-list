@@ -97,6 +97,10 @@ const displayStorage = () => {
       const li = domCreator.createProjectListItem(project.getTitle(), project);
       const ul = domLoader.getQuery("#projects");
       domLoader.appendChildToParent(li, ul);  
+      storedProject.todos.forEach(data => {
+        const test = defaultProject.allTasks.getTodos().find(defaultTodo => defaultTodo.getUUID() == data.todoID);
+        project.addTodo(test);
+      });
     }
   });
 }

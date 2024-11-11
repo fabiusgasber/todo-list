@@ -168,12 +168,15 @@ export class ChangeTextAction extends Action {
             const textInput = domCreator.createElement("input", "", { value: e.target.textContent });
             let storedData = userStorage.getData("projects");
             let storedProject = storedData.find(data => data.projectID == projectID);
-            let storedTodo = storedProject.todos.find(data => data.todoID == todoID);    
+            let storedTodo = storedProject.todos.find(data => data.todoID == todoID);   
+            let storedDefaultProject = storedData.find(data => data.title == "default");
+            let storedDefaultTodo = storedDefaultProject.todos.find(data => data.todoID == todoID); 
             textInput.addEventListener("focusout", (e) => {
                 todo.setTitle(e.target.value);
                 textContainer.replaceChildren();
                 textContainer.textContent = e.target.value;
                 storedTodo.title = todo.getTitle();
+                storedDefaultTodo.title = todo.getTitle();
                 userStorage.addData("projects", storedData);
            });
             textContainer.replaceChildren(textInput);
