@@ -4,8 +4,15 @@ import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
 import { defaultProject } from "./projects";
 import "./styles.css"
+import { userStorage } from "./user-storage";
 
 function init() {
+    let storedData = userStorage.getData("projects");
+    let storedProject = storedData.find(data => data.title == "default");
+    if(!storedProject) {
+     storedData.push({title: defaultProject.allTasks.getTitle(), todos: defaultProject.allTasks.getTodos(), projectID: defaultProject.allTasks.uuID});
+     userStorage.addData("projects", storedData);
+    }
     setUpListeners();
 }
 
