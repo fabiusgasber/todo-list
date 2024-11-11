@@ -26,9 +26,9 @@ export const domCreator = (() => {
         }
     }
 
-    const createTodoDivs = (projectArr, project) => {
+    const createTodoDivs = (projectArr, projectUUID) => {
         const todoDivs = projectArr.map((todo) => {
-            const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
+            const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.getUUID() }`, projectID: `${ projectUUID }` } );
             const textContent = createElement("div", "", { class: "todo-text" });
             const title = todo.getTitle();
             textContent.append(title);
@@ -45,7 +45,7 @@ export const domCreator = (() => {
     }
 
     const createProjectListItem = (text, project) => {
-        const li = createElement("li", "", { class: "project-li", projectID: `${ project.uuID }` });
+        const li = createElement("li", "", { class: "project-li", projectID: `${ project.getUUID() }` });
         const p = createElement("p", text, { class: "projectTitle" });
         const deleteBtn = createElement("div", "", { class: "deleteProject-btn" });
         const buttonDiv = createElement("div", "", { class: "button-div" });

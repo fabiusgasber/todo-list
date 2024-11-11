@@ -1,5 +1,7 @@
 export function createProject(title) {
 
+    let uuID = Math.floor(Math.random() * 100000);
+
     const getTitle = () => title;
     const setTitle = (newTitle) => title = newTitle;
 
@@ -16,8 +18,11 @@ export function createProject(title) {
     const getWeek = () => todoItems.filter(task => task.getDate()?.isDueNextWeek());
 
     const getImportant = () => todoItems.filter(task => task.getPriority()?.getLevel() === "high");
+
+    const getUUID = () => uuID;
+    const setUUID = (newUUID) => uuID = newUUID; 
     
-    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant, isProject: true, uuID: Math.floor(Math.random() * 10000) };
+    return { getTitle, setTitle, getTodos, addTodo, removeTodo, getToday, getWeek, getImportant, isProject: true, getUUID, setUUID};
 };
 
 export const defaultProject = (function defaultProject () {

@@ -6,6 +6,7 @@ export function createTodo(title){
     let completed = false;
     let project = null;
     let todoTitle = title;
+    let uuID = Math.floor(Math.random() * 100000);
 
     const getCompleted = () => completed;
     const setCompleted = (hasCompleted) => completed = hasCompleted;
@@ -27,6 +28,9 @@ export function createTodo(title){
     const priority = new Priority();
     const getPriority = () => priority;
 
+    const getUUID = () => uuID;
+    const setUUID = (newUUID) => uuID = newUUID; 
+
     const todo = { 
         getCompleted, 
         setCompleted,
@@ -36,7 +40,8 @@ export function createTodo(title){
         getPriority,
         getProject,
         setProject,
-        uuID: Math.floor(Math.random() * 100000),
+        getUUID,
+        setUUID,
         isTodoItem : true,
     };
 

@@ -2,16 +2,20 @@ import { ButtonHandler, ChangeItemAction, ChangeTextAction } from "./button-hand
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
 import { logicHandler } from "./logic-handler";
-import { defaultProject } from "./projects";
+import { createProject, defaultProject } from "./projects";
 import "./styles.css"
+import { createTodo } from "./todo-items";
 import { userStorage } from "./user-storage";
 
 function init() {
     let storedData = userStorage.getData("projects");
     let storedProject = storedData.find(data => data.title == "default");
     if(!storedProject) {
-     storedData.push({title: defaultProject.allTasks.getTitle(), todos: defaultProject.allTasks.getTodos(), projectID: defaultProject.allTasks.uuID});
+     storedData.push({title: defaultProject.allTasks.getTitle(), todos: defaultProject.allTasks.getTodos(), projectID: defaultProject.allTasks.getUUID()});
      userStorage.addData("projects", storedData);
+    }
+    else {
+      displayStorage();
     }
     setUpListeners();
 }
@@ -29,25 +33,24 @@ const setUpListeners = () => {
           const projectID = li.getAttribute("projectid");
           domLoader.getQuery("#main").append(domCreator.createElement("h1", e.target.textContent, { id: "page-title", projectid: projectID}));
           if(projectID){
-            const project = defaultProject.getProjects().find(project => project.uuID == projectID);
-            const todoDivs = domCreator.createTodoDivs(project.getTodos(), project);
-            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
+            const project = defaultProject.getProjects().find(project => project.getUUID() == projectID);
+            const todoDivs = domCreator.createTodoDivs(project.getTodos(), projectID);
+            todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
           }
           else if(li.getAttribute("id") === "all"){
-            li.classList.add("active");
-            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getTodos(), defaultProject.allTasks);
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getTodos(), defaultProject.allTasks.getUUID());
             todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
           }
           else if(li.getAttribute("id") === "today"){
-            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getToday(), defaultProject.allTasks);
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getToday(), defaultProject.allTasks.getUUID());
             todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
           }
           else if(li.getAttribute("id") === "week"){
-            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getWeek(), defaultProject.allTasks);
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getWeek(), defaultProject.allTasks.getUUID());
             todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
           }
           else if(li.getAttribute("id") === "important"){
-            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getImportant(), defaultProject.allTasks);
+            const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getImportant(), defaultProject.allTasks.getUUID());
             todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));    
           }
 
@@ -69,6 +72,33 @@ const handleClick = (e, obj) => {
     if(element && typeof element.execute === "function"){
         element.execute(e);
     }
+}
+
+const displayStorage = () => {
+  const storedDefaultProject = userStorage.getData("projects").find(project => project.title == "default");
+  const defaultTodos = storedDefaultProject.todos;
+  defaultProject.allTasks.setTitle(storedDefaultProject.title);
+  defaultProject.allTasks.setUUID(storedDefaultProject.projectID);
+  defaultTodos.forEach(storedTodo => {
+    const todo = createTodo(storedTodo.title);
+    todo.getDate().setDate(storedTodo.date);
+    todo.getPriority().setLevel(storedTodo.priority);
+    todo.setCompleted(storedTodo.completed);
+    todo.setUUID(storedTodo.todoID);
+    defaultProject.allTasks.addTodo(todo);
+  });
+  const todoDivs = domCreator.createTodoDivs(defaultProject.allTasks.getTodos(), defaultProject.allTasks.getUUID());
+  todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
+  userStorage.getData("projects").forEach(storedProject => {
+    if(storedProject.title !== "default"){
+      const project = createProject(storedProject.title);
+      project.setUUID(storedProject.projectID);
+      defaultProject.addProject(project);
+      const li = domCreator.createProjectListItem(project.getTitle(), project);
+      const ul = domLoader.getQuery("#projects");
+      domLoader.appendChildToParent(li, ul);  
+    }
+  });
 }
 
 init();
