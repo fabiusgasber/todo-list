@@ -1,7 +1,7 @@
 import { domCreator } from "./dom-creator";
 import { domLoader } from "./dom-loader";
-import { processor } from "./processor";
 import { createProject, defaultProject } from "./projects";
+import { userStorage } from "./user-storage";
 import { createTodo } from "./todo-items";
 
 export class ButtonHandler {
@@ -18,97 +18,177 @@ class Action {
     handleEvent(){};
 }
 
-export class TodoSubmitAction extends Action {
+export class FormSubmitAction extends Action {
     handleEvent(e){
-        const form = e.target.parentElement;
-        if(form && processor.checkArray(form.children)){
-            let inputArr = [];
-            let parsedInputs = [];
-            if(form && processor.checkArray(form.children)){
-                inputArr = Array.from(form.children).filter(element => element.tagName === "SELECT" || element.tagName === "INPUT").map(input => ({ type: input.type, value: input.value, id: input.id }));
-            }
-            if(processor.checkArray(inputArr)){
-                parsedInputs = processor.parseInput(inputArr);
-            }
-            if(processor.checkArray(parsedInputs)){
-                const todo = createTodo(parsedInputs);
-                defaultProject.allTasks.addTodo(todo);
-                if (todo.getProject() && todo.getProject() !== defaultProject.allTasks){
-                    todo.getProject().addTodo(todo);
-                }
-            }
-    
-        }
-        domLoader.removeElement(form);
-    }
-}
-
-export class ProjectSubmitAction extends Action {
-    handleEvent(e){
-        const form = e.target.parentElement;
-        if(form && processor.checkArray(form.children)){
-            const main = domLoader.getQuery("#content");
-            const ul = domLoader.getQuery("#ownProjects");
+        const form = e.target.form;
+        const container = e.target.closest(".add-item");
+        const button = Array.from(container.children).find(button => button.classList.contains("add-btn"));
+        if(form && form.children && button.id === "addProject"){
+            const ul = domLoader.getQuery("#projects");
             const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
             const userProject = createProject(textInput.value);
             defaultProject.addProject(userProject);
-            const li = domCreator.createProjectListItem(userProject.getTitle());
-            li.addEventListener("click", () => {
-                main.replaceChildren();
-                const todoDivs = domCreator.createTodoDivs(userProject.getTodos(), userProject);
-                todoDivs.forEach(todoDiv => domLoader.appendChildToParent(todoDiv, main));
-            });
+            let storedData = userStorage.getData("projects");
+            storedData.push({title: userProject.getTitle(), todos: userProject.getTodos(), projectID: userProject.getUUID()});
+            userStorage.addData("projects", storedData);
+            const li = domCreator.createProjectListItem(userProject.getTitle(), userProject);
             domLoader.appendChildToParent(li, ul);
-    
+            li.click();
         }
-        domLoader.removeElement(form);
-    }
-}
-
-export class FormCancelAction extends Action {
-    handleEvent(e){
-        const form = e.target.parentElement;
-        domLoader.removeElement(form);
+        else if (form && form.children && button.id === "addTodo") {
+            const textInput = Array.from(form.children).find(element => element.tagName === "INPUT");
+            const todo = createTodo(textInput.value);
+            const projectTitle = domLoader.getQuery("#page-title");
+            const projectID = projectTitle.getAttribute("projectid");
+            const project = defaultProject.getProjects().find(project => project.getUUID() == projectID);
+            if (project){
+                todo.setProject(project)
+                defaultProject.allTasks.addTodo(todo);
+                const nav = document.querySelector("#projects");
+                const li = Array.from(nav.children).find(project => project.getAttribute("projectid") == projectID);
+                li.click();
+                let storedData = userStorage.getData("projects");
+                const storedProject = storedData.find(data => data.projectID == li.getAttribute("projectid"));
+                const storedDefault = storedData.find(data => data.title == "default");
+                storedDefault.todos.push(...project.getTodos().map(todo => ({title: todo.getTitle(), completed: todo.getCompleted(), date: todo.getDate().toString(), priority: todo.getPriority().getLevel(), todoID: todo.getUUID()})));
+                storedProject.todos.push(...project.getTodos().map(todo => ({title: todo.getTitle(), completed: todo.getCompleted(), date: todo.getDate().toString(), priority: todo.getPriority().getLevel(), todoID: todo.getUUID()})));
+                userStorage.addData("projects", storedData);
+            }
+            else {
+               todo.setProject(defaultProject.allTasks);
+               let storedData = userStorage.getData("projects");
+               let storedDefault = storedData.find(data => data.title == "default");
+               storedDefault.todos.push(...defaultProject.allTasks.getTodos().map(todo => ({title: todo.getTitle(), completed: todo.getCompleted(), date: todo.getDate().toString(), priority: todo.getPriority().getLevel(), todoID: todo.getUUID()})));
+               userStorage.addData("projects", storedData);
+               domLoader.getQuery("#all").click();
+            }
+        }
+        new FormCancelAction().handleEvent(e);
     }
 }
 
 export class ProjectDeleteAction extends Action {
     handleEvent(e){
-       const projectTitle = Array.from(e.target.parentElement.children).find(element => element.className === "projectTitle");
+       const projectItem = e.target.closest(".project-li");
+       const projectTitle = Array.from(projectItem.children).find(element => element.className === "projectTitle");
        if(projectTitle && typeof projectTitle.textContent === "string" || projectTitle.textContent instanceof String){
         const userProject = defaultProject.getProjects().find(project => project.getTitle() === projectTitle.textContent);
+        let storedData = userStorage.getData("projects");
+        let storedProject = storedData.find(data => data.projectID === userProject.uuID);
+        storedData.splice(storedData.indexOf(storedProject), 1);
+        userStorage.addData("projects", storedData);
         defaultProject.removeProject(userProject);
-        domLoader.removeElement(e.target.parentElement);
+        domLoader.removeElement(projectItem);
        }
     }
 }
 
 export class TodoDeleteAction extends Action {
     handleEvent(e){
-        const projectID = e.target.parentElement.getAttribute("projectID");
-        const todoID = e.target.parentElement.getAttribute("todoID");
-        const project = defaultProject.getProjects().find(project => project.uuID == projectID);
-        const todo = project.getTodos().find(todo => todo.uuID == todoID);
+        const todoDiv = e.target.closest(".todoDiv");
+        const projectID = todoDiv.getAttribute("projectID");
+        const todoID = todoDiv.getAttribute("todoID");
+        const project = defaultProject.getProjects().find(project => project.getUUID() == projectID);
+        const todo = project.getTodos().find(todo => todo.getUUID() == todoID);
+        let storedData = userStorage.getData("projects");
+        let storedDefaultProject = storedData.find(data => data.title == "default");
+        let storedDefaultTodo = storedDefaultProject.todos.find(data => data.todoID == todoID);    
         if(todo && project){
+            defaultProject.allTasks.removeTodo(todo);
             project.removeTodo(todo);
-            domLoader.removeElement(e.target.parentElement);
+            let storedProject = storedData.find(data => data.projectID == projectID);
+            let storedTodo = storedProject.todos.find(data => data.todoID == todoID);
+            storedProject.todos.splice(storedProject.todos.indexOf(storedTodo), 1);
+            storedDefaultProject.todos.splice(storedProject.todos.indexOf(storedDefaultTodo), 1);
+            userStorage.addData("projects", storedData);
+            domLoader.removeElement(todoDiv);
         }
     }
 }
 
-export class AddTodoAction extends Action {
-    handleEvent(){
-        const main = domLoader.getQuery("#content");
-        const todoForm = domCreator.createTodoForm();
-        todoForm.id = "todo-form";
-        domLoader.appendChildToParent(todoForm, main);
+export class FormAddAction extends Action {
+    handleEvent(e){
+        e.target.closest(".add-btn").classList.add("inactive");
+        const container = e.target.closest(".add-item");
+        let form = domLoader.getQuery("form");
+        if(form) {
+            Array.from(document.querySelectorAll(".add-btn")).filter(button => button !== e.target.closest(".add-btn")).forEach(button => button.classList.remove("inactive"));
+        }
+        else {
+          form = domCreator.createForm();
+        }
+        domLoader.appendChildToParent(form, container);
     }
 }
 
-export class AddProjectAction extends Action {
-    handleEvent(){
-        const projectList = domLoader.getQuery("#ownProjects");
-        const projectForm = domCreator.createProjectForm();
-        domLoader.appendChildToParent(projectForm, projectList);
+export class FormCancelAction extends Action {
+    handleEvent(e){
+        if(e && e.target.form){
+            domLoader.removeElement(e.target.form);
+            document.querySelectorAll(".add-btn").forEach(button => button.classList.remove("inactive"));
+        }
+    }
+}
+
+export class ChangeItemAction extends Action {
+    handleEvent(e){
+        const container = e.target.closest(".todoDiv");
+        const todoID = container.getAttribute("todoid");
+        const projectID = container.getAttribute("projectid");
+        const project = defaultProject.getProjects().find(projectItem => projectItem.getUUID() == projectID);
+        const todo = project.getTodos().find(todoItem => todoItem.getUUID() == todoID);
+        let storedData = userStorage.getData("projects");
+        let storedProject = storedData.find(data => data.projectID == projectID);
+        let storedDefaultProject = storedData.find(data => data.title == "default");
+        let storedTodo = storedProject.todos.find(data => data.todoID == todoID);
+        let storedDefaultTodo = storedDefaultProject.todos.find(data => data.todoID == todoID);
+        if (e.target.className && e.target.classList.contains("priority-select")) {
+            todo.getPriority().setLevel(e.target.value);
+            storedTodo.priority = todo.getPriority().getLevel();
+            storedDefaultTodo.priority = todo.getPriority().getLevel();
+        }
+        else if(e.target.tagName === "INPUT" && e.target.getAttribute("type") === "date"){
+            todo.getDate().setDate(e.target.value);
+            storedTodo.date = todo.getDate().toString();
+            storedDefaultTodo.date = todo.getDate().toString();
+        }
+        userStorage.addData("projects", storedData);
+    }
+}
+
+export class ChangeTextAction extends Action {
+    handleEvent(e){
+        if(e.target.classList.contains("todo-text")){
+            const container = e.target.closest(".todoDiv");
+            const todoID = container.getAttribute("todoid");
+            const projectID = container.getAttribute("projectid");
+            const project = defaultProject.getProjects().find(projectItem => projectItem.getUUID() == projectID);
+            const todo = project.getTodos().find(todoItem => todoItem.getUUID() == todoID);
+            const textContainer = e.target;
+            const textInput = domCreator.createElement("input", "", { value: e.target.textContent });
+            let storedData = userStorage.getData("projects");
+            let storedProject = storedData.find(data => data.projectID == projectID);
+            let storedTodo = storedProject.todos.find(data => data.todoID == todoID);   
+            let storedDefaultProject = storedData.find(data => data.title == "default");
+            let storedDefaultTodo = storedDefaultProject.todos.find(data => data.todoID == todoID); 
+            textInput.addEventListener("focusout", (e) => {
+                todo.setTitle(e.target.value);
+                textContainer.replaceChildren();
+                textContainer.textContent = e.target.value;
+                storedTodo.title = todo.getTitle();
+                storedDefaultTodo.title = todo.getTitle();
+                userStorage.addData("projects", storedData);
+           });
+            textContainer.replaceChildren(textInput);
+        }
+    }
+}
+
+export class TodoCompleteAction extends Action {
+    handleEvent(e){
+       e.target.classList.toggle("checked");
+       e.target.nextSibling.classList.toggle("line-through");
+       e.target.nextSibling.classList.toggle("faded");
+       e.target.closest(".todoDiv").classList.toggle("done");
     }
 }

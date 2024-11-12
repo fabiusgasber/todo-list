@@ -1,5 +1,4 @@
 import { Priority } from "./priorities";
-import { defaultProject } from "./projects";
 
 export const domCreator = (() => {
 
@@ -27,51 +26,44 @@ export const domCreator = (() => {
         }
     }
 
-    const createTodoDivs = (projectArr, project) => {
+    const createTodoDivs = (projectArr, projectUUID) => {
         const todoDivs = projectArr.map((todo) => {
-            const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.uuID }`, projectID: `${ project.uuID }` } );
-            const text = todo.getText().map(text => createElement("div", text));
-            const date = createElement("div", todo.getDate().toString());
-            const priority = createElement("div", todo.getPriority().getLevel());
-            const editBtn = createElement("button", "Edit", { type: "submit", class: "editTodo-btn" });
-            const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteTodo-btn" });
-            div.append(...text, date, priority, editBtn, deleteBtn);
+            const div = createElement("div", "", { class: "todoDiv", todoID: `${ todo.getUUID() }`, projectID: `${ projectUUID }` } );
+            const textContent = createElement("div", "", { class: "todo-text" });
+            const title = todo.getTitle();
+            textContent.append(title);
+            const date = createElement("input", "", { type: "date", value: todo.getDate().toString()});
+            const checker = createElement("div", "", { class: "checker" });
+            const priorityDiv = createElement("div", "", { class: "select-wrapper" });
+            const priority = createElement("select", "", { class: "priority-select" }, Priority.acceptedLevels, todo.getPriority().getLevel());
+            priorityDiv.append(priority);
+            const deleteDiv = createElement("div", "", { class: "delete-div" });
+            div.append(checker, textContent, date, priorityDiv, deleteDiv);
             return div;
         });
         return todoDivs;
     }
 
-    const createProjectListItem = (text) => {
-        const li = createElement("li", "", { class: "project-li" });
+    const createProjectListItem = (text, project) => {
+        const li = createElement("li", "", { class: "project-li", projectID: `${ project.getUUID() }` });
         const p = createElement("p", text, { class: "projectTitle" });
-        const editBtn = createElement("button", "Edit", { type: "submit", class: "editProject-btn"  })
-        const deleteBtn = createElement("button", "Delete", { type: "submit", class: "deleteProject-btn" });
-        li.append(p, editBtn, deleteBtn);
+        const deleteBtn = createElement("div", "", { class: "deleteProject-btn" });
+        const buttonDiv = createElement("div", "", { class: "button-div" });
+        buttonDiv.append(deleteBtn);
+        li.append(p, buttonDiv);
         return li;
     } 
 
-
-    const createTodoForm = () => {
+    const createForm = () => {
         const form = createElement("form");
-        const title = createElement("input", "", { name: "title", class: "title", placeholder: "Title", id: "title"});
-        const description = createElement("input", "", { name: "description", class: "description", placeholder: "Description", id: "description" });
-        const date = createElement("input", "", { name: "date", class: "date", type: "date", id: "date" });
-        const priorities = createElement("select", "", { name: "priorities", id: "priority-select" }, Priority.acceptedLevels);
-        const projects = createElement("select", "", { name: "projects", id: "projects-select" }, defaultProject.getProjects().map(projects => projects.getTitle()));
-        const submitBtn = createElement("button", "Submit", { type: "button", class: "todo-submit-btn" });
-        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
-        form.append(title, description, date, priorities, projects, submitBtn, cancelBtn);
+        const name = createElement("input", "", { type: "text", placeholder: "Enter your title..." });
+        const submitBtn = createElement("button", "Add", { type: "button", class: "form-submit-btn" });
+        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "form-cancel-btn" });
+        const buttonDiv = createElement("div", "", { class: "button-div" });
+        buttonDiv.append(submitBtn, cancelBtn);
+        form.append(name, buttonDiv);
         return form;
     }
 
-    const createProjectForm = () => {
-        const form = createElement("form");
-        const name = createElement("input", "", { type: "text", placeholder: "Enter your projects name..." });
-        const submitBtn = createElement("button", "Submit", { type: "button", class: "project-submit-btn" });
-        const cancelBtn = createElement("button", "Cancel", { type: "button", class: "cancel-btn" });
-        form.append(name, submitBtn, cancelBtn);
-        return form;
-    }
-
-    return { createProjectForm, createTodoForm, createElement, createTodoDivs, createProjectListItem}
+    return { createElement, createForm, createTodoDivs, createProjectListItem}
 })();

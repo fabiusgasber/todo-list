@@ -1,24 +1,17 @@
-import { ButtonHandler, FormCancelAction, TodoSubmitAction, ProjectDeleteAction, ProjectSubmitAction, TodoDeleteAction, AddTodoAction, AddProjectAction } from "./button-handler";
-import { Navigation, PageAll } from "./navigation";
-import { defaultProject } from "./projects";
+import { ButtonHandler, FormSubmitAction, FormCancelAction, ProjectDeleteAction, TodoDeleteAction, FormAddAction, TodoCompleteAction } from "./button-handler";
 
 export const logicHandler = (() => {
 
     const handler = {
-        navigation: {
-            "all": new Navigation(new PageAll(), defaultProject.allTasks.getTodos, defaultProject.allTasks),
-            "today": new Navigation(new PageAll(), defaultProject.allTasks.getToday, defaultProject.allTasks),
-            "week": new Navigation(new PageAll(), defaultProject.allTasks.getWeek, defaultProject.allTasks),
-            "important": new Navigation(new PageAll(), defaultProject.allTasks.getImportant, defaultProject.allTasks),
-        },
         buttonAction: {
-            "todo-submit-btn": new ButtonHandler(new TodoSubmitAction()),
-            "project-submit-btn": new ButtonHandler(new ProjectSubmitAction()),
-            "cancel-btn": new ButtonHandler(new FormCancelAction()),
+            "form-submit-btn": new ButtonHandler(new FormSubmitAction()),
+            "form-cancel-btn": new ButtonHandler(new FormCancelAction()),
             "deleteProject-btn": new ButtonHandler(new ProjectDeleteAction()),
-            "deleteTodo-btn": new ButtonHandler(new TodoDeleteAction()),
-            "addTodo": new ButtonHandler(new AddTodoAction()),
-            "addProject": new ButtonHandler(new AddProjectAction()),
+            "delete-div": new ButtonHandler(new TodoDeleteAction()),
+            "addTodo": new ButtonHandler(new FormAddAction()),
+            "addProject": new ButtonHandler(new FormAddAction()),
+            "checker": new ButtonHandler(new TodoCompleteAction()),
+            "checker checked": new ButtonHandler(new TodoCompleteAction()),
         },
     }
 
