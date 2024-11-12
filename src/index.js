@@ -99,7 +99,9 @@ const displayStorage = () => {
       domLoader.appendChildToParent(li, ul);  
       storedProject.todos.forEach(data => {
         const test = defaultProject.allTasks.getTodos().find(defaultTodo => defaultTodo.getUUID() == data.todoID);
-        project.addTodo(test);
+        if(test) {
+          project.addTodo(test);
+        }
       });
     }
   });
