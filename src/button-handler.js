@@ -86,25 +86,22 @@ export class ProjectDeleteAction extends Action {
 export class TodoDeleteAction extends Action {
     handleEvent(e){
         const todoDiv = e.target.closest(".todoDiv");
-        const projectID = todoDiv.getAttribute("projectID");
         const todoID = todoDiv.getAttribute("todoID");
-        const project = defaultProject.getProjects().find(project => project.getUUID() == projectID);
-        const todo = project.getTodos().find(todo => todo.getUUID() == todoID);
-        let storedData = userStorage.getData("projects");
-        let storedDefaultProject = storedData.find(data => data.title == "default");
-        let storedDefaultTodo = storedDefaultProject.todos.find(data => data.todoID == todoID);    
-        if(todo && project){
-            defaultProject.allTasks.removeTodo(todo);
+        const storedData = userStorage.getData("projects");
+        defaultProject.getProjects().forEach(project => project.getTodos().forEach(todo => {
+           if(todo.getUUID() == todoID){
             project.removeTodo(todo);
-            let storedProject = storedData.find(data => data.projectID == projectID);
-            let storedTodo = storedProject.todos.find(data => data.todoID == todoID);
-            storedProject.todos.splice(storedProject.todos.indexOf(storedTodo), 1);
-            storedDefaultProject.todos.splice(storedProject.todos.indexOf(storedDefaultTodo), 1);
-            userStorage.addData("projects", storedData);
-            domLoader.removeElement(todoDiv);
+           };
+        }));
+        storedData.forEach(project => project.todos.forEach((todo, index) => {
+            if(todo.todoID == todoID){
+                project.todos.splice(index, 1);
+               };
+        }));
+        userStorage.addData("projects", storedData);
+        domLoader.removeElement(todoDiv);
         }
     }
-}
 
 export class FormAddAction extends Action {
     handleEvent(e){
