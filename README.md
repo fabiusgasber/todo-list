@@ -29,6 +29,3 @@ This project offered practical experience with:
 
 ## Demo
 Check out the running version of this project [here](https://fabiusgasber.github.io/todo-list/).
-
----
-This to-do list project is an exercise in advanced JavaScript principles, clean code, and effective project structure. It's a foundation for building larger, more complex web applications in the future.
